@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2026 Draft Board</title>
+<style>
+  :root {
+    --bg: #0d1117; --panel: #151b24; --panel2: #1b2330; --line: #263041;
+    --text: #e6edf3; --dim: #7d8ba1; --hivis: #f5d90a; --red: #f85149;
+    --green: #3fb950; --blue: #58a6ff;
+    --elite: #f5d90a; --t1: #ff9f43; --t2: #58a6ff; --t3: #3fb950;
+    --t4: #b083f0; --t5: #8b949e; --t6: #6e7681; --t7: #484f58;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font: 14px/1.45 "Segoe UI", system-ui, sans-serif;
+    height: 100vh; display: flex; flex-direction: column; overflow: hidden;
+  }
+  header {
+    display: flex; align-items: center; gap: 16px; padding: 10px 16px;
+    background: var(--panel); border-bottom: 2px solid var(--hivis);
+  }
+  header h1 { font-size: 16px; letter-spacing: 2px; text-transform: uppercase; }
+  header h1 span { color: var(--hivis); }
+  .pickmeta { margin-left: auto; display: flex; gap: 18px; align-items: center; font-variant-numeric: tabular-nums; }
+  .pickmeta .big { font-size: 20px; font-weight: 700; color: var(--hivis); }
+  .pickmeta label { color: var(--dim); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+  .pickmeta input { width: 44px; background: var(--panel2); color: var(--text); border: 1px solid var(--line); border-radius: 4px; padding: 3px 6px; font-size: 14px; text-align: center; }
+  main { flex: 1; display: flex; min-height: 0; }
+  #left { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+  #controls { display: flex; gap: 8px; padding: 10px 16px; align-items: center; flex-wrap: wrap; background: var(--bg); }
+  #search {
+    flex: 1; min-width: 220px; background: var(--panel2); border: 1px solid var(--line);
+    border-radius: 6px; color: var(--text); font-size: 16px; padding: 9px 14px; outline: none;
+  }
+  #search:focus { border-color: var(--hivis); }
+  .fbtn {
+    background: var(--panel2); border: 1px solid var(--line); color: var(--dim);
+    border-radius: 6px; padding: 8px 12px; cursor: pointer; font-size: 13px; font-weight: 600;
+  }
+  .fbtn.on { color: #0d1117; background: var(--hivis); border-color: var(--hivis); }
+  .hint { width: 100%; color: var(--dim); font-size: 11.5px; padding: 0 2px; }
+  .hint b { color: var(--text); background: var(--panel2); border: 1px solid var(--line); border-radius: 3px; padding: 0 5px; font-weight: 600; }
+  #board { flex: 1; overflow-y: auto; padding: 0 8px 30px 16px; }
+  table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  thead th {
+    position: sticky; top: 0; background: var(--bg); color: var(--dim); font-size: 10.5px;
+    text-transform: uppercase; letter-spacing: 1px; text-align: left; padding: 8px 8px 6px;
+    border-bottom: 1px solid var(--line); z-index: 2;
+  }
+  thead th.num, td.num { text-align: right; }
+  tbody tr { border-bottom: 1px solid #161d28; cursor: default; }
+  tbody tr:hover { background: #182131; }
+  tbody td { padding: 5px 8px; }
+  tr.hit { outline: 2px solid var(--hivis); outline-offset: -2px; }
+  .rk { color: var(--dim); width: 40px; }
+  .tierbar { width: 4px; padding: 0; }
+  .name { font-weight: 600; white-space: nowrap; }
+  .name small { color: var(--dim); font-weight: 400; margin-left: 6px; }
+  .pos { font-weight: 700; font-size: 12px; width: 52px; }
+  .pos.QB { color: #ff6b9d; } .pos.RB { color: #3fb950; } .pos.WR { color: #58a6ff; }
+  .pos.TE { color: #ff9f43; } .pos.K { color: #8b949e; } .pos.DST { color: #b083f0; }
+  .edge-pos { color: var(--green); } .edge-neg { color: var(--red); }
+  .danger { color: var(--red); font-size: 10px; font-weight: 700; letter-spacing: .5px; }
+  tr.taken td { color: #4b5563; }
+  tr.taken .name, tr.taken .pos { text-decoration: line-through; color: #4b5563; }
+  tr.mine { background: rgba(63,185,80,.09); }
+  tr.mine .name { color: var(--green); }
+  .act { white-space: nowrap; width: 148px; }
+  .act button {
+    border: 1px solid var(--line); background: var(--panel2); color: var(--dim);
+    border-radius: 4px; padding: 3px 9px; margin-left: 4px; cursor: pointer; font-size: 12px; font-weight: 700;
+  }
+  .act button:hover { color: var(--text); border-color: var(--dim); }
+  .act .undo1 { color: var(--blue); }
+  #side {
+    width: 330px; flex: none; overflow-y: auto; background: var(--panel);
+    border-left: 1px solid var(--line); padding: 14px;
+  }
+  .card { background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; padding: 12px; margin-bottom: 12px; }
+  .card h2 { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--dim); margin-bottom: 8px; }
+  #suggest .s1 { font-size: 17px; font-weight: 700; }
+  #suggest .why { color: var(--dim); font-size: 12.5px; line-height: 1.5; margin: 4px 0 10px; }
+  .legend { color: var(--dim); font-size: 11px; line-height: 1.4; margin-top: 8px; border-top: 1px solid var(--line); padding-top: 6px; }
+  #lenses { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 9px; }
+  .lens { background: var(--panel); border: 1px solid var(--line); color: var(--dim); border-radius: 4px; padding: 4px 8px; cursor: pointer; font-size: 11.5px; font-weight: 700; }
+  .lens.on { color: #0d1117; background: var(--hivis); border-color: var(--hivis); }
+  #suggest .alt { font-size: 12.5px; color: var(--text); padding: 3px 0; border-top: 1px solid var(--line); }
+  #suggest .alt span { color: var(--dim); }
+  .rosterrow { display: flex; gap: 8px; padding: 2.5px 0; font-size: 13px; font-variant-numeric: tabular-nums; }
+  .rosterrow .slot { width: 42px; color: var(--dim); font-weight: 700; font-size: 11.5px; padding-top: 1px; }
+  .rosterrow .who { flex: 1; }
+  .rosterrow .who.empty { color: #3d4653; }
+  .bestrow { display: flex; gap: 8px; padding: 2.5px 0; font-size: 13px; }
+  .bestrow .p { width: 36px; font-weight: 700; }
+  .bestrow .n { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bestrow .v { color: var(--dim); font-variant-numeric: tabular-nums; }
+  #topbtns { display: flex; gap: 8px; }
+  #topbtns button { flex: 1; }
+  .ghost { background: none; border: 1px solid var(--line); color: var(--dim); border-radius: 6px; padding: 7px; cursor: pointer; font-size: 12.5px; font-weight: 600; }
+  .ghost:hover { color: var(--text); }
+  .ghost.danger:hover { color: var(--red); border-color: var(--red); }
+</style>
+</head>
+<body>
+<header>
+  <h1>2026 <span>Draft Board</span></h1>
+  <div class="pickmeta">
+    <div><label>On the clock</label><div class="big" id="curpick">1.01</div></div>
+    <div><label>My next</label><div class="big" id="mynext" style="color:var(--green)">-</div></div>
+    <div><label>Teams</label><br><input id="teams" type="number" min="4" max="16" value="10"></div>
+    <div><label>My slot</label><br><input id="slot" type="number" min="1" max="16" value="5"></div>
+  </div>
+</header>
+<main>
+  <div id="left">
+    <div id="controls">
+      <input id="search" placeholder="Type a name..." autocomplete="off" spellcheck="false">
+      <button class="fbtn on" data-f="ALL">All</button>
+      <button class="fbtn" data-f="QB">QB</button>
+      <button class="fbtn" data-f="RB">RB</button>
+      <button class="fbtn" data-f="WR">WR</button>
+      <button class="fbtn" data-f="TE">TE</button>
+      <button class="fbtn" data-f="K">K</button>
+      <button class="fbtn" data-f="DST">DST</button>
+      <button class="fbtn on" id="hidetaken">Hide taken</button>
+      <div class="hint"><b>Enter</b> marks the outlined player Taken &nbsp; <b>Shift+Enter</b> = My Pick &nbsp; <b>Ctrl+Z</b> undo &nbsp; <b>Esc</b> clear search &nbsp; Red GONE tag = likely gone before your next pick &nbsp; Value +9 = you get him 9 picks cheaper than normal, -9 = a reach</div>
+    </div>
+    <div id="board"><table>
+      <thead><tr>
+        <th></th><th class="rk">#</th><th>Pos</th><th>Player</th><th class="num">Score</th>
+        <th class="num" title="Season points above a waiver-wire replacement at his position">VORP</th><th class="num" title="Average Draft Position: the pick where drafts usually take him">ADP</th><th class="num" title="ADP minus our rank. Positive = bargain, he lasts longer than he should. Negative = a reach at this pick.">Value +/-</th><th></th><th class="act"></th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+  </div>
+  <div id="side">
+    <div class="card" id="suggest"><h2>Draft next</h2>
+      <div id="lenses">
+        <button class="lens on" data-l="best">Best Pick</button><button class="lens" data-l="value">Value</button><button class="lens" data-l="sleeper">Sleeper</button><button class="lens" data-l="rookie">Rookie</button><button class="lens" data-l="safe">Safe</button><button class="lens" data-l="upside">Upside</button>
+      </div>
+      <div id="sugbody"></div></div>
+    <div class="card"><h2>My team so far</h2><div id="gradebody" class="why" style="margin:0"></div></div>
+    <div class="card"><h2>My roster</h2><div id="roster"></div></div>
+    <div class="card"><h2>Best available by position</h2><div id="bestpos"></div></div>
+    <div class="card" id="topbtns-card"><h2>Draft controls</h2>
+      <div id="topbtns">
+        <button class="ghost" id="undo">Undo last</button>
+        <button class="ghost danger" id="reset">Reset draft</button>
+      </div>
+    </div>
+  </div>
+</main>
+<script>
+const PLAYERS = __DATA__;
+const TIERC = {"ELITE":"var(--elite)","TIER 1":"var(--t1)","TIER 2":"var(--t2)","TIER 3":"var(--t3)","TIER 4":"var(--t4)","TIER 5":"var(--t5)","TIER 6":"var(--t6)","TIER 7":"var(--t7)"};
+const STARTERS = {QB:1, RB:2, WR:2, TE:1, K:1, DST:1};
+const SLOTS = ["QB","RB","RB","WR","WR","TE","FLEX","K","DST","BN","BN","BN","BN","BN","BN"];
+const KEY = "draftboard2026-v3";   // versioned: bump on every data resync so stale saved states never mismatch player ranks
+
+// state: status[overall] = "" | "T" (taken) | "M" (mine); history = list of overalls marked
+let st = __INIT__;
+try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && s.status) st = s; } catch (e) {}
+st.out = st.out || {};   // out-for-season players: off the board, but never counted as a pick
+
+let posFilter = "ALL", hideTaken = true, query = "", lens = "best";
+const $ = id => document.getElementById(id);
+const save = () => localStorage.setItem(KEY, JSON.stringify(st));
+const picksMade = () => st.hist.length;
+const fmtPick = n => Math.ceil(n / st.teams) + "." + String((n - 1) % st.teams + 1).padStart(2, "0");
+
+function myPicks() {  // snake pick numbers for my slot
+  const out = [];
+  for (let r = 1; r <= 15; r++)
+    out.push(r % 2 ? (r - 1) * st.teams + st.slot : r * st.teams - st.slot + 1);
+  return out;
+}
+function nextMyPick() {
+  const cur = picksMade() + 1;
+  return myPicks().find(p => p >= cur);
+}
+function matches(p) {
+  if (!query) return true;
+  const n = p.name.toLowerCase();
+  if (n.includes(query)) return true;
+  let i = 0;                       // subsequence match, so "jsn" finds Smith-Njigba
+  for (const ch of n) if (ch === query[i]) i++;
+  return i >= query.length;
+}
+function visible() {
+  return PLAYERS.filter(p => {
+    const s = st.status[p.overall] || "";
+    if (posFilter !== "ALL" && p.pos !== posFilter) return false;
+    if (hideTaken && (s === "T" || st.out[p.overall]) && !query) return false;
+    return matches(p);
+  });
+}
+function firstAvailable() {
+  return visible().find(p => !st.status[p.overall] && !st.out[p.overall]);
+}
+function markOut(o) { st.out[o] = true; save(); render(); }
+function clearOut(o) { delete st.out[o]; save(); render(); }
+function mark(overall, kind) {
+  if (st.status[overall]) return;
+  st.status[overall] = kind;
+  st.hist.push(overall);
+  save(); render();
+  $("search").value = ""; query = ""; $("search").focus();
+}
+function unmark(overall) {
+  delete st.status[overall];
+  st.hist = st.hist.filter(o => o !== overall);
+  save(); render();
+}
+function undo() {
+  const last = st.hist.pop();
+  if (last !== undefined) delete st.status[last];
+  save(); render();
+}
+
+function rosterAssign() {  // place my picks into lineup slots
+  const mine = st.hist.filter(o => st.status[o] === "M").map(o => PLAYERS[o - 1]);
+  const slots = SLOTS.map(s => ({ slot: s, p: null }));
+  for (const p of mine) {
+    let t = slots.find(s => !s.p && s.slot === p.pos)
+         || (["RB","WR","TE"].includes(p.pos) && slots.find(s => !s.p && s.slot === "FLEX"))
+         || slots.find(s => !s.p && s.slot === "BN");
+    if (t) t.p = p;
+  }
+  return slots;
+}
+function needInfo() {
+  const counts = {QB:0,RB:0,WR:0,TE:0,K:0,DST:0};
+  for (const o of st.hist) if (st.status[o] === "M") counts[PLAYERS[o - 1].pos]++;
+  let flexUsed = 0;
+  for (const pos of ["RB","WR","TE"]) flexUsed += Math.max(0, counts[pos] - STARTERS[pos]);
+  return { counts, flexOpen: flexUsed < 1 };
+}
+function suggestions() {
+  const { counts, flexOpen } = needInfo();
+  const mineN = st.hist.filter(o => st.status[o] === "M").length;
+  const lateOK = mineN >= 12;      // K/DST only with your last 3 picks
+  const avail = PLAYERS.filter(p => !st.status[p.overall] && !st.out[p.overall]);
+  const cands = [];
+  for (const p of avail) {
+    if ((p.pos === "K" || p.pos === "DST") && !lateOK) continue;
+    // ownership caps, ALL lenses: never suggest a position you have enough of
+    if (p.pos === "QB" && counts.QB >= 2) continue;
+    if (p.pos === "TE" && counts.TE >= 2) continue;
+    if ((p.pos === "K" || p.pos === "DST") && counts[p.pos] >= STARTERS[p.pos]) continue;
+    let bonus = 0, need = "";
+    if (counts[p.pos] < STARTERS[p.pos]) {
+      bonus += (p.pos === "K" || p.pos === "DST") && mineN >= 13 ? 30 : 6;  // force K/DST with the last 2 picks
+      need = "fills your open " + p.pos + " starter spot";
+    }
+    else if (["RB","WR"].includes(p.pos) && flexOpen) { bonus += 3; need = "fits your open FLEX spot"; }
+    else if (p.pos === "QB") { bonus -= 10; need = "you already have a QB"; }
+    else if (p.pos === "TE") { bonus -= 10; need = "you already have a TE (flex is better spent on RB/WR)"; }
+    else {
+      need = "adds depth";
+      // balance nudge: if stacked at RB or WR, tilt toward the thinner one
+      if (p.pos === "RB" && counts.RB >= counts.WR + 3) { bonus -= 3; need = "adds depth, but you are already stacked at RB"; }
+      if (p.pos === "WR" && counts.WR >= counts.RB + 3) { bonus -= 3; need = "adds depth, but you are already stacked at WR"; }
+    }
+    if (p.edge >= 10) bonus += 2;
+    cands.push({ p, val: p.score + bonus, need });
+  }
+  cands.sort((a, b) => b.val - a.val);
+  if (lens === "best") return cands.slice(0, 3);
+  // lens modes: filter the pool, then let OUR ratings order it (score/floor/ceiling from the board)
+  let pool = cands;
+  const skill = c => c.p.pos !== "K" && c.p.pos !== "DST";  // no such thing as a sleeper kicker
+  if (lens === "value")   pool = cands.filter(c => skill(c) && c.p.edge >= 5).sort((a, b) => b.p.score - a.p.score);
+  if (lens === "sleeper") pool = cands.filter(c => skill(c) && c.p.edge >= 12 && c.p.adp >= 45).sort((a, b) => b.p.score - a.p.score);
+  if (lens === "rookie")  pool = cands.filter(c => c.p.rookie).sort((a, b) => b.p.score - a.p.score);
+  if (lens === "safe")    pool = cands.filter(c => c.p.conf === "A").sort((a, b) => b.p.floor - a.p.floor || b.p.score - a.p.score);
+  if (lens === "upside")  pool = [...cands].sort((a, b) => b.p.ceil - a.p.ceil || b.p.score - a.p.score);
+  return pool.slice(0, 3);
+}
+function valueWords(p) {
+  const e = Math.round(p.edge);
+  if (e >= 5) return "Drafts usually take him around pick " + Math.round(p.adp) + " and we rank him #" + p.overall + ", so he is falling about " + e + " picks past his real value. That is a bargain.";
+  if (e <= -5) return "We rank him #" + p.overall + " but drafts usually take him around pick " + Math.round(p.adp) + ", so grabbing him now means reaching about " + Math.abs(e) + " picks early.";
+  return "His usual draft spot (pick " + Math.round(p.adp) + ") and our rank (#" + p.overall + ") agree, so this is a fair price.";
+}
+function writeup(c) {
+  const p = c.p;
+  const scout = (p.exp || "").split(/\.\s/)[0].replace(/\.+$/, "");
+  const tail = scout ? " Scouting view: " + scout + "." : "";
+  if (lens === "value")
+    return "Highest-rated player on our board among the bargains (score " + p.score + "), and " + c.need + ". " + valueWords(p) + tail;
+  if (lens === "sleeper")
+    return "Our board scores him " + p.score + " (#" + p.overall + " overall), but drafts do not usually take him until pick " + Math.round(p.adp) + ". Nobody in your room is watching him, so you can wait or steal him now." + tail;
+  if (lens === "rookie")
+    return "Highest-rated rookie left by our Rookie Engine (score " + p.score + "), and " + c.need + ". " + valueWords(p) + tail;
+  if (lens === "safe")
+    return "Safest pick left: A confidence, and even his bad weeks grade out around " + p.floor + ". Our board scores him " + p.score + " and " + c.need + "." + tail;
+  if (lens === "upside")
+    return "Biggest ceiling on the board: if it clicks, he plays like a " + p.ceil + "-rated player (elite shelf). Board score " + p.score + ", " + c.need + "." + tail;
+  return "He is the best player left on our board (" + p.pos + p.posRank + ", score " + p.score + ") and " + c.need + ". " + valueWords(p) + tail;
+}
+
+function leagueRosters() {  // snake math attributes every pick in hist to a team slot
+  const rosters = {};
+  for (let s = 1; s <= st.teams; s++) rosters[s] = [];
+  st.hist.forEach((o, i) => {
+    const pick = i + 1, r = Math.ceil(pick / st.teams), idx = (pick - 1) % st.teams;
+    const slot = r % 2 ? idx + 1 : st.teams - idx;
+    rosters[slot].push(PLAYERS[o - 1]);
+  });
+  return rosters;
+}
+function lineupPts(roster) {  // best legal starting lineup from a roster
+  const sorted = [...roster].sort((a, b) => b.pts - a.pts);
+  const used = new Set(), byPos = {QB:0, RB:0, WR:0, TE:0, K:0, DST:0, FLEX:0};
+  let total = 0;
+  for (const pos of ["QB","RB","WR","TE","K","DST"]) {
+    let n = STARTERS[pos];
+    for (const p of sorted) if (n > 0 && p.pos === pos && !used.has(p)) { used.add(p); total += p.pts; byPos[pos] += p.pts; n--; }
+  }
+  for (const p of sorted) if (!used.has(p) && ["RB","WR","TE"].includes(p.pos)) { used.add(p); total += p.pts; byPos.FLEX = p.pts; break; }
+  return { total, byPos };
+}
+function teamReport() {
+  if (!st.hist.length) return "No picks yet. Once the draft starts this grades your roster against the league.";
+  const rosters = leagueRosters();
+  const lineups = {};
+  for (let s = 1; s <= st.teams; s++) lineups[s] = lineupPts(rosters[s]);
+  const mine = lineups[st.slot];
+  const totals = Object.values(lineups).map(l => l.total).sort((a, b) => b - a);
+  const rank = totals.indexOf(mine.total) + 1;
+  const avg = totals.reduce((a, b) => a + b, 0) / st.teams;
+  const grade = rank <= 2 ? "A" : rank <= 4 ? "B+" : rank <= 6 ? "B" : rank <= 8 ? "C" : "D";
+  const gcolor = rank <= 4 ? "var(--green)" : rank <= 6 ? "var(--hivis)" : "var(--red)";
+  // position edges vs league average (starters only)
+  const diffs = [];
+  for (const pos of ["QB","RB","WR","TE","FLEX"]) {
+    let lgAvg = 0;
+    for (let s = 1; s <= st.teams; s++) lgAvg += lineups[s].byPos[pos];
+    lgAvg /= st.teams;
+    diffs.push({ pos, d: mine.byPos[pos] - lgAvg });
+  }
+  diffs.sort((a, b) => b.d - a.d);
+  const best = diffs[0], worst = diffs[diffs.length - 1];
+  // what is still open
+  const { counts } = needInfo();
+  const open = [];
+  for (const pos of ["QB","RB","WR","TE","K","DST"]) if (counts[pos] < STARTERS[pos]) open.push(pos + (STARTERS[pos] > 1 ? " (" + (STARTERS[pos] - counts[pos]) + ")" : ""));
+  const mineList = st.hist.filter(o => st.status[o] === "M");
+  const flexFilled = mine.byPos.FLEX > 0;
+  if (!flexFilled) open.push("FLEX");
+  const openTxt = open.length ? "Still open: " + open.join(", ") + ", plus " + (15 - mineList.length - open.length > 0 ? (15 - mineList.length - open.length) + " bench seats." : "nothing else.") : "Starters full; " + (15 - mineList.length) + " bench seats left.";
+  let s = "<b style=\"color:" + gcolor + ";font-size:15px\">" + grade + "</b> <b>(" + rank + (rank === 1 ? "st" : rank === 2 ? "nd" : rank === 3 ? "rd" : "th") + " of " + st.teams + ")</b>. ";
+  s += "Your starters project to " + Math.round(mine.total).toLocaleString() + " points; league average is " + Math.round(avg).toLocaleString() + ". ";
+  s += best.d > 5 ? "Biggest edge: " + best.pos + ", +" + Math.round(best.d) + " points over the average team. " : "No big positional edge yet. ";
+  s += worst.d < -5 ? "Thinnest spot: " + worst.pos + ", " + Math.round(worst.d) + " points behind the average team. " : "No glaring weakness. ";
+  s += openTxt;
+  return s;
+}
+
+function render() {
+  const nmp = nextMyPick();
+  $("curpick").textContent = fmtPick(picksMade() + 1);
+  $("mynext").textContent = nmp ? fmtPick(nmp) : "-";
+  const hit = firstAvailable();
+  const rows = [];
+  for (const p of visible()) {
+    const s = st.status[p.overall] || "";
+    const isOut = !!st.out[p.overall];
+    const cls = (isOut ? "taken" : s === "T" ? "taken" : s === "M" ? "mine" : "") + (hit === p ? " hit" : "");
+    const gone = isOut ? '<span class="danger">OUT</span>'
+      : !s && nmp && p.adp < nmp ? '<span class="danger">GONE</span>' : "";
+    const edge = p.edge > 0 ? `<span class="edge-pos">+${p.edge}</span>` : p.edge < 0 ? `<span class="edge-neg">${p.edge}</span>` : "0";
+    const act = isOut
+      ? `<button class="undo1" onclick="clearOut(${p.overall})">Back</button>`
+      : s
+      ? `<button class="undo1" onclick="unmark(${p.overall})">Undo</button>`
+      : `<button onclick="mark(${p.overall},'T')">Taken</button><button onclick="mark(${p.overall},'M')" style="color:var(--green)">Mine</button><button onclick="markOut(${p.overall})" style="color:var(--red)" title="Injured or out for the season: removes him from every suggestion without counting as a draft pick">Out</button>`;
+    rows.push(`<tr class="${cls}">
+      <td class="tierbar" style="background:${TIERC[p.tier]}"></td>
+      <td class="rk">${p.overall}</td>
+      <td class="pos ${p.pos}">${p.pos}${p.posRank}</td>
+      <td class="name" title="${p.exp.replace(/"/g, "&quot;")}\nRISK: ${p.risk.replace(/"/g, "&quot;")}">${p.name}${p.team ? `<small>${p.team}</small>` : ""}</td>
+      <td class="num">${p.score}</td><td class="num">${p.vorp}</td>
+      <td class="num">${p.adp}</td><td class="num">${edge}</td>
+      <td>${gone}</td><td class="act">${act}</td></tr>`);
+  }
+  $("rows").innerHTML = rows.join("");
+
+  const sug = suggestions();
+  $("sugbody").innerHTML = sug.length
+    ? `<div class="s1">${sug[0].p.name} <span class="pos ${sug[0].p.pos}">${sug[0].p.pos}${sug[0].p.posRank}</span></div>
+       <div class="why">${writeup(sug[0])}</div>` +
+      sug.slice(1).map(s => `<div class="alt">${s.p.name} <span>${s.p.pos}${s.p.posRank} - ${s.need}${Math.round(s.p.edge) >= 5 ? ", falling " + Math.round(s.p.edge) + " picks past his value" : ""}</span></div>`).join("")
+    : "No available player fits this lens right now. Try another button.";
+
+  $("gradebody").innerHTML = teamReport();
+
+  $("roster").innerHTML = rosterAssign().map(s =>
+    `<div class="rosterrow"><span class="slot">${s.slot}</span>
+     <span class="who ${s.p ? "" : "empty"}">${s.p ? `<span class="pos ${s.p.pos}">${s.p.pos}</span> ${s.p.name}` : "open"}</span></div>`).join("");
+
+  $("bestpos").innerHTML = ["QB","RB","WR","TE","K","DST"].map(pos => {
+    const b = PLAYERS.find(p => p.pos === pos && !st.status[p.overall] && !st.out[p.overall]);
+    const v = b ? (b.vorp >= 0 ? "+" : "") + Math.round(b.vorp) : "";
+    return `<div class="bestrow" title="${b ? "Our #" + b.overall + " overall. Projected " + v + " season points vs a waiver-wire " + pos + "." : ""}"><span class="p pos ${pos}">${pos}</span>
+      <span class="n">${b ? b.name : "none left"}</span>
+      <span class="v">${b ? "our #" + b.overall + ", " + v + " pts" : ""}</span></div>`;
+  }).join("") + `<div class="legend">"our #" = rank on our board. "+pts" = season points he gives you over a waiver-wire pickup at that spot. Bigger = harder to replace.</div>`;
+}
+
+$("search").addEventListener("input", e => { query = e.target.value.trim().toLowerCase(); render(); });
+$("search").addEventListener("keydown", e => {
+  if (e.key === "Enter") { const p = firstAvailable(); if (p) mark(p.overall, e.shiftKey ? "M" : "T"); e.preventDefault(); }
+  if (e.key === "Escape") { e.target.value = ""; query = ""; render(); }
+});
+document.addEventListener("keydown", e => {
+  if (e.ctrlKey && e.key.toLowerCase() === "z") { undo(); e.preventDefault(); }
+  else if (!e.ctrlKey && e.key.length === 1 && document.activeElement !== $("search")
+           && document.activeElement.tagName !== "INPUT") $("search").focus();
+});
+document.querySelectorAll(".fbtn[data-f]").forEach(b => b.addEventListener("click", () => {
+  posFilter = b.dataset.f;
+  document.querySelectorAll(".fbtn[data-f]").forEach(x => x.classList.toggle("on", x === b));
+  render();
+}));
+$("hidetaken").addEventListener("click", () => { hideTaken = !hideTaken; $("hidetaken").classList.toggle("on", hideTaken); render(); });
+document.querySelectorAll(".lens").forEach(b => b.addEventListener("click", () => {
+  lens = b.dataset.l;
+  document.querySelectorAll(".lens").forEach(x => x.classList.toggle("on", x === b));
+  render();
+}));
+$("undo").addEventListener("click", undo);
+$("reset").addEventListener("click", () => {
+  if (confirm("Clear the whole draft and start over?")) { st.status = {}; st.hist = []; save(); render(); }
+});
+for (const id of ["teams", "slot"]) $(id).addEventListener("change", e => {
+  st[id] = Math.max(1, parseInt(e.target.value) || (id === "teams" ? 10 : 5));
+  save(); render();
+});
+$("teams").value = st.teams; $("slot").value = st.slot;
+render();
+$("search").focus();
+</script>
+</body>
+</html>
