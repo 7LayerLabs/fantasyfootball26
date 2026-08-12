@@ -206,11 +206,12 @@ for i, p in enumerate(players):
     ma.cell(r, 2).value = f"='LIVE SOURCE'!B{r}"
     ma.cell(r, 3).value = f"='LIVE SOURCE'!D{r}"
     ma.cell(r, 7).value = f"=SUM(D{r}:F{r})"
-    ma.cell(r, 9, "2026-08-11")
+    ma.cell(r, 9, "2026-08-12")
 # carry the live adjustments
 ADJ = {
     "Makai Lemon": (-3, "Camp hamstring issue / missed practice time; temporary downgrade."),
     "Ricky Pearsall": (-60, "Season-ending PCL surgery announced 8/1/2026; out for the year (NFL.com)."),
+    "Zach Charbonnet": (-25, "Jan 2026 playoff ACL; opens on PUP, return may be as late as December (ESPN). Not draftable in a 10-team league."),
 }
 for i, p in enumerate(players):
     if p["player"] in ADJ:
