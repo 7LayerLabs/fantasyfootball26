@@ -207,12 +207,17 @@ for i, p in enumerate(players):
     ma.cell(r, 3).value = f"='LIVE SOURCE'!D{r}"
     ma.cell(r, 7).value = f"=SUM(D{r}:F{r})"
     ma.cell(r, 9, "2026-08-11")
-# carry the one live adjustment
+# carry the live adjustments
+ADJ = {
+    "Makai Lemon": (-3, "Camp hamstring issue / missed practice time; temporary downgrade."),
+    "Ricky Pearsall": (-60, "Season-ending PCL surgery announced 8/1/2026; out for the year (NFL.com)."),
+}
 for i, p in enumerate(players):
-    if p["player"] == "Makai Lemon":
+    if p["player"] in ADJ:
         r = DS + i
-        ma.cell(r, 4, -3)
-        ma.cell(r, 8, "Camp hamstring issue / missed practice time; temporary downgrade.")
+        adj, note = ADJ[p["player"]]
+        ma.cell(r, 4, adj)
+        ma.cell(r, 8, note)
 edit_mark(ma, ["D", "E", "F", "H", "I", "J"])
 numfmt(ma, ["C"], "0.0")
 
@@ -220,7 +225,7 @@ numfmt(ma, ["C"], "0.0")
 # 3. LIVE SOURCE (canonical table, static inputs)
 # =====================================================================
 ls = sheet2("LIVE SOURCE",
-            "LIVE SOURCE: the one canonical table. 223 entries. Every other tab reads from here.",
+            "LIVE SOURCE: the one canonical table. one canonical table. Every other tab reads from here.",
             ["Pos", "Player", "Team", "Base Rating", "Market ADP", "Confidence",
              "Model Path", "2026 Expectation", "Why", "Main Risk", "Source"],
             [6, 22, 6, 11, 10, 10, 22, 50, 60, 50, 40], tab_color="ED7D31")
@@ -348,7 +353,7 @@ fm_cols = [
     ("2026 Expectation", "=INDEX(" + ls_col("H") + ",{h})"),
     ("Main Risk", "=INDEX(" + ls_col("J") + ",{h})"),
 ]
-fm = rank_view("FINAL Master", "2026 FINAL Master: all 223, live-ranked, K/DST gated to the final rounds.",
+fm = rank_view("FINAL Master", "2026 FINAL Master: every player, live-ranked, K/DST gated to the final rounds.",
                N, fm_cols, [8, 6, 8, 22, 10, 9, 10, 8, 11, 10, 9, 10, 22, 50, 50], "FFC000")
 numfmt(fm, ["E", "G", "H", "I", "J", "K"], "0.0", DS, DE_END)
 
@@ -373,7 +378,7 @@ t200 = rank_view("Top 200", "2026 Overall Top 200: pure formula view, updates wi
 numfmt(t200, ["E", "F", "G", "H", "I", "J", "K", "L", "M"], "0.0", DS, DS + 199)
 
 # =====================================================================
-# Draft Board: all 223 in overall order, mark picks right here
+# Draft Board: full pool in overall order, mark picks right here
 # =====================================================================
 db_ws = sheet2("Draft Board",
                "Draft Board: go in order, mark every pick in the Pick column. Marked rows cross out.",

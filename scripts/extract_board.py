@@ -12,7 +12,7 @@ def tier(r):
     return "TIER 7"
 
 out = []
-for r in range(3, 226):
+for r in range(3, 233):
     rating = round(de.cell(r, 5).value, 1)
     out.append({
         "pos": de.cell(r, 1).value,
@@ -35,7 +35,7 @@ for r in range(3, 226):
         "risk": ls.cell(r, 10).value or "",
     })
 out.sort(key=lambda p: p["overall"])
-assert len(out) == 223 and [p["overall"] for p in out] == list(range(1, 224))
+assert len(out) == 230 and [p["overall"] for p in out] == list(range(1, 231))
 with open(r"C:\Users\derek\AppData\Local\Temp\claude\C--Users-derek\51be7128-2b08-4038-953f-b27b86e2ee5a\scratchpad\board_data.json", "w", encoding="utf-8") as f:
     json.dump(out, f)
 print("OK", len(out), "players;", out[0]["name"], "->", out[-1]["name"])
