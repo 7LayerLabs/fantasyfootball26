@@ -126,6 +126,14 @@
   .rc-row .p { width: 34px; font-weight: 700; font-size: 11px; }
   .rc-row .nm { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .rc-row .pr { color: var(--dim); font-size: 11px; }
+  #ticker { display: none; background: var(--panel); border-bottom: 1px solid var(--line); padding: 6px 10px; overflow-x: auto; white-space: nowrap; flex: none; scrollbar-width: thin; }
+  #ticker .tk { display: inline-block; background: var(--panel2); border: 1px solid var(--line); border-radius: 6px; padding: 3px 9px 4px; margin-right: 6px; font-size: 11px; vertical-align: top; min-width: 92px; }
+  #ticker .tk .tno { color: var(--dim); font-size: 9.5px; letter-spacing: .5px; }
+  #ticker .tk .tteam { font-weight: 700; font-size: 11px; max-width: 130px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #ticker .tk .tplayer { color: var(--dim); font-size: 10.5px; }
+  #ticker .tk.me { border-color: var(--green); }
+  #ticker .tk.me .tteam { color: var(--green); }
+  #ticker .tk.now { border-color: var(--hivis); background: rgba(245,217,10,.08); }
 </style>
 </head>
 <body>
@@ -139,6 +147,7 @@
     <div><label>My slot</label><br><input id="slot" type="number" min="1" max="16" value="5"></div>
   </div>
 </header>
+<div id="ticker"></div>
 <main>
   <div id="left">
     <div id="controls">
@@ -170,11 +179,9 @@
       <div id="sugbody"></div></div>
     <div class="card" id="queuecard" style="display:none"><h2>My watchlist</h2><div id="queue"></div>
       <div class="legend">Percentage = chance he is still on the board at your next turn, from live market prices.</div></div>
-    <div class="card"><h2>My team so far</h2><div id="gradebody" class="why" style="margin:0"></div></div>
-    <div class="card"><h2>My roster</h2><div id="roster"></div></div>
     <div class="card"><h2>Best available by position</h2><div id="bestpos"></div></div>
-    <div class="card" id="botcard" style="display:none"><h2>Mock draft opponents</h2><div id="botlist"></div>
-      <div class="legend">Each opponent follows a different guide with human randomness: crush players, reaches, and noise re-roll every mock, so no two drafts repeat.</div></div>
+    <div class="card"><h2>My roster</h2><div id="roster"></div></div>
+    <div class="card"><h2>My team so far</h2><div id="gradebody" class="why" style="margin:0"></div></div>
     <div class="card" id="topbtns-card"><h2>Draft controls</h2>
       <div id="topbtns">
         <button class="ghost" id="mockbtn" style="color:var(--hivis)">Start mock draft</button>
@@ -483,7 +490,9 @@ const BOT_TYPES = [
   { name: "Tommy Homer",     guide: "",                                                 w: { espn: 0,   mkt: 1,   ours: 0 },  sigma: .10, homer: true },
 ];
 function gauss() { let u = 0, v = 0; while (!u) u = Math.random(); while (!v) v = Math.random(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); }
-function slotOnClock() { const pick = picksMade() + 1, r = Math.ceil(pick / st.teams), idx = (pick - 1) % st.teams; return r % 2 ? idx + 1 : st.teams - idx; }
+function slotOfPick(pk) { const r = Math.ceil(pk / st.teams), idx = (pk - 1) % st.teams; return r % 2 ? idx + 1 : st.teams - idx; }
+function slotOnClock() { return slotOfPick(picksMade() + 1); }
+const lastNm = n => n.split(" ").filter(w => !/^(jr|sr|ii|iii|iv|v)\.?$/i.test(w)).pop();
 function mockOn() { return !!(st.mock && st.mock.on); }
 function startMock() {
   if (st.hist.length && !confirm("Start a fresh mock draft? This clears the current board.")) return;
@@ -643,7 +652,6 @@ function showRecap() {
   const winner = order[0];
   const moves = s => rosters[s].filter(p => p.pos !== "K" && p.pos !== "DST")
     .map(p => ({ p, no: st.hist.indexOf(p.overall) + 1, v: p.adp - (st.hist.indexOf(p.overall) + 1) }));
-  const lastName = n => n.split(" ").filter(w => !/^(jr|sr|ii|iii|iv|v)\.?$/i.test(w)).pop();
   const summarize = s => {
     const lu = lineups[s];
     const diffs = ["QB", "RB", "WR", "TE", "FLEX"].map(pos => ({ pos, d: lu.byPos[pos] - avgBy[pos] })).sort((a, b) => b.d - a.d);
@@ -668,7 +676,7 @@ function showRecap() {
     if (steal) bits.push(`Best move: ${steal.p.name} at pick ${steal.no}, a full ${Math.round(steal.v / st.teams) || 1}+ round${Math.round(steal.v / st.teams) > 1 ? "s" : ""} after drafts usually take him.`);
     if (reach) bits.push(`Head scratcher: ${reach.p.name} at pick ${reach.no}, way before anyone else would have taken him.`);
     const byes = {};
-    rosters[s].forEach(p => { if (p.bye && p.pos !== "K" && p.pos !== "DST") (byes[p.bye] = byes[p.bye] || []).push(lastName(p.name)); });
+    rosters[s].forEach(p => { if (p.bye && p.pos !== "K" && p.pos !== "DST") (byes[p.bye] = byes[p.bye] || []).push(lastNm(p.name)); });
     for (const [w, ns] of Object.entries(byes)) if (ns.length >= 3) { bits.push(`Circle week ${w}: ${ns.join(", ")} all sit that week.`); break; }
     return bits.join(" ");
   };
@@ -737,16 +745,26 @@ function render() {
   $("mockbtn").textContent = mockOn() ? "End mock" : "Start mock draft";
   $("slotmode").textContent = st.randSlot ? "Mock seat: Random" : "Mock seat: Manual";
   $("speedbtn").textContent = st.speed === "normal" ? "Speed: Normal" : "Speed: Quick";
-  $("botcard").style.display = mockOn() ? "" : "none";
-  if (mockOn()) {
-    const order = [];
-    for (let s = 1; s <= st.teams; s++) {
-      if (s === st.slot)
-        order.push(`<div class="qrow"><span style="width:44px;color:var(--hivis);font-weight:700;font-size:11px">Slot ${s}</span><span class="n" style="white-space:normal"><b style="color:var(--green)">${st.name}</b> <span style="color:var(--dim)">(you)</span></span></div>`);
-      else if (st.mock.bots[s])
-        order.push(`<div class="qrow"><span style="width:44px;color:var(--dim);font-weight:700;font-size:11px">Slot ${s}</span><span class="n" style="white-space:normal"><b>${st.mock.bots[s].name}</b> <span style="color:var(--dim)">${st.mock.bots[s].guide}</span></span></div>`);
+
+  // top pick ticker, ESPN style: recent picks, on the clock, who is up next
+  const showTicker = !!st.mock || picksMade() > 0;
+  $("ticker").style.display = showTicker ? "block" : "none";
+  if (showTicker) {
+    const total = st.teams * 15, cur = picksMade() + 1;
+    const from = Math.max(1, cur - 6), to = Math.min(total, cur + Math.max(6, st.teams));
+    const cells = [];
+    for (let pk = from; pk <= to; pk++) {
+      const s = slotOfPick(pk), isMe = s === st.slot;
+      const guide = st.mock && st.mock.bots[s] ? st.mock.bots[s].guide : "";
+      let body;
+      if (pk < cur) { const p = PLAYERS[st.hist[pk - 1] - 1]; body = `${p.pos} ${lastNm(p.name)}`; }
+      else if (pk === cur) body = `<span style="color:var(--hivis);font-weight:700">on the clock</span>`;
+      else body = isMe ? "your pick" : "up soon";
+      cells.push(`<div class="tk${isMe ? " me" : ""}${pk === cur ? " now" : ""}" title="${guide}"><div class="tno">${fmtPick(pk)}</div><div class="tteam">${teamLabel(s)}</div><div class="tplayer">${body}</div></div>`);
     }
-    $("botlist").innerHTML = order.join("");
+    $("ticker").innerHTML = cells.join("");
+    const now = $("ticker").querySelector(".tk.now");
+    if (now) $("ticker").scrollLeft = Math.max(0, now.offsetLeft - $("ticker").clientWidth / 2);
   }
 
   const onClock = nmp === picksMade() + 1;
