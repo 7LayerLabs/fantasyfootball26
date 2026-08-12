@@ -18,6 +18,7 @@ for r in range(3, 233):
         "pos": de.cell(r, 1).value,
         "name": de.cell(r, 2).value,
         "team": ls.cell(r, 3).value or "",
+        "bye": ls.cell(r, 12).value or 0,
         "rating": rating,
         "tier": tier(rating),
         "posRank": de.cell(r, 6).value,

@@ -158,7 +158,7 @@ const PLAYERS = __DATA__;
 const TIERC = {"ELITE":"var(--elite)","TIER 1":"var(--t1)","TIER 2":"var(--t2)","TIER 3":"var(--t3)","TIER 4":"var(--t4)","TIER 5":"var(--t5)","TIER 6":"var(--t6)","TIER 7":"var(--t7)"};
 const STARTERS = {QB:1, RB:2, WR:2, TE:1, K:1, DST:1};
 const SLOTS = ["QB","RB","RB","WR","WR","TE","FLEX","K","DST","BN","BN","BN","BN","BN","BN"];
-const KEY = "draftboard2026-v4";   // versioned: bump on every data resync so stale saved states never mismatch player ranks
+const KEY = "draftboard2026-v5";   // versioned: bump on every data resync so stale saved states never mismatch player ranks
 
 // state: status[overall] = "" | "T" (taken) | "M" (mine); history = list of overalls marked
 let st = __INIT__;
@@ -285,7 +285,17 @@ function valueWords(p) {
   if (e <= -5) return "We rank him #" + p.overall + " but drafts usually take him around pick " + Math.round(p.adp) + ", so grabbing him now means reaching about " + Math.abs(e) + " picks early.";
   return "His usual draft spot (pick " + Math.round(p.adp) + ") and our rank (#" + p.overall + ") agree, so this is a fair price.";
 }
-function writeup(c) {
+function byeWarn(p) {
+  if (!p.bye || p.pos === "K" || p.pos === "DST") return "";
+  const mine = st.hist.filter(o => st.status[o] === "M").map(o => PLAYERS[o - 1]);
+  const samePos = mine.filter(m => m.bye === p.bye && m.pos === p.pos);
+  const sameAll = mine.filter(m => m.bye === p.bye && m.pos !== "K" && m.pos !== "DST");
+  if (samePos.length) return " Heads up: same week " + p.bye + " bye as " + samePos.map(m => m.name).join(" and ") + ", so you would be thin at " + p.pos + " that week.";
+  if (sameAll.length >= 3) return " Heads up: that would put " + (sameAll.length + 1) + " of your starters-quality players on the same week " + p.bye + " bye.";
+  return "";
+}
+function writeup(c) { return writeupCore(c) + byeWarn(c.p); }
+function writeupCore(c) {
   const p = c.p;
   const scout = (p.exp || "").split(/\.\s/)[0].replace(/\.+$/, "");
   const tail = scout ? " Scouting view: " + scout + "." : "";
@@ -357,6 +367,9 @@ function teamReport() {
   s += best.d > 5 ? "Biggest edge: " + best.pos + ", +" + Math.round(best.d) + " points over the average team. " : "No big positional edge yet. ";
   s += worst.d < -5 ? "Thinnest spot: " + worst.pos + ", " + Math.round(worst.d) + " points behind the average team. " : "No glaring weakness. ";
   s += openTxt;
+  const byeGroups = {};
+  mineList.forEach(o => { const p = PLAYERS[o - 1]; if (p.bye && p.pos !== "K" && p.pos !== "DST") (byeGroups[p.bye] = byeGroups[p.bye] || []).push(p.name); });
+  for (const [w, ns] of Object.entries(byeGroups)) if (ns.length >= 3) s += " Bye pileup: " + ns.join(", ") + " are all off in week " + w + ", so plan your bench around that.";
   return s;
 }
 
@@ -382,7 +395,7 @@ function render() {
       <td class="tierbar" style="background:${TIERC[p.tier]}"></td>
       <td class="rk">${p.overall}</td>
       <td class="pos ${p.pos}">${p.pos}${p.posRank}</td>
-      <td class="name" title="${p.exp.replace(/"/g, "&quot;")}\nRISK: ${p.risk.replace(/"/g, "&quot;")}">${p.name}${p.team ? `<small>${p.team}</small>` : ""}</td>
+      <td class="name" title="${p.exp.replace(/"/g, "&quot;")}\nRISK: ${p.risk.replace(/"/g, "&quot;")}">${p.name}${p.team ? `<small>${p.team}${p.bye ? " · Bye " + p.bye : ""}</small>` : ""}</td>
       <td class="num">${p.score}</td><td class="num">${p.vorp}</td>
       <td class="num">${p.adp}</td><td class="num">${edge}</td>
       <td>${gone}</td><td class="act">${act}</td></tr>`);

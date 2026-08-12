@@ -225,10 +225,10 @@ numfmt(ma, ["C"], "0.0")
 # 3. LIVE SOURCE (canonical table, static inputs)
 # =====================================================================
 ls = sheet2("LIVE SOURCE",
-            "LIVE SOURCE: the one canonical table. one canonical table. Every other tab reads from here.",
+            "LIVE SOURCE: the one canonical table. Every other tab reads from here.",
             ["Pos", "Player", "Team", "Base Rating", "Market ADP", "Confidence",
-             "Model Path", "2026 Expectation", "Why", "Main Risk", "Source"],
-            [6, 22, 6, 11, 10, 10, 22, 50, 60, 50, 40], tab_color="ED7D31")
+             "Model Path", "2026 Expectation", "Why", "Main Risk", "Source", "Bye"],
+            [6, 22, 6, 11, 10, 10, 22, 50, 60, 50, 40, 6], tab_color="ED7D31")
 for i, p in enumerate(players):
     r = DS + i
     ls.cell(r, 1, p["pos"])
@@ -242,6 +242,7 @@ for i, p in enumerate(players):
     ls.cell(r, 9, p["why"])
     ls.cell(r, 10, p["risk"])
     ls.cell(r, 11, p["source"])
+    ls.cell(r, 12, p.get("bye") or "")
 edit_mark(ls, ["D", "E", "F"])
 numfmt(ls, ["D", "E"], "0.0")
 dv_conf = DataValidation(type="list", formula1='"A,B,C"', allow_blank=True)
@@ -384,10 +385,10 @@ db_ws = sheet2("Draft Board",
                "Draft Board: go in order, mark every pick in the Pick column. Marked rows cross out.",
                ["Overall", "Pos", "Pos Rank", "Player / Defense", "Adj Rating", "Tier",
                 "Draft Score", "Market ADP", "Draft Edge", "Pick", "Avail Rank",
-                "2026 Expectation", "Src"],
-               [8, 6, 8, 22, 10, 9, 11, 10, 9, 12, 9, 70, 6], tab_color="C00000")
-db_ws["N1"] = "Freeze adjustments once the draft starts: picks attach to board slots, so do not edit Manual Adjustments mid-draft."
-db_ws["N1"].font = SUB_FONT
+                "2026 Expectation", "Src", "Bye"],
+               [8, 6, 8, 22, 10, 9, 11, 10, 9, 12, 9, 70, 6, 6], tab_color="C00000")
+db_ws["P1"] = "Freeze adjustments once the draft starts: picks attach to board slots, so do not edit Manual Adjustments mid-draft."
+db_ws["P1"].font = SUB_FONT
 for k in range(1, N + 1):
     r = DS + k - 1
     h = f"$M{r}"
@@ -404,17 +405,18 @@ for k in range(1, N + 1):
     db_ws.cell(r, 9).value = f"=INDEX({de_col('S')},{h})"
     db_ws.cell(r, 11).value = f"=INDEX({de_col('Z')},{h})"
     db_ws.cell(r, 12).value = f"=INDEX({ls_col('H')},{h})"
+    db_ws.cell(r, 14).value = f"=INDEX({ls_col('L')},{h})"
 numfmt(db_ws, ["E", "G", "H", "I"], "0.0")
 edit_mark(db_ws, ["J"])
 dv_pick = DataValidation(type="list", formula1='"Drafted,My Pick"', allow_blank=True)
 db_ws.add_data_validation(dv_pick)
 dv_pick.add(f"J{DS}:J{DE_END}")
 db_ws.conditional_formatting.add(
-    f"A{DS}:L{DE_END}",
+    f"A{DS}:N{DE_END}",
     FormulaRule(formula=[f'$J{DS}="My Pick"'], fill=PatternFill("solid", fgColor=GREEN),
                 stopIfTrue=True))
 db_ws.conditional_formatting.add(
-    f"A{DS}:L{DE_END}",
+    f"A{DS}:N{DE_END}",
     FormulaRule(formula=[f'$J{DS}<>""'], font=Font(strike=True, color=GRAY)))
 
 ps_cols = [
