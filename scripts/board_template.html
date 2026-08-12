@@ -157,8 +157,11 @@
     <div class="card"><h2>My team so far</h2><div id="gradebody" class="why" style="margin:0"></div></div>
     <div class="card"><h2>My roster</h2><div id="roster"></div></div>
     <div class="card"><h2>Best available by position</h2><div id="bestpos"></div></div>
+    <div class="card" id="botcard" style="display:none"><h2>Mock draft opponents</h2><div id="botlist"></div>
+      <div class="legend">Each opponent follows a different guide with human randomness: crush players, reaches, and noise re-roll every mock, so no two drafts repeat.</div></div>
     <div class="card" id="topbtns-card"><h2>Draft controls</h2>
       <div id="topbtns">
+        <button class="ghost" id="mockbtn" style="color:var(--hivis)">Start mock draft</button>
         <button class="ghost" id="undo">Undo last</button>
         <button class="ghost danger" id="reset">Reset draft</button>
       </div>
@@ -253,17 +256,24 @@ function markOut(o) { st.out[o] = true; save(); render(); }
 function clearOut(o) { delete st.out[o]; save(); render(); }
 function mark(overall, kind) {
   if (st.status[overall]) return;
+  if (mockOn()) {
+    if (slotOnClock() !== st.slot || picksMade() >= st.teams * 15) return;  // bots are picking or draft over
+    kind = "M";                                                             // in a mock, your turn = your pick
+  }
   st.status[overall] = kind;
   st.hist.push(overall);
   save(); render();
   $("search").value = ""; query = ""; $("search").focus();
+  if (mockOn()) botLoop();
 }
 function unmark(overall) {
+  if (mockOn()) return undoMock();
   delete st.status[overall];
   st.hist = st.hist.filter(o => o !== overall);
   save(); render();
 }
 function undo() {
+  if (mockOn()) return undoMock();
   const last = st.hist.pop();
   if (last !== undefined) delete st.status[last];
   save(); render();
@@ -422,6 +432,108 @@ function teamReport() {
   return s;
 }
 
+// ---------- mock draft engine: 9 AI drafters, each on a different guide ----------
+const BOT_TYPES = [
+  { name: "ESPN Eddie",      guide: "drafts straight off ESPN's rankings",              w: { espn: .85, mkt: .15, ours: 0 },  sigma: .07 },
+  { name: "Yahoo Yolanda",   guide: "follows market draft prices, pure chalk",          w: { espn: 0,   mkt: 1,   ours: 0 },  sigma: .08 },
+  { name: "Chalk Charlie",   guide: "never strays far from consensus",                  w: { espn: .35, mkt: .65, ours: 0 },  sigma: .04 },
+  { name: "Old School Earl", guide: "pounds running backs early, every single year",    w: { espn: .3,  mkt: .7,  ours: 0 },  sigma: .10, mult: { RB: .8, WR: 1.15 } },
+  { name: "Zero-RB Zara",    guide: "loads up on receivers, ignores RBs early",         w: { espn: 0,   mkt: 1,   ours: 0 },  sigma: .10, mult: { WR: .8, RB: 1.4 }, multRounds: 5 },
+  { name: "QB-Early Quinn",  guide: "grabs a quarterback rounds before everyone else",  w: { espn: .5,  mkt: .5,  ours: 0 },  sigma: .09, mult: { QB: .65 }, multRounds: 6 },
+  { name: "Upside Uma",      guide: "chases rookies and ceiling over safety",           w: { espn: 0,   mkt: 1,   ours: 0 },  sigma: .14, rookieBoost: .82 },
+  { name: "Value Vic",       guide: "hunts players falling past their market price",    w: { espn: .2,  mkt: .5,  ours: .3 }, sigma: .08, fallerBoost: .88 },
+  { name: "Wildcard Wade",   guide: "total chaos: reaches, hunches, and gut calls",     w: { espn: 0,   mkt: 1,   ours: 0 },  sigma: .28 },
+  { name: "Homer Hank",      guide: "somehow got a copy of OUR exact cheat sheet",      w: { espn: 0,   mkt: .15, ours: .85 }, sigma: .07 },
+  { name: "TE-First Tessa",  guide: "believes an elite tight end wins the league",      w: { espn: .4,  mkt: .6,  ours: 0 },  sigma: .09, mult: { TE: .7 }, multRounds: 4 },
+];
+function gauss() { let u = 0, v = 0; while (!u) u = Math.random(); while (!v) v = Math.random(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); }
+function slotOnClock() { const pick = picksMade() + 1, r = Math.ceil(pick / st.teams), idx = (pick - 1) % st.teams; return r % 2 ? idx + 1 : st.teams - idx; }
+function mockOn() { return !!(st.mock && st.mock.on); }
+function startMock() {
+  if (st.hist.length && !confirm("Start a fresh mock draft? This clears the current board.")) return;
+  st.status = {}; st.hist = [];
+  const pool = [...BOT_TYPES].sort(() => Math.random() - .5);
+  const top120 = PLAYERS.filter(p => p.overall <= 120);
+  st.mock = { on: true, bots: {} };
+  let i = 0;
+  for (let s = 1; s <= st.teams; s++) {
+    if (s === st.slot) continue;
+    const t = pool[i % pool.length]; i++;
+    const crushes = [];
+    for (let k = 0; k < 2 + Math.floor(Math.random() * 3); k++) crushes.push(top120[Math.floor(Math.random() * top120.length)].overall);
+    st.mock.bots[s] = { name: t.name, guide: t.guide, ti: BOT_TYPES.indexOf(t), crushes };
+  }
+  save(); render(); botLoop();
+}
+function endMock() { if (st.mock) st.mock.on = false; save(); render(); }
+function botCounts(slot) {
+  const c = { QB: 0, RB: 0, WR: 0, TE: 0, K: 0, DST: 0 };
+  st.hist.forEach((o, i) => {
+    const pk = i + 1, r = Math.ceil(pk / st.teams), idx = (pk - 1) % st.teams;
+    if ((r % 2 ? idx + 1 : st.teams - idx) === slot) c[PLAYERS[o - 1].pos]++;
+  });
+  return c;
+}
+function botPick(slot) {
+  const bot = st.mock.bots[slot], t = BOT_TYPES[bot.ti];
+  const round = Math.ceil((picksMade() + 1) / st.teams);
+  const c = botCounts(slot);
+  const made = Object.values(c).reduce((a, b) => a + b, 0), left = 15 - made;
+  const gaps = ["QB","RB","WR","TE","K","DST"].filter(pos => c[pos] < STARTERS[pos] ? STARTERS[pos] - c[pos] : 0);
+  const gapCount = ["QB","RB","WR","TE","K","DST"].reduce((a, pos) => a + Math.max(0, STARTERS[pos] - c[pos]), 0);
+  const avail = PLAYERS.filter(p => !st.status[p.overall] && !st.out[p.overall]);
+  let elig = avail.filter(p => {
+    if (p.pos === "K" || p.pos === "DST") return round >= 13 && c[p.pos] < 1;
+    if (p.pos === "QB" && (c.QB >= 2 || (c.QB >= 1 && round < 9))) return false;
+    if (p.pos === "TE" && c.TE >= 2) return false;
+    return true;
+  });
+  if (left <= gapCount + 1) { const f = elig.filter(p => gaps.includes(p.pos)); if (f.length) elig = f; }
+  if (round >= 14 && (c.K < 1 || c.DST < 1)) {
+    const need = ["K","DST"].filter(pos => c[pos] < 1);
+    const f = avail.filter(p => need.includes(p.pos));
+    if (f.length) elig = f;
+  }
+  if (!elig.length) elig = avail;
+  const scored = elig.map(p => {
+    let r = t.w.espn * (p.espn ?? p.adp) + t.w.mkt * p.adp + t.w.ours * p.overall;
+    if (t.mult && (!t.multRounds || round <= t.multRounds) && t.mult[p.pos]) r *= t.mult[p.pos];
+    if (t.rookieBoost && p.rookie) r *= t.rookieBoost;
+    if (t.fallerBoost && p.edge >= 8) r *= t.fallerBoost;
+    if (bot.crushes.includes(p.overall)) r *= .55;
+    r *= 1 + gauss() * t.sigma;
+    return { p, r };
+  }).sort((a, b) => a.r - b.r);
+  const W = [38, 24, 15, 10, 8, 5], top = scored.slice(0, W.length);
+  let roll = Math.random() * top.reduce((a, _, i) => a + W[i], 0);
+  for (let i = 0; i < top.length; i++) { roll -= W[i]; if (roll <= 0) return top[i].p; }
+  return top[0].p;
+}
+let botTimer = null;
+function botLoop() {
+  if (!mockOn()) return;
+  if (picksMade() >= st.teams * 15) return;
+  const s = slotOnClock();
+  if (s === st.slot) return;                    // your turn: the engine waits for you
+  clearTimeout(botTimer);
+  botTimer = setTimeout(() => {
+    if (!mockOn() || picksMade() >= st.teams * 15) { render(); return; }
+    const s2 = slotOnClock();
+    if (s2 === st.slot) { render(); return; }
+    const p = botPick(s2);
+    st.status[p.overall] = "T"; st.hist.push(p.overall);
+    save(); render(); botLoop();
+  }, 130);
+}
+function undoMock() {  // rewind to before YOUR last pick (bot picks in between come back too)
+  while (st.hist.length) {
+    const last = st.hist.pop(), wasMine = st.status[last] === "M";
+    delete st.status[last];
+    if (wasMine) break;
+  }
+  save(); render();
+}
+
 function render() {
   const nmp = nextMyPick();
   $("curpick").textContent = fmtPick(picksMade() + 1);
@@ -455,7 +567,14 @@ function render() {
   }
   $("rows").innerHTML = rows.join("");
 
-  $("alerts").innerHTML = alerts().map(a => `<div class="alertrow">${a}</div>`).join("");
+  const mockDone = st.mock && picksMade() >= st.teams * 15;
+  $("alerts").innerHTML = (mockDone ? `<div class="alertrow"><b>Mock draft complete.</b> Final grade is in My Team So Far below. Hit Start mock draft to run another; the opponents and their tendencies re-roll every time.</div>` : "")
+    + alerts().map(a => `<div class="alertrow">${a}</div>`).join("");
+
+  $("mockbtn").textContent = mockOn() ? "End mock" : "Start mock draft";
+  $("botcard").style.display = mockOn() ? "" : "none";
+  if (mockOn()) $("botlist").innerHTML = Object.entries(st.mock.bots).map(([s, b]) =>
+    `<div class="qrow"><span style="width:44px;color:var(--dim);font-weight:700;font-size:11px">Slot ${s}</span><span class="n" style="white-space:normal"><b>${b.name}</b> <span style="color:var(--dim)">${b.guide}</span></span></div>`).join("");
 
   const onClock = nmp === picksMade() + 1;
   const sug = suggestions();
@@ -511,16 +630,19 @@ document.querySelectorAll(".lens").forEach(b => b.addEventListener("click", () =
   render();
 }));
 $("undo").addEventListener("click", undo);
+$("mockbtn").addEventListener("click", () => mockOn() ? endMock() : startMock());
 $("reset").addEventListener("click", () => {
-  if (confirm("Clear the whole draft and start over?")) { st.status = {}; st.hist = []; save(); render(); }
+  if (confirm("Clear the whole draft and start over?")) { st.status = {}; st.hist = []; st.mock = null; save(); render(); }
 });
 for (const id of ["teams", "slot"]) $(id).addEventListener("change", e => {
+  if (mockOn()) { e.target.value = st[id]; return; }   // locked during a mock: turn order depends on them
   st[id] = Math.max(1, parseInt(e.target.value) || (id === "teams" ? 10 : 5));
   save(); render();
 });
 $("teams").value = st.teams; $("slot").value = st.slot;
 render();
 $("search").focus();
+botLoop();   // resume a mock in progress if the page was reloaded mid-draft
 </script>
 </body>
 </html>

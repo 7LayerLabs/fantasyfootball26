@@ -13,6 +13,22 @@ data = json.load(open(S + r"\board_data.json", encoding="utf-8"))
 lookup = {norm(p["name"]): p["overall"] for p in data}
 assert len(lookup) == len(data), "normalization collision in player pool"
 
+# merge ESPN overall ranks (Yates top 160, scraped 8/12) so mock-draft bots can draft off ESPN's board
+try:
+    espn = json.load(open(S + r"\espn_parsed.json", encoding="utf-8"))
+    emap = {norm(name): rank for rank, name, *_ in espn["yates"]}
+    emap[norm("Bijan Robinson")] = 1  # rank 1 glued to intro text in the scrape
+    n_esp = 0
+    for p in data:
+        r = emap.get(norm(p["name"]))
+        p["espn"] = r
+        n_esp += r is not None
+    print(f"espn ranks merged: {n_esp}/{len(data)}")
+except FileNotFoundError:
+    for p in data:
+        p.setdefault("espn", None)
+    print("espn_parsed.json not found; espn ranks skipped")
+
 status, hist, misses = {}, [], []
 for name, mine in PICKS:
     o = lookup.get(norm(name))
