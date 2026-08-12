@@ -6,7 +6,7 @@
 
 | File | What it is |
 |------|-----------|
-| `2026_Fantasy_Football_Draft_Engine_100_PERCENT_FIXED.xlsx` | The engine. 16 tabs, one canonical data chain: LIVE SOURCE (223 players) + Manual Adjustments feed the Draft Engine tab, and every rankings tab (FINAL Master, Top 200, position tabs, K, DST) is a live formula view of it. Zero copied rankings. QA Checks tab must show ALL CHECKS PASS. |
+| `2026_Fantasy_Football_Draft_Engine_100_PERCENT_FIXED.xlsx` | The engine. 17 tabs (the last one, How It Works, is a plain-English guide to the whole system), one canonical data chain: LIVE SOURCE (223 players) + Manual Adjustments feed the Draft Engine tab, and every rankings tab (FINAL Master, Top 200, position tabs, K, DST) is a live formula view of it. Zero copied rankings. QA Checks tab must show ALL CHECKS PASS. |
 | `2026_Fantasy_Football_Draft_Engine_CLEAN_FINAL.xlsx` | The original source workbook the engine was rebuilt from (static copies, kept for reference). |
 | `draft-board.html` | The draft app. One file, no server, works offline. Open it in a browser. |
 
