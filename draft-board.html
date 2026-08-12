@@ -650,7 +650,7 @@ function showRecap() {
     const diffs = ["QB", "RB", "WR", "TE", "FLEX"].map(pos => ({ pos, d: lu.byPos[pos] - avgBy[pos] })).sort((a, b) => b.d - a.d);
     const hi = diffs[0], lo = diffs[diffs.length - 1];
     const bits = [];
-    const stars = [...rosters[s]].sort((a, b) => b.pts - a.pts).slice(0, 2).map(p => p.name);
+    const stars = rosters[s].filter(p => p.pos !== "K" && p.pos !== "DST").slice(0, 2).map(p => p.name);  // rosters keep pick order: your first two skill picks ARE what you built around
     bits.push(`Built around ${stars.join(" and ")}.`);
     if (hi.d > 3) {
       const hn = (lu.names[hi.pos] || []).slice(0, 2).join(" and ");
