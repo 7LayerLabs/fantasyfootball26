@@ -41,6 +41,8 @@
     border-radius: 6px; padding: 8px 12px; cursor: pointer; font-size: 13px; font-weight: 600;
   }
   .fbtn.on { color: #0d1117; background: var(--hivis); border-color: var(--hivis); }
+  .bchip { background: var(--panel2); border: 1px solid var(--line); color: var(--dim); border-radius: 6px; padding: 8px 9px; cursor: pointer; font-size: 11.5px; font-weight: 700; }
+  .bchip.on { color: var(--red); border-color: var(--red); text-decoration: line-through; }
   .hint { width: 100%; color: var(--dim); font-size: 11.5px; padding: 0 2px; }
   .hint b { color: var(--text); background: var(--panel2); border: 1px solid var(--line); border-radius: 3px; padding: 0 5px; font-weight: 600; }
   #board { flex: 1; overflow-y: auto; padding: 0 8px 30px 16px; }
@@ -159,6 +161,8 @@
       <button class="fbtn" data-f="TE">TE</button>
       <button class="fbtn" data-f="K">K</button>
       <button class="fbtn" data-f="DST">DST</button>
+      <span style="color:var(--dim);font-size:11px;margin-left:10px" title="Done with a position? Block it and it disappears from the big board. Searching still finds everyone.">Block:</span>
+      <button class="bchip" data-b="QB">QB</button><button class="bchip" data-b="RB">RB</button><button class="bchip" data-b="WR">WR</button><button class="bchip" data-b="TE">TE</button><button class="bchip" data-b="K">K</button><button class="bchip" data-b="DST">DST</button>
       <button class="fbtn on" id="hidetaken">Hide taken</button>
       <div class="hint"><b>Enter</b> marks the outlined player Taken &nbsp; <b>Shift+Enter</b> = your Pick &nbsp; <b>Ctrl+Z</b> undo &nbsp; <b>Esc</b> clear search &nbsp; Red GONE tag = likely gone before your next pick &nbsp; Value +9 = you get him 9 picks cheaper than normal, -9 = a reach &nbsp; Star = watchlist with live "will he last?" odds</div>
     </div>
@@ -211,6 +215,7 @@ st.watch = st.watch || {};   // watchlist: players you are targeting, with live 
 st.name = st.name || "My Team";
 if (st.randSlot === undefined) st.randSlot = true;   // mocks deal a random seat unless switched to manual
 st.speed = st.speed || "quick";   // mock pacing: quick = instant bots, normal = real-lobby waits
+st.block = st.block || {};        // positions hidden from the big board (search still finds them)
 st.teams = Math.min(16, Math.max(8, st.teams || 10));
 st.slot = Math.min(st.teams, Math.max(1, st.slot || 1));
 
@@ -278,6 +283,7 @@ function visible() {
   return PLAYERS.filter(p => {
     const s = st.status[p.overall] || "";
     if (posFilter !== "ALL" && p.pos !== posFilter) return false;
+    if (posFilter === "ALL" && st.block[p.pos] && !query) return false;
     if (hideTaken && (s === "T" || st.out[p.overall]) && !query) return false;
     return matches(p);
   });
@@ -343,8 +349,10 @@ function suggestions() {
     if (p.pos === "TE" && counts.TE >= 2) continue;
     if ((p.pos === "K" || p.pos === "DST") && counts[p.pos] >= STARTERS[p.pos]) continue;
     let bonus = 0, need = "";
+    const round = Math.ceil((picksMade() + 1) / st.teams);
     if (counts[p.pos] < STARTERS[p.pos]) {
-      bonus += (p.pos === "K" || p.pos === "DST") && mineN >= 13 ? 30 : 6;  // force K/DST with the last 2 picks
+      // open starter spots get louder as rounds pass: +6 early, up to +18 by the mid rounds
+      bonus += (p.pos === "K" || p.pos === "DST") && mineN >= 13 ? 30 : Math.min(18, 6 + Math.max(0, round - 3) * 3);
       need = "fills your open " + p.pos + " starter spot";
     }
     else if (["RB","WR"].includes(p.pos) && flexOpen) { bonus += 3; need = "fits your open FLEX spot"; }
@@ -506,7 +514,7 @@ function regenOrder() {
   else { st.status = {}; st.hist = []; save(); render(); }
 }
 function mockBegin() {
-  st.status = {}; st.hist = [];
+  st.status = {}; st.hist = []; st.block = {};
   recapClosed = false; $("recap").style.display = "none";
   if (st.randSlot) { st.slot = 1 + Math.floor(Math.random() * st.teams); $("slot").value = st.slot; }
   const pool = [...BOT_TYPES].filter(t => !t.homer).sort(() => Math.random() - .5);
@@ -671,9 +679,13 @@ function showRecap() {
     }
     if (hi.d <= 3 && lo.d >= -3) bits.push(`Balanced everywhere, special nowhere.`);
     const mv = moves(s);
-    const steal = mv.filter(x => x.v >= 12).sort((a, b) => b.v - a.v)[0];
-    const reach = mv.filter(x => x.v <= -12 && x.no <= st.teams * 10).sort((a, b) => a.v - b.v)[0];
-    if (steal) bits.push(`Best move: ${steal.p.name} at pick ${steal.no}, a full ${Math.round(steal.v / st.teams) || 1}+ round${Math.round(steal.v / st.teams) > 1 ? "s" : ""} after drafts usually take him.`);
+    // steal = he FELL: picked well after his market price (or well after our board says he should be gone)
+    const steal = mv.filter(x => x.no - x.p.adp >= 12).sort((a, b) => (b.no - b.p.adp) - (a.no - a.p.adp))[0];
+    const bsteal = !steal ? mv.filter(x => x.no - x.p.overall >= 20).sort((a, b) => (b.no - b.p.overall) - (a.no - a.p.overall))[0] : null;
+    // reach = paid up well before his market price, AND even our board thinks it was early
+    const reach = mv.filter(x => x.p.adp - x.no >= 12 && x.no < x.p.overall && x.no <= st.teams * 10).sort((a, b) => (b.p.adp - b.no) - (a.p.adp - a.no))[0];
+    if (steal) { const rds = Math.max(1, Math.round((steal.no - steal.p.adp) / st.teams)); bits.push(`Best move: ${steal.p.name} at pick ${steal.no}, a full ${rds}+ round${rds > 1 ? "s" : ""} after drafts usually take him.`); }
+    else if (bsteal) bits.push(`Best move: ${bsteal.p.name} at pick ${bsteal.no}, way later than our board says he should last.`);
     if (reach) bits.push(`Head scratcher: ${reach.p.name} at pick ${reach.no}, way before anyone else would have taken him.`);
     const byes = {};
     rosters[s].forEach(p => { if (p.bye && p.pos !== "K" && p.pos !== "DST") (byes[p.bye] = byes[p.bye] || []).push(lastNm(p.name)); });
@@ -682,8 +694,10 @@ function showRecap() {
   };
   let head = `You finished ${ordinal(myRank)} of ${st.teams}.`;
   head += myRank === 1 ? ` Nobody built a better starting lineup.` : ` ${teamLabel(winner)} came out with the strongest lineup on paper.`;
-  const mySteal = moves(st.slot).filter(x => x.v >= 12).sort((a, b) => b.v - a.v)[0];
-  if (mySteal) head += ` Your best move: ${mySteal.p.name} at pick ${mySteal.no}, long after the market usually takes him.`;
+  const myMv = moves(st.slot);
+  const mySteal = myMv.filter(x => x.no - x.p.adp >= 12).sort((a, b) => (b.no - b.p.adp) - (a.no - a.p.adp))[0]
+    || myMv.filter(x => x.no - x.p.overall >= 20).sort((a, b) => (b.no - b.p.overall) - (a.no - a.p.overall))[0];
+  if (mySteal) head += ` Your best move: ${mySteal.p.name} at pick ${mySteal.no}, long after he should have been gone.`;
   const cards = order.map(s => {
     const rk = order.indexOf(s) + 1;
     const guide = s !== st.slot && st.mock && st.mock.bots[s] ? ` <span style="color:var(--dim);font-weight:400;font-size:11px">${st.mock.bots[s].guide}</span>` : "";
@@ -745,6 +759,7 @@ function render() {
   $("mockbtn").textContent = mockOn() ? "End mock" : "Start mock draft";
   $("slotmode").textContent = st.randSlot ? "Mock seat: Random" : "Mock seat: Manual";
   $("speedbtn").textContent = st.speed === "normal" ? "Speed: Normal" : "Speed: Quick";
+  document.querySelectorAll(".bchip").forEach(b => b.classList.toggle("on", !!st.block[b.dataset.b]));
 
   // top pick ticker, ESPN style: recent picks, on the clock, who is up next
   const showTicker = !!st.mock || picksMade() > 0;
@@ -818,6 +833,11 @@ document.querySelectorAll(".fbtn[data-f]").forEach(b => b.addEventListener("clic
   render();
 }));
 $("hidetaken").addEventListener("click", () => { hideTaken = !hideTaken; $("hidetaken").classList.toggle("on", hideTaken); render(); });
+document.querySelectorAll(".bchip").forEach(b => b.addEventListener("click", () => {
+  const pos = b.dataset.b;
+  if (st.block[pos]) delete st.block[pos]; else st.block[pos] = true;
+  save(); render();
+}));
 document.querySelectorAll(".lens").forEach(b => b.addEventListener("click", () => {
   lens = b.dataset.l;
   document.querySelectorAll(".lens").forEach(x => x.classList.toggle("on", x === b));
@@ -829,7 +849,7 @@ $("regen").addEventListener("click", regenOrder);
 $("slotmode").addEventListener("click", () => { st.randSlot = !st.randSlot; save(); render(); });
 $("speedbtn").addEventListener("click", () => { st.speed = st.speed === "normal" ? "quick" : "normal"; save(); render(); if (mockOn()) botLoop(); });
 $("reset").addEventListener("click", () => {
-  if (confirm("Clear the whole draft and start over?")) { st.status = {}; st.hist = []; st.mock = null; save(); render(); }
+  if (confirm("Clear the whole draft and start over?")) { st.status = {}; st.hist = []; st.mock = null; st.block = {}; save(); render(); }
 });
 for (const id of ["teams", "slot"]) $(id).addEventListener("change", e => {
   if (mockOn()) { e.target.value = st[id]; return; }   // locked during a mock: turn order depends on them
