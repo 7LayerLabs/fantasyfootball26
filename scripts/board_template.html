@@ -163,11 +163,12 @@
     <div class="card" id="topbtns-card"><h2>Draft controls</h2>
       <div id="topbtns">
         <button class="ghost" id="mockbtn" style="color:var(--hivis)">Start mock draft</button>
-        <button class="ghost" id="regen" title="Deals you a random draft slot; in a mock it also reseats and re-rolls the opponents">New draft order</button>
+        <button class="ghost" id="slotmode" title="Random: every mock deals you a fresh seat, like a real lobby. Manual: mocks use whatever My Slot says, for practicing one seat.">Mock seat: Random</button>
+        <button class="ghost" id="regen" title="Re-deals your slot and re-rolls the opponents">New draft order</button>
         <button class="ghost" id="undo">Undo last</button>
         <button class="ghost danger" id="reset">Reset draft</button>
       </div>
-      <div class="legend">Mock picks are on a 1:00 clock. At zero the app drafts your top watchlist player, or the top suggestion if the list is empty.</div>
+      <div class="legend">Mocks deal you a random seat (switch Mock seat to Manual to practice a specific slot). Picks are on a 1:00 clock; at zero the app drafts your top watchlist player, or the top suggestion if the list is empty.</div>
     </div>
   </div>
 </main>
@@ -184,6 +185,7 @@ try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && s.status) st = s
 st.out = st.out || {};   // out-for-season players: off the board, but never counted as a pick
 st.watch = st.watch || {};   // watchlist: players you are targeting, with live survival odds
 st.name = st.name || "My Team";
+if (st.randSlot === undefined) st.randSlot = true;   // mocks deal a random seat unless switched to manual
 st.teams = Math.min(16, Math.max(8, st.teams || 10));
 st.slot = Math.min(st.teams, Math.max(1, st.slot || 1));
 
@@ -474,6 +476,7 @@ function regenOrder() {
 }
 function mockBegin() {
   st.status = {}; st.hist = [];
+  if (st.randSlot) { st.slot = 1 + Math.floor(Math.random() * st.teams); $("slot").value = st.slot; }
   const pool = [...BOT_TYPES].filter(t => !t.homer).sort(() => Math.random() - .5);
   const top120 = PLAYERS.filter(p => p.overall <= 120);
   st.mock = { on: true, bots: {} };
@@ -645,6 +648,7 @@ function render() {
     + alerts().map(a => `<div class="alertrow">${a}</div>`).join("");
 
   $("mockbtn").textContent = mockOn() ? "End mock" : "Start mock draft";
+  $("slotmode").textContent = st.randSlot ? "Mock seat: Random" : "Mock seat: Manual";
   $("botcard").style.display = mockOn() ? "" : "none";
   if (mockOn()) {
     const order = [];
@@ -715,6 +719,7 @@ document.querySelectorAll(".lens").forEach(b => b.addEventListener("click", () =
 $("undo").addEventListener("click", undo);
 $("mockbtn").addEventListener("click", () => mockOn() ? endMock() : startMock());
 $("regen").addEventListener("click", regenOrder);
+$("slotmode").addEventListener("click", () => { st.randSlot = !st.randSlot; save(); render(); });
 $("reset").addEventListener("click", () => {
   if (confirm("Clear the whole draft and start over?")) { st.status = {}; st.hist = []; st.mock = null; save(); render(); }
 });
