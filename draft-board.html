@@ -119,7 +119,8 @@
   <div class="pickmeta">
     <div><label>On the clock</label><div class="big" id="curpick">1.01</div></div>
     <div><label>My next</label><div class="big" id="mynext" style="color:var(--green)">-</div></div>
-    <div><label>Teams</label><br><input id="teams" type="number" min="4" max="16" value="10"></div>
+    <div><label>My team</label><br><input id="myname" type="text" maxlength="24" style="width:130px;text-align:left" placeholder="My Team"></div>
+    <div><label>Teams</label><br><input id="teams" type="number" min="8" max="16" value="10"></div>
     <div><label>My slot</label><br><input id="slot" type="number" min="1" max="16" value="5"></div>
   </div>
 </header>
@@ -182,6 +183,9 @@ let st = {"status": {}, "hist": [], "teams": 10, "slot": 9};
 try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && s.status) st = s; } catch (e) {}
 st.out = st.out || {};   // out-for-season players: off the board, but never counted as a pick
 st.watch = st.watch || {};   // watchlist: players you are targeting, with live survival odds
+st.name = st.name || "My Team";
+st.teams = Math.min(16, Math.max(8, st.teams || 10));
+st.slot = Math.min(st.teams, Math.max(1, st.slot || 1));
 
 let posFilter = "ALL", hideTaken = true, query = "", lens = "best";
 const $ = id => document.getElementById(id);
@@ -484,10 +488,12 @@ function mockBegin() {
                           ti: BOT_TYPES.findIndex(t => t.homer), fan, crushes: [] };
       continue;
     }
-    const t = pool[i % pool.length]; i++;
+    const t = pool[i % pool.length];
+    const nick = t.name + (Math.floor(i / pool.length) ? " " + (Math.floor(i / pool.length) + 1) : "");  // 16-team lobbies repeat types
+    i++;
     const crushes = [];
     for (let k = 0; k < 2 + Math.floor(Math.random() * 3); k++) crushes.push(top120[Math.floor(Math.random() * top120.length)].overall);
-    st.mock.bots[s] = { name: t.name, guide: t.guide, ti: BOT_TYPES.indexOf(t), crushes };
+    st.mock.bots[s] = { name: nick, guide: t.guide, ti: BOT_TYPES.indexOf(t), crushes };
   }
   save(); render(); botLoop();
 }
@@ -627,8 +633,16 @@ function render() {
 
   $("mockbtn").textContent = mockOn() ? "End mock" : "Start mock draft";
   $("botcard").style.display = mockOn() ? "" : "none";
-  if (mockOn()) $("botlist").innerHTML = Object.entries(st.mock.bots).map(([s, b]) =>
-    `<div class="qrow"><span style="width:44px;color:var(--dim);font-weight:700;font-size:11px">Slot ${s}</span><span class="n" style="white-space:normal"><b>${b.name}</b> <span style="color:var(--dim)">${b.guide}</span></span></div>`).join("");
+  if (mockOn()) {
+    const order = [];
+    for (let s = 1; s <= st.teams; s++) {
+      if (s === st.slot)
+        order.push(`<div class="qrow"><span style="width:44px;color:var(--hivis);font-weight:700;font-size:11px">Slot ${s}</span><span class="n" style="white-space:normal"><b style="color:var(--green)">${st.name}</b> <span style="color:var(--dim)">(you)</span></span></div>`);
+      else if (st.mock.bots[s])
+        order.push(`<div class="qrow"><span style="width:44px;color:var(--dim);font-weight:700;font-size:11px">Slot ${s}</span><span class="n" style="white-space:normal"><b>${st.mock.bots[s].name}</b> <span style="color:var(--dim)">${st.mock.bots[s].guide}</span></span></div>`);
+    }
+    $("botlist").innerHTML = order.join("");
+  }
 
   const onClock = nmp === picksMade() + 1;
   ensureClock();
@@ -693,10 +707,18 @@ $("reset").addEventListener("click", () => {
 });
 for (const id of ["teams", "slot"]) $(id).addEventListener("change", e => {
   if (mockOn()) { e.target.value = st[id]; return; }   // locked during a mock: turn order depends on them
-  st[id] = Math.max(1, parseInt(e.target.value) || (id === "teams" ? 10 : 5));
+  if (id === "teams") {
+    st.teams = Math.min(16, Math.max(8, parseInt(e.target.value) || 10));
+    st.slot = Math.min(st.slot, st.teams);
+    $("slot").value = st.slot;
+  } else {
+    st.slot = Math.min(st.teams, Math.max(1, parseInt(e.target.value) || 1));
+  }
+  e.target.value = st[id];
   save(); render();
 });
-$("teams").value = st.teams; $("slot").value = st.slot;
+$("myname").addEventListener("input", e => { st.name = e.target.value.trim() || "My Team"; save(); render(); });
+$("teams").value = st.teams; $("slot").value = st.slot; $("myname").value = st.name === "My Team" ? "" : st.name;
 render();
 $("search").focus();
 botLoop();   // resume a mock in progress if the page was reloaded mid-draft
