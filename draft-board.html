@@ -451,6 +451,11 @@ const BOT_TYPES = [
   { name: "Wildcard Wade",   guide: "total chaos: reaches, hunches, and gut calls",     w: { espn: 0,   mkt: 1,   ours: 0 },  sigma: .28 },
   { name: "Homer Hank",      guide: "somehow got a copy of OUR exact cheat sheet",      w: { espn: 0,   mkt: .15, ours: .85 }, sigma: .07 },
   { name: "TE-First Tessa",  guide: "believes an elite tight end wins the league",      w: { espn: .4,  mkt: .6,  ours: 0 },  sigma: .09, mult: { TE: .7 }, multRounds: 4 },
+  { name: "Veteran Vera",    guide: "does not trust rookies, wants proven producers",   w: { espn: .3,  mkt: .7,  ours: 0 },  sigma: .08, rookieBoost: 1.3 },
+  { name: "Safe-Floor Sofia",guide: "drafts high floors, allergic to risky profiles",   w: { espn: .25, mkt: .75, ours: 0 },  sigma: .07, safe: true },
+  { name: "Late-QB Larry",   guide: "refuses to draft a QB before double-digit rounds", w: { espn: 0,   mkt: 1,   ours: 0 },  sigma: .09, mult: { QB: 1.6 }, multRounds: 9 },
+  { name: "Average Joe",     guide: "averages every ranking site and splits the middle",w: { espn: .33, mkt: .34, ours: .33 }, sigma: .06 },
+  { name: "Stack Stan",      guide: "stacks his QB with that team's pass catchers",     w: { espn: .3,  mkt: .7,  ours: 0 },  sigma: .09, stack: true },
   { name: "Tommy Homer",     guide: "",                                                 w: { espn: 0,   mkt: 1,   ours: 0 },  sigma: .10, homer: true },
 ];
 function gauss() { let u = 0, v = 0; while (!u) u = Math.random(); while (!v) v = Math.random(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); }
@@ -498,12 +503,17 @@ function mockBegin() {
   save(); render(); botLoop();
 }
 function endMock() { if (st.mock) st.mock.on = false; save(); render(); }
-function botCounts(slot) {
-  const c = { QB: 0, RB: 0, WR: 0, TE: 0, K: 0, DST: 0 };
+function botPlayers(slot) {
+  const out = [];
   st.hist.forEach((o, i) => {
     const pk = i + 1, r = Math.ceil(pk / st.teams), idx = (pk - 1) % st.teams;
-    if ((r % 2 ? idx + 1 : st.teams - idx) === slot) c[PLAYERS[o - 1].pos]++;
+    if ((r % 2 ? idx + 1 : st.teams - idx) === slot) out.push(PLAYERS[o - 1]);
   });
+  return out;
+}
+function botCounts(slot) {
+  const c = { QB: 0, RB: 0, WR: 0, TE: 0, K: 0, DST: 0 };
+  for (const p of botPlayers(slot)) c[p.pos]++;
   return c;
 }
 function botPick(slot) {
@@ -527,11 +537,14 @@ function botPick(slot) {
     if (f.length) elig = f;
   }
   if (!elig.length) elig = avail;
+  const qbTeams = t.stack ? botPlayers(slot).filter(x => x.pos === "QB" && x.team).map(x => x.team) : [];
   const scored = elig.map(p => {
     let r = t.w.espn * (p.espn ?? p.adp) + t.w.mkt * p.adp + t.w.ours * p.overall;
     if (t.mult && (!t.multRounds || round <= t.multRounds) && t.mult[p.pos]) r *= t.mult[p.pos];
     if (t.rookieBoost && p.rookie) r *= t.rookieBoost;
     if (t.fallerBoost && p.edge >= 8) r *= t.fallerBoost;
+    if (t.safe) { if (p.conf === "A") r *= .85; else if (p.conf === "C") r *= 1.12; }
+    if (qbTeams.includes(p.team) && (p.pos === "WR" || p.pos === "TE")) r *= .75;
     if (bot.crushes.includes(p.overall)) r *= .55;
     if (bot.fan && p.team === bot.fan) r *= .5;   // Tommy Homer: his team's players go rounds early
     r *= 1 + gauss() * t.sigma;
