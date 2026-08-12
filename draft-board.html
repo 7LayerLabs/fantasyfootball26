@@ -411,14 +411,16 @@ function leagueRosters() {  // snake math attributes every pick in hist to a tea
 function lineupPts(roster) {  // best legal starting lineup from a roster
   const sorted = [...roster].sort((a, b) => b.pts - a.pts);
   const used = new Set(), byPos = {QB:0, RB:0, WR:0, TE:0, K:0, DST:0, FLEX:0};
+  const names = {QB:[], RB:[], WR:[], TE:[], K:[], DST:[], FLEX:[]};
   let total = 0;
   for (const pos of ["QB","RB","WR","TE","K","DST"]) {
     let n = STARTERS[pos];
-    for (const p of sorted) if (n > 0 && p.pos === pos && !used.has(p)) { used.add(p); total += p.pts; byPos[pos] += p.pts; n--; }
+    for (const p of sorted) if (n > 0 && p.pos === pos && !used.has(p)) { used.add(p); total += p.pts; byPos[pos] += p.pts; names[pos].push(p.name); n--; }
   }
-  for (const p of sorted) if (!used.has(p) && ["RB","WR","TE"].includes(p.pos)) { used.add(p); total += p.pts; byPos.FLEX = p.pts; break; }
-  return { total, byPos };
+  for (const p of sorted) if (!used.has(p) && ["RB","WR","TE"].includes(p.pos)) { used.add(p); total += p.pts; byPos.FLEX = p.pts; names.FLEX.push(p.name); break; }
+  return { total, byPos, names };
 }
+const POSWORD = { QB: "quarterback spot", RB: "backfield", WR: "receiver room", TE: "tight end spot", FLEX: "flex", K: "kicker", DST: "defense" };
 function teamReport() {
   if (!st.hist.length) return "No picks yet. Once the draft starts this grades your roster against the league.";
   const rosters = leagueRosters();
@@ -450,8 +452,10 @@ function teamReport() {
   const openTxt = open.length ? "Still open: " + open.join(", ") + ", plus " + (15 - mineList.length - open.length > 0 ? (15 - mineList.length - open.length) + " bench seats." : "nothing else.") : "Starters full; " + (15 - mineList.length) + " bench seats left.";
   let s = "<b style=\"color:" + gcolor + ";font-size:15px\">" + grade + "</b> <b>(" + rank + (rank === 1 ? "st" : rank === 2 ? "nd" : rank === 3 ? "rd" : "th") + " of " + st.teams + ")</b>. ";
   s += "Your starters project to " + Math.round(mine.total).toLocaleString() + " points; league average is " + Math.round(avg).toLocaleString() + ". ";
-  s += best.d > 5 ? "Biggest edge: " + best.pos + ", +" + Math.round(best.d) + " points over the average team. " : "No big positional edge yet. ";
-  s += worst.d < -5 ? "Thinnest spot: " + worst.pos + ", " + Math.round(worst.d) + " points behind the average team. " : "No glaring weakness. ";
+  const bn = (mine.names[best.pos] || []).slice(0, 2).join(" and ");
+  s += best.d > 5 ? "Your edge is the " + POSWORD[best.pos] + (bn ? " (" + bn + ")" : "") + ", worth about " + Math.round(best.d) + " more points a season than the average team gets there. " : "No big positional edge yet. ";
+  const wn = (mine.names[worst.pos] || []).slice(0, 2).join(" and ");
+  s += worst.d < -5 ? "Thinnest spot is the " + POSWORD[worst.pos] + (wn ? " (" + wn + " holding it down)" : " (nobody there yet)") + ", about " + Math.round(-worst.d) + " points behind the average team. " : "No glaring weakness. ";
   s += openTxt;
   const byeGroups = {};
   mineList.forEach(o => { const p = PLAYERS[o - 1]; if (p.bye && p.pos !== "K" && p.pos !== "DST") (byeGroups[p.bye] = byeGroups[p.bye] || []).push(p.name); });
@@ -637,22 +641,48 @@ function showRecap() {
     avgBy[pos] = t / st.teams;
   }
   const myRank = order.indexOf(st.slot) + 1;
-  const leagueAvg = order.reduce((a, s) => a + lineups[s].total, 0) / st.teams;
   const winner = order[0];
-  let head = `You finished ${ordinal(myRank)} of ${st.teams}. Your starters project ${Math.round(lineups[st.slot].total).toLocaleString()} points`;
-  head += myRank === 1 ? `, best in the league (average is ${Math.round(leagueAvg).toLocaleString()}).`
-        : `; ${teamLabel(winner)} leads with ${Math.round(lineups[winner].total).toLocaleString()}, league average is ${Math.round(leagueAvg).toLocaleString()}.`;
+  const moves = s => rosters[s].filter(p => p.pos !== "K" && p.pos !== "DST")
+    .map(p => ({ p, no: st.hist.indexOf(p.overall) + 1, v: p.adp - (st.hist.indexOf(p.overall) + 1) }));
+  const lastName = n => n.split(" ").filter(w => !/^(jr|sr|ii|iii|iv|v)\.?$/i.test(w)).pop();
+  const summarize = s => {
+    const lu = lineups[s];
+    const diffs = ["QB", "RB", "WR", "TE", "FLEX"].map(pos => ({ pos, d: lu.byPos[pos] - avgBy[pos] })).sort((a, b) => b.d - a.d);
+    const hi = diffs[0], lo = diffs[diffs.length - 1];
+    const bits = [];
+    const stars = [...rosters[s]].sort((a, b) => b.pts - a.pts).slice(0, 2).map(p => p.name);
+    bits.push(`Built around ${stars.join(" and ")}.`);
+    if (hi.d > 3) {
+      const hn = (lu.names[hi.pos] || []).slice(0, 2).join(" and ");
+      bits.push(`The ${POSWORD[hi.pos]}${hn ? " (" + hn + ")" : ""} is the best part of this roster, clearly ahead of what most teams got there.`);
+    }
+    if (lo.d < -3) {
+      const ln = (lu.names[lo.pos] || []).slice(0, 2).join(" and ");
+      if (!ln) bits.push(`The ${POSWORD[lo.pos]} never got filled, which will hurt every single week.`);
+      else if (lo.d < -25) bits.push(`It gets thin at the ${POSWORD[lo.pos]}: ${ln} against everyone else's starters is a weekly problem.`);
+      else bits.push(`The ${POSWORD[lo.pos]} (${ln}) is a touch light next to what other teams roll out, but it is livable.`);
+    }
+    if (hi.d <= 3 && lo.d >= -3) bits.push(`Balanced everywhere, special nowhere.`);
+    const mv = moves(s);
+    const steal = mv.filter(x => x.v >= 12).sort((a, b) => b.v - a.v)[0];
+    const reach = mv.filter(x => x.v <= -12 && x.no <= st.teams * 10).sort((a, b) => a.v - b.v)[0];
+    if (steal) bits.push(`Best move: ${steal.p.name} at pick ${steal.no}, a full ${Math.round(steal.v / st.teams) || 1}+ round${Math.round(steal.v / st.teams) > 1 ? "s" : ""} after drafts usually take him.`);
+    if (reach) bits.push(`Head scratcher: ${reach.p.name} at pick ${reach.no}, way before anyone else would have taken him.`);
+    const byes = {};
+    rosters[s].forEach(p => { if (p.bye && p.pos !== "K" && p.pos !== "DST") (byes[p.bye] = byes[p.bye] || []).push(lastName(p.name)); });
+    for (const [w, ns] of Object.entries(byes)) if (ns.length >= 3) { bits.push(`Circle week ${w}: ${ns.join(", ")} all sit that week.`); break; }
+    return bits.join(" ");
+  };
+  let head = `You finished ${ordinal(myRank)} of ${st.teams}.`;
+  head += myRank === 1 ? ` Nobody built a better starting lineup.` : ` ${teamLabel(winner)} came out with the strongest lineup on paper.`;
+  const mySteal = moves(st.slot).filter(x => x.v >= 12).sort((a, b) => b.v - a.v)[0];
+  if (mySteal) head += ` Your best move: ${mySteal.p.name} at pick ${mySteal.no}, long after the market usually takes him.`;
   const cards = order.map(s => {
     const rk = order.indexOf(s) + 1;
-    const diffs = ["QB", "RB", "WR", "TE", "FLEX"].map(pos => ({ pos, d: lineups[s].byPos[pos] - avgBy[pos] })).sort((a, b) => b.d - a.d);
-    const hi = diffs[0], lo = diffs[diffs.length - 1];
-    let sum = `${ordinal(rk)} with ${Math.round(lineups[s].total).toLocaleString()} projected starter points. `;
-    sum += hi.d > 3 ? `Strength: ${hi.pos}, +${Math.round(hi.d)} vs the average team. ` : `No standout position. `;
-    sum += lo.d < -3 ? `Thin spot: ${lo.pos}, ${Math.round(lo.d)}.` : `No glaring hole.`;
     const guide = s !== st.slot && st.mock && st.mock.bots[s] ? ` <span style="color:var(--dim);font-weight:400;font-size:11px">${st.mock.bots[s].guide}</span>` : "";
     const rows = rosters[s].map(p =>
       `<div class="rc-row"><span class="p pos ${p.pos}">${p.pos}</span><span class="nm">${p.name}</span><span class="pr">${p.pos}${p.posRank}</span></div>`).join("");
-    return `<div class="rc-card${s === st.slot ? " me" : ""}"><h3>${rk}. ${teamLabel(s)}${s === st.slot ? ' <span style="color:var(--green)">(you)</span>' : ""} <span style="color:var(--dim);font-weight:400;font-size:11px">slot ${s}</span></h3>${guide}<div class="rc-sum">${sum}</div>${rows}</div>`;
+    return `<div class="rc-card${s === st.slot ? " me" : ""}"><h3>${rk}. ${teamLabel(s)}${s === st.slot ? ' <span style="color:var(--green)">(you)</span>' : ""} <span style="color:var(--dim);font-weight:400;font-size:11px">slot ${s}, ${Math.round(lineups[s].total).toLocaleString()} pts</span></h3>${guide}<div class="rc-sum">${summarize(s)}</div>${rows}</div>`;
   }).join("");
   $("recap").innerHTML = `<div class="rc-top"><h2>DRAFT RECAP</h2><div class="sub">${head}</div><button class="ghost" onclick="closeRecap()">Close</button></div><div class="rc-grid">${cards}</div>`;
   $("recap").style.display = "block";
