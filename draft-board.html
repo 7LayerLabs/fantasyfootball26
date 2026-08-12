@@ -102,6 +102,15 @@
   .ghost { background: none; border: 1px solid var(--line); color: var(--dim); border-radius: 6px; padding: 7px; cursor: pointer; font-size: 12.5px; font-weight: 600; }
   .ghost:hover { color: var(--text); }
   .ghost.danger:hover { color: var(--red); border-color: var(--red); }
+  .onclock { background: var(--hivis); color: #0d1117; font-weight: 800; text-align: center; border-radius: 6px; padding: 6px; margin-bottom: 9px; letter-spacing: 1.5px; font-size: 13px; }
+  .alertrow { border-left: 3px solid var(--hivis); background: rgba(245,217,10,.07); border-radius: 4px; padding: 6px 9px; margin-bottom: 8px; font-size: 12px; line-height: 1.45; }
+  .watchcell { width: 22px; cursor: pointer; text-align: center; }
+  .watchcell svg { vertical-align: middle; }
+  .qrow { display: flex; gap: 8px; padding: 3px 0; font-size: 12.5px; align-items: center; }
+  .qrow .n { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .qrow .risk { font-weight: 700; font-size: 10.5px; font-variant-numeric: tabular-nums; }
+  .qrow .qx { border: 1px solid var(--line); background: var(--panel); border-radius: 4px; cursor: pointer; color: var(--dim); font-size: 10px; padding: 1px 6px; }
+  .qrow .qx:hover { color: var(--red); border-color: var(--red); }
 </style>
 </head>
 <body>
@@ -126,22 +135,25 @@
       <button class="fbtn" data-f="K">K</button>
       <button class="fbtn" data-f="DST">DST</button>
       <button class="fbtn on" id="hidetaken">Hide taken</button>
-      <div class="hint"><b>Enter</b> marks the outlined player Taken &nbsp; <b>Shift+Enter</b> = My Pick &nbsp; <b>Ctrl+Z</b> undo &nbsp; <b>Esc</b> clear search &nbsp; Red GONE tag = likely gone before your next pick &nbsp; Value +9 = you get him 9 picks cheaper than normal, -9 = a reach</div>
+      <div class="hint"><b>Enter</b> marks the outlined player Taken &nbsp; <b>Shift+Enter</b> = My Pick &nbsp; <b>Ctrl+Z</b> undo &nbsp; <b>Esc</b> clear search &nbsp; Red GONE tag = likely gone before your next pick &nbsp; Value +9 = you get him 9 picks cheaper than normal, -9 = a reach &nbsp; Star = watchlist with live "will he last?" odds</div>
     </div>
     <div id="board"><table>
       <thead><tr>
-        <th></th><th class="rk">#</th><th>Pos</th><th>Player</th><th class="num">Score</th>
+        <th></th><th></th><th class="rk">#</th><th>Pos</th><th>Player</th><th class="num">Score</th>
         <th class="num" title="Season points above a waiver-wire replacement at his position">VORP</th><th class="num" title="Average Draft Position: the pick where drafts usually take him">ADP</th><th class="num" title="ADP minus our rank. Positive = bargain, he lasts longer than he should. Negative = a reach at this pick.">Value +/-</th><th></th><th class="act"></th>
       </tr></thead>
       <tbody id="rows"></tbody>
     </table></div>
   </div>
   <div id="side">
+    <div id="alerts"></div>
     <div class="card" id="suggest"><h2>Draft next</h2>
       <div id="lenses">
         <button class="lens on" data-l="best">Best Pick</button><button class="lens" data-l="value">Value</button><button class="lens" data-l="sleeper">Sleeper</button><button class="lens" data-l="rookie">Rookie</button><button class="lens" data-l="safe">Safe</button><button class="lens" data-l="upside">Upside</button>
       </div>
       <div id="sugbody"></div></div>
+    <div class="card" id="queuecard" style="display:none"><h2>My watchlist</h2><div id="queue"></div>
+      <div class="legend">Percentage = chance he is still on the board at your next turn, from live market prices.</div></div>
     <div class="card"><h2>My team so far</h2><div id="gradebody" class="why" style="margin:0"></div></div>
     <div class="card"><h2>My roster</h2><div id="roster"></div></div>
     <div class="card"><h2>Best available by position</h2><div id="bestpos"></div></div>
@@ -164,6 +176,7 @@ const KEY = "draftboard2026-v6";   // versioned: bump on every data resync so st
 let st = {"status": {}, "hist": [], "teams": 10, "slot": 9};
 try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && s.status) st = s; } catch (e) {}
 st.out = st.out || {};   // out-for-season players: off the board, but never counted as a pick
+st.watch = st.watch || {};   // watchlist: players you are targeting, with live survival odds
 
 let posFilter = "ALL", hideTaken = true, query = "", lens = "best";
 const $ = id => document.getElementById(id);
@@ -181,6 +194,42 @@ function nextMyPick() {
   const cur = picksMade() + 1;
   return myPicks().find(p => p >= cur);
 }
+function waitTarget() {  // the pick number your NEXT decision happens at (skips the pick you are on now)
+  const cur = picksMade() + 1;
+  const mine = myPicks().filter(p => p >= cur);
+  return mine[0] === cur ? mine[1] : mine[0];
+}
+function survival(p, target) {  // chance (0-1) player p is still on the board at pick `target`, from market ADP
+  return 1 / (1 + Math.exp(-(p.adp - target) / 5.5));
+}
+function passOdds(p) {
+  const t = waitTarget();
+  if (!t) return "";
+  const s = Math.round(survival(p, t) * 100);
+  const w = s >= 75 ? "he should still be there" : s >= 45 ? "it is a coin flip whether he lasts"
+          : s >= 20 ? "he will probably be gone" : "he will almost certainly be gone";
+  return " If you pass, " + w + " at your next turn (pick " + fmtPick(t) + ", about " + s + "% chance he is still available).";
+}
+function alerts() {  // position runs + dying tiers, worth interrupting for
+  const out = [];
+  if (st.hist.length >= 5) {
+    const last = st.hist.slice(-6).map(o => PLAYERS[o - 1]);
+    for (const pos of ["QB", "RB", "WR", "TE"]) {
+      const n = last.filter(p => p.pos === pos).length;
+      if (n >= 4) out.push("<b>" + pos + " run in progress:</b> " + n + " of the last " + last.length + " picks were " + pos + "s. If you still need one, do not wait.");
+    }
+    const GOODTIERS = ["ELITE", "TIER 1", "TIER 2", "TIER 3", "TIER 4"];
+    for (const pos of ["QB", "RB", "WR", "TE"]) {
+      const avail = PLAYERS.filter(p => p.pos === pos && !st.status[p.overall] && !st.out[p.overall]);
+      if (!avail.length || !GOODTIERS.includes(avail[0].tier)) continue;
+      const top = avail.filter(p => p.tier === avail[0].tier);
+      if (top.length <= 2) out.push("<b>" + pos + " tier alarm:</b> only " + (top.length === 1 ? "one player" : "two players") + " left in " + avail[0].tier + " (" + top.map(p => p.name).join(", ") + "). After that the position drops a level.");
+    }
+  }
+  return out.slice(0, 3);
+}
+const star = w => `<svg width="12" height="12" viewBox="0 0 24 24" fill="${w ? "var(--hivis)" : "none"}" stroke="${w ? "var(--hivis)" : "#3d4653"}" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>`;
+function toggleWatch(o) { if (st.watch[o]) delete st.watch[o]; else st.watch[o] = true; save(); render(); }
 function matches(p) {
   if (!query) return true;
   const n = p.name.toLowerCase();
@@ -376,7 +425,10 @@ function teamReport() {
 function render() {
   const nmp = nextMyPick();
   $("curpick").textContent = fmtPick(picksMade() + 1);
-  $("mynext").textContent = nmp ? fmtPick(nmp) : "-";
+  const mineUp = myPicks().filter(x => x >= picksMade() + 1);
+  $("mynext").innerHTML = mineUp.length
+    ? fmtPick(mineUp[0]) + (mineUp[1] ? `<span style="font-size:12px;color:var(--dim)"> then ${fmtPick(mineUp[1])}</span>` : "")
+    : "-";
   const hit = firstAvailable();
   const rows = [];
   for (const p of visible()) {
@@ -392,6 +444,7 @@ function render() {
       ? `<button class="undo1" onclick="unmark(${p.overall})">Undo</button>`
       : `<button onclick="mark(${p.overall},'T')">Taken</button><button onclick="mark(${p.overall},'M')" style="color:var(--green)">Mine</button><button onclick="markOut(${p.overall})" style="color:var(--red)" title="Injured or out for the season: removes him from every suggestion without counting as a draft pick">Out</button>`;
     rows.push(`<tr class="${cls}">
+      <td class="watchcell" onclick="toggleWatch(${p.overall})" title="Watchlist: pin him to your target queue with live odds he lasts until your pick">${star(st.watch[p.overall])}</td>
       <td class="tierbar" style="background:${TIERC[p.tier]}"></td>
       <td class="rk">${p.overall}</td>
       <td class="pos ${p.pos}">${p.pos}${p.posRank}</td>
@@ -402,12 +455,24 @@ function render() {
   }
   $("rows").innerHTML = rows.join("");
 
+  $("alerts").innerHTML = alerts().map(a => `<div class="alertrow">${a}</div>`).join("");
+
+  const onClock = nmp === picksMade() + 1;
   const sug = suggestions();
-  $("sugbody").innerHTML = sug.length
+  $("sugbody").innerHTML = (onClock ? `<div class="onclock">YOU ARE ON THE CLOCK</div>` : "") + (sug.length
     ? `<div class="s1">${sug[0].p.name} <span class="pos ${sug[0].p.pos}">${sug[0].p.pos}${sug[0].p.posRank}</span></div>
-       <div class="why">${writeup(sug[0])}</div>` +
-      sug.slice(1).map(s => `<div class="alt">${s.p.name} <span>${s.p.pos}${s.p.posRank} - ${s.need}${Math.round(s.p.edge) >= 5 ? ", falling " + Math.round(s.p.edge) + " picks past his value" : ""}</span></div>`).join("")
-    : "No available player fits this lens right now. Try another button.";
+       <div class="why">${writeup(sug[0])}${passOdds(sug[0].p)}</div>` +
+      sug.slice(1).map(s => { const t = waitTarget(); const pct = t ? Math.round(survival(s.p, t) * 100) + "% to last" : ""; return `<div class="alt">${s.p.name} <span>${s.p.pos}${s.p.posRank} - ${s.need}${Math.round(s.p.edge) >= 5 ? ", falling " + Math.round(s.p.edge) + " picks past his value" : ""}${pct ? " · " + pct : ""}</span></div>`; }).join("")
+    : "No available player fits this lens right now. Try another button.");
+
+  const watched = PLAYERS.filter(p => st.watch[p.overall] && !st.status[p.overall] && !st.out[p.overall]);
+  $("queuecard").style.display = watched.length ? "" : "none";
+  const wt = waitTarget();
+  $("queue").innerHTML = watched.map(p => {
+    const s = wt ? Math.round(survival(p, wt) * 100) : 100;
+    const col = s < 45 ? "var(--red)" : s < 75 ? "var(--hivis)" : "var(--green)";
+    return `<div class="qrow"><span class="pos ${p.pos}" style="width:40px;font-weight:700">${p.pos}${p.posRank}</span><span class="n">${p.name}</span><span class="risk" style="color:${col}">${s < 45 ? "AT RISK " + s + "%" : s + "%"}</span><button class="qx" onclick="toggleWatch(${p.overall})" title="Remove from watchlist">x</button></div>`;
+  }).join("");
 
   $("gradebody").innerHTML = teamReport();
 
