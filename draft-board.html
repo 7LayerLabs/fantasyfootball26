@@ -445,6 +445,7 @@ const BOT_TYPES = [
   { name: "Wildcard Wade",   guide: "total chaos: reaches, hunches, and gut calls",     w: { espn: 0,   mkt: 1,   ours: 0 },  sigma: .28 },
   { name: "Homer Hank",      guide: "somehow got a copy of OUR exact cheat sheet",      w: { espn: 0,   mkt: .15, ours: .85 }, sigma: .07 },
   { name: "TE-First Tessa",  guide: "believes an elite tight end wins the league",      w: { espn: .4,  mkt: .6,  ours: 0 },  sigma: .09, mult: { TE: .7 }, multRounds: 4 },
+  { name: "Tommy Homer",     guide: "",                                                 w: { espn: 0,   mkt: 1,   ours: 0 },  sigma: .10, homer: true },
 ];
 function gauss() { let u = 0, v = 0; while (!u) u = Math.random(); while (!v) v = Math.random(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); }
 function slotOnClock() { const pick = picksMade() + 1, r = Math.ceil(pick / st.teams), idx = (pick - 1) % st.teams; return r % 2 ? idx + 1 : st.teams - idx; }
@@ -452,12 +453,25 @@ function mockOn() { return !!(st.mock && st.mock.on); }
 function startMock() {
   if (st.hist.length && !confirm("Start a fresh mock draft? This clears the current board.")) return;
   st.status = {}; st.hist = [];
-  const pool = [...BOT_TYPES].sort(() => Math.random() - .5);
+  const pool = [...BOT_TYPES].filter(t => !t.homer).sort(() => Math.random() - .5);
   const top120 = PLAYERS.filter(p => p.overall <= 120);
   st.mock = { on: true, bots: {} };
+  // Tommy Homer is in every lobby with a fresh random fandom: he reaches for HIS team's guys
+  const fanCounts = {};
+  for (const p of top120) if (p.team && p.pos !== "K" && p.pos !== "DST") fanCounts[p.team] = (fanCounts[p.team] || 0) + 1;
+  const fanTeams = Object.keys(fanCounts).filter(t => fanCounts[t] >= 2);
+  const fan = fanTeams[Math.floor(Math.random() * fanTeams.length)];
+  const fanDst = PLAYERS.find(p => p.pos === "DST" && p.team === fan);
+  const botSlots = [];
+  for (let s = 1; s <= st.teams; s++) if (s !== st.slot) botSlots.push(s);
+  const tommySlot = botSlots[Math.floor(Math.random() * botSlots.length)];
   let i = 0;
-  for (let s = 1; s <= st.teams; s++) {
-    if (s === st.slot) continue;
+  for (const s of botSlots) {
+    if (s === tommySlot) {
+      st.mock.bots[s] = { name: "Tommy Homer", guide: "diehard " + (fanDst ? fanDst.name : fan) + " fan, takes his guys rounds too early",
+                          ti: BOT_TYPES.findIndex(t => t.homer), fan, crushes: [] };
+      continue;
+    }
     const t = pool[i % pool.length]; i++;
     const crushes = [];
     for (let k = 0; k < 2 + Math.floor(Math.random() * 3); k++) crushes.push(top120[Math.floor(Math.random() * top120.length)].overall);
@@ -501,6 +515,7 @@ function botPick(slot) {
     if (t.rookieBoost && p.rookie) r *= t.rookieBoost;
     if (t.fallerBoost && p.edge >= 8) r *= t.fallerBoost;
     if (bot.crushes.includes(p.overall)) r *= .55;
+    if (bot.fan && p.team === bot.fan) r *= .5;   // Tommy Homer: his team's players go rounds early
     r *= 1 + gauss() * t.sigma;
     return { p, r };
   }).sort((a, b) => a.r - b.r);
