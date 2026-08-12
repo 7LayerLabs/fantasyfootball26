@@ -162,9 +162,11 @@
     <div class="card" id="topbtns-card"><h2>Draft controls</h2>
       <div id="topbtns">
         <button class="ghost" id="mockbtn" style="color:var(--hivis)">Start mock draft</button>
+        <button class="ghost" id="regen" title="Deals you a random draft slot; in a mock it also reseats and re-rolls the opponents">New draft order</button>
         <button class="ghost" id="undo">Undo last</button>
         <button class="ghost danger" id="reset">Reset draft</button>
       </div>
+      <div class="legend">Mock picks are on a 1:00 clock. At zero the app drafts your top watchlist player, or the top suggestion if the list is empty.</div>
     </div>
   </div>
 </main>
@@ -452,6 +454,16 @@ function slotOnClock() { const pick = picksMade() + 1, r = Math.ceil(pick / st.t
 function mockOn() { return !!(st.mock && st.mock.on); }
 function startMock() {
   if (st.hist.length && !confirm("Start a fresh mock draft? This clears the current board.")) return;
+  mockBegin();
+}
+function regenOrder() {
+  if (st.hist.length && !confirm("Regenerate the draft order? This clears the board and deals you a new slot.")) return;
+  st.slot = 1 + Math.floor(Math.random() * st.teams);
+  $("slot").value = st.slot;
+  if (st.mock) mockBegin();                       // fresh lobby, new seating
+  else { st.status = {}; st.hist = []; save(); render(); }
+}
+function mockBegin() {
   st.status = {}; st.hist = [];
   const pool = [...BOT_TYPES].filter(t => !t.homer).sort(() => Math.random() - .5);
   const top120 = PLAYERS.filter(p => p.overall <= 120);
@@ -540,6 +552,33 @@ function botLoop() {
     save(); render(); botLoop();
   }, 130);
 }
+// ---------- 60-second pick clock (mock drafts only) ----------
+const MOCK_CLOCK = 60;
+let clockEnd = null, clockPick = null;
+function ensureClock() {
+  const myTurn = mockOn() && slotOnClock() === st.slot && picksMade() < st.teams * 15;
+  if (!myTurn) { clockPick = null; return; }
+  const cur = picksMade() + 1;
+  if (clockPick !== cur) { clockPick = cur; clockEnd = Date.now() + MOCK_CLOCK * 1000; }
+}
+function tickClock() {
+  if (clockPick === null) return;
+  if (!mockOn() || slotOnClock() !== st.slot) { clockPick = null; return; }
+  const left = Math.max(0, Math.ceil((clockEnd - Date.now()) / 1000));
+  const el = document.getElementById("clockleft");
+  if (el) {
+    el.textContent = Math.floor(left / 60) + ":" + String(left % 60).padStart(2, "0");
+    el.style.color = left <= 10 ? "var(--red)" : "";
+  }
+  if (left <= 0) { clockPick = null; autoPick(); }
+}
+setInterval(tickClock, 250);
+function autoPick() {   // clock expired: your top watchlist player, else the top suggestion
+  const avail = p => !st.status[p.overall] && !st.out[p.overall];
+  let p = PLAYERS.find(q => st.watch[q.overall] && avail(q));
+  if (!p) { const sg = suggestions(); p = sg.length ? sg[0].p : PLAYERS.find(avail); }
+  if (p) mark(p.overall, "M");
+}
 function undoMock() {  // rewind to before YOUR last pick (bot picks in between come back too)
   while (st.hist.length) {
     const last = st.hist.pop(), wasMine = st.status[last] === "M";
@@ -592,8 +631,10 @@ function render() {
     `<div class="qrow"><span style="width:44px;color:var(--dim);font-weight:700;font-size:11px">Slot ${s}</span><span class="n" style="white-space:normal"><b>${b.name}</b> <span style="color:var(--dim)">${b.guide}</span></span></div>`).join("");
 
   const onClock = nmp === picksMade() + 1;
+  ensureClock();
+  const clockTag = mockOn() && onClock ? ` <span id="clockleft" style="font-variant-numeric:tabular-nums">1:00</span>` : "";
   const sug = suggestions();
-  $("sugbody").innerHTML = (onClock ? `<div class="onclock">YOU ARE ON THE CLOCK</div>` : "") + (sug.length
+  $("sugbody").innerHTML = (onClock ? `<div class="onclock">YOU ARE ON THE CLOCK${clockTag}</div>` : "") + (sug.length
     ? `<div class="s1">${sug[0].p.name} <span class="pos ${sug[0].p.pos}">${sug[0].p.pos}${sug[0].p.posRank}</span></div>
        <div class="why">${writeup(sug[0])}${passOdds(sug[0].p)}</div>` +
       sug.slice(1).map(s => { const t = waitTarget(); const pct = t ? Math.round(survival(s.p, t) * 100) + "% to last" : ""; return `<div class="alt">${s.p.name} <span>${s.p.pos}${s.p.posRank} - ${s.need}${Math.round(s.p.edge) >= 5 ? ", falling " + Math.round(s.p.edge) + " picks past his value" : ""}${pct ? " · " + pct : ""}</span></div>`; }).join("")
@@ -646,6 +687,7 @@ document.querySelectorAll(".lens").forEach(b => b.addEventListener("click", () =
 }));
 $("undo").addEventListener("click", undo);
 $("mockbtn").addEventListener("click", () => mockOn() ? endMock() : startMock());
+$("regen").addEventListener("click", regenOrder);
 $("reset").addEventListener("click", () => {
   if (confirm("Clear the whole draft and start over?")) { st.status = {}; st.hist = []; st.mock = null; save(); render(); }
 });
