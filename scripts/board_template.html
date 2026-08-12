@@ -97,8 +97,7 @@
   .bestrow .p { width: 36px; font-weight: 700; }
   .bestrow .n { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .bestrow .v { color: var(--dim); font-variant-numeric: tabular-nums; }
-  #topbtns { display: flex; gap: 8px; }
-  #topbtns button { flex: 1; }
+  #topbtns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   .ghost { background: none; border: 1px solid var(--line); color: var(--dim); border-radius: 6px; padding: 7px; cursor: pointer; font-size: 12.5px; font-weight: 600; }
   .ghost:hover { color: var(--text); }
   .ghost.danger:hover { color: var(--red); border-color: var(--red); }
@@ -179,8 +178,8 @@
     <div class="card" id="topbtns-card"><h2>Draft controls</h2>
       <div id="topbtns">
         <button class="ghost" id="mockbtn" style="color:var(--hivis)">Start mock draft</button>
-        <button class="ghost" id="slotmode" title="Random: every mock deals you a fresh seat, like a real lobby. Manual: mocks use whatever My Slot says, for practicing one seat.">Mock seat: Random</button>
         <button class="ghost" id="speedbtn" title="Quick: opponents pick instantly. Normal: opponents take 15 seconds to 2 minutes per pick, real lobby pacing.">Speed: Quick</button>
+        <button class="ghost" id="slotmode" title="Random: every mock deals you a fresh seat, like a real lobby. Manual: mocks use whatever My Slot says, for practicing one seat.">Mock seat: Random</button>
         <button class="ghost" id="regen" title="Re-deals your slot and re-rolls the opponents">New draft order</button>
         <button class="ghost" id="undo">Undo last</button>
         <button class="ghost danger" id="reset">Reset draft</button>
