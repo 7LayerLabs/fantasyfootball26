@@ -457,6 +457,24 @@
     text-transform: uppercase; letter-spacing: 2px; color: var(--gold); 
     margin-bottom: 10px; 
   }
+  .pc-wait { 
+    margin: 24px 32px; padding: 18px 20px 16px; 
+    background: rgba(201,162,39,.04); 
+    border: 2px solid var(--gold); border-radius: 0; 
+    font-size: 13px; line-height: 1.65; color: var(--text); 
+  }
+  .pc-wait-label { 
+    font: 700 9px/1 "Segoe UI", system-ui, sans-serif;
+    text-transform: uppercase; letter-spacing: 2px; color: var(--gold); 
+    margin-bottom: 10px; 
+  }
+  .pc-wait-line { 
+    margin: 6px 0;
+  }
+  .pc-wait-line strong {
+    color: var(--gold);
+    font-weight: 700;
+  }
   .pc-footer { 
     padding: 16px 32px; border-top: 3px double var(--gold); 
     font: 700 10px/1 "Segoe UI", system-ui, sans-serif;
@@ -569,6 +587,10 @@
     <div class="pc-drop" id="pc-drop-box" style="display:none">
       <div class="pc-drop-label">The Drop</div>
       <div id="pc-drop-text"></div>
+    </div>
+    <div class="pc-wait" id="pc-wait-box" style="display:none">
+      <div class="pc-wait-label">Wait</div>
+      <div id="pc-wait-text"></div>
     </div>
     <div class="pc-text" id="pc-extra"></div>
     <div class="pc-footer" id="pc-footer"></div>
@@ -906,6 +928,75 @@ function generateDrop(p) {
   return lines.join(" ");
 }
 
+function generateWait(p) {
+  const teams = st.teams || 10;
+  const samePos = PLAYERS.filter(x => x.pos === p.pos && x.overall > p.overall).sort((a, b) => a.overall - b.overall);
+  
+  if (!samePos.length) return '<div class="pc-wait-line"><strong>Pro:</strong> none.</div><div class="pc-wait-line"><strong>Con:</strong> no one left to wait for.</div>';
+  
+  const next1 = samePos[0];
+  const next2 = samePos.length > 1 ? samePos[1] : null;
+  
+  // Calculate gaps
+  const scoreGap = p.score - next1.score;
+  const vorpGap = (p.vorp || 0) - (next1.vorp || 0);
+  const adpGap = (next1.adp || 0) - (p.adp || 0);
+  const roundGap = Math.abs(adpGap / teams);
+  
+  const isSmallGap = (scoreGap < 3 || vorpGap < 6) && roundGap <= 1;
+  
+  // Find wait target
+  const waitTarget = next2 ? (samePos.find(x => x.adp && (x.adp - p.adp) >= teams) || next2) : next1;
+  const waitScoreGap = p.score - waitTarget.score;
+  const waitAdpGap = (waitTarget.adp || 0) - (p.adp || 0);
+  const waitRoundGap = Math.abs(waitAdpGap / teams);
+  
+  const waitRoundText = waitRoundGap < 1.5 ? "1 round" :
+                        waitRoundGap < 2.5 ? "2 rounds" :
+                        waitRoundGap < 3.5 ? "2-3 rounds" :
+                        Math.round(waitRoundGap) + " rounds";
+  
+  // Check for cluster (anti-panic situation) - only when both next guys are LATER
+  const isCluster = next2 && adpGap > 0 && Math.abs(next1.score - next2.score) < 3 && Math.abs((next1.adp || 0) - (next2.adp || 0)) < teams * 1.5;
+  
+  let pro = "";
+  let con = "";
+  
+  if (!next1.adp) {
+    // Missing ADP, use score only
+    if (isSmallGap) {
+      pro = `${next1.name} is close on our board. You save a pick.`;
+      con = `If he goes, you're on ${waitTarget.name}. That's a ${waitScoreGap.toFixed(1)}-point drop.`;
+    } else {
+      pro = `You save a pick or more.`;
+      con = `${next1.name} is ${scoreGap.toFixed(1)} points lower. Paying up is safer.`;
+    }
+  } else if (adpGap < 0) {
+    // Next guy goes EARLIER (market inefficiency)
+    pro = `${next1.name} goes ${Math.abs(Math.round(adpGap))} picks earlier anyway. Market loves him.`;
+    con = `If he's gone, you're on ${waitTarget.name}. That could be a bigger drop.`;
+  } else if (isCluster) {
+    // Anti-panic: next two are close
+    pro = `The next two are basically the same wait. Don't panic-reach.`;
+    con = `If the run keeps going you may miss this tier.`;
+  } else if (isSmallGap) {
+    // Small gap, waiting is fine
+    const pickText = Math.round(adpGap) === 1 ? "a pick" : `${Math.round(adpGap)} picks`;
+    pro = `${next1.name} is ${pickText} later and almost the same player. You keep a pick.`;
+    if (next2 && waitTarget === next2) {
+      con = `If ${next1.name} goes too, you're on ${waitTarget.name}. That's ${waitRoundText} later and ${waitScoreGap < 5 ? "a step down" : "a real drop"}.`;
+    } else {
+      con = `If he goes, you're on ${waitTarget.name}. That's ${waitRoundText} later.`;
+    }
+  } else {
+    // Real drop
+    pro = `You save ${roundGap < 1 ? "under a round" : waitRoundText}.`;
+    con = `It's a real drop on our board (${scoreGap.toFixed(1)} points). Paying up is the safer pick.`;
+  }
+  
+  return `<div class="pc-wait-line"><strong>Pro:</strong> ${pro}</div><div class="pc-wait-line"><strong>Con:</strong> ${con}</div>`;
+}
+
 function getPosRank(p, stat) {
   // Count players at same position with this stat > 0
   const samePos = PLAYERS.filter(x => {
@@ -1063,6 +1154,17 @@ function openPlayerCard(overall) {
     $("pc-drop-box").style.display = "block";
   } else {
     $("pc-drop-box").style.display = "none";
+  }
+  
+  // Wait box (always show for skill positions)
+  if (p.pos !== "K" && p.pos !== "DST") {
+    $("pc-wait-text").innerHTML = generateWait(p);
+    $("pc-wait-box").style.display = "block";
+  } else if (p.posRank) {
+    $("pc-wait-text").innerHTML = generateWait(p);
+    $("pc-wait-box").style.display = "block";
+  } else {
+    $("pc-wait-box").style.display = "none";
   }
   
   // Extra text (only if adds something)
