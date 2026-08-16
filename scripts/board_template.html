@@ -185,7 +185,7 @@
     <div id="alerts"></div>
     <div class="card" id="suggest"><h2>Draft next</h2>
       <div id="lenses">
-        <button class="lens on" data-l="best">Best Pick</button><button class="lens" data-l="value">Value</button><button class="lens" data-l="sleeper">Sleeper</button><button class="lens" data-l="rookie">Rookie</button><button class="lens" data-l="safe">Safe</button><button class="lens" data-l="upside">Upside</button>
+        <button class="lens on" data-l="best">Best Pick</button><button class="lens" data-l="value">Value</button><button class="lens" data-l="sleeper">Sleeper</button><button class="lens" data-l="rookie">Rookie</button><button class="lens" data-l="safe">Safe</button><button class="lens" data-l="upside">Upside</button><button class="lens" data-l="opp">Touches</button>
       </div>
       <div id="sugbody"></div></div>
     <div class="card" id="queuecard" style="display:none"><h2>My watchlist</h2><div id="queue"></div>
@@ -397,6 +397,20 @@ function valueWords(p) {
   if (e <= -5) return "We rank him #" + p.overall + " but drafts usually take him around pick " + Math.round(p.adp) + ", so grabbing him now means reaching about " + Math.abs(e) + " picks early.";
   return "His usual draft spot (pick " + Math.round(p.adp) + ") and our rank (#" + p.overall + ") agree, so this is a fair price.";
 }
+function oppTooltip(p) {
+  if (p.pos === "K" || p.pos === "DST" || !p.games_played) return "";
+  let txt = "\n---OPPORTUNITY---";
+  if (p.games_played) txt += "\nGames: " + p.games_played;
+  if (p.sample_note) txt += " (" + p.sample_note + ")";
+  if (p.snap_share) txt += "\nSnap share: " + p.snap_share + "%";
+  if (p.pos === "RB" && p.carry_share) txt += "\nCarry share: " + p.carry_share + "%";
+  if ((p.pos === "WR" || p.pos === "TE" || p.pos === "RB") && p.target_share) txt += "\nTarget share: " + p.target_share + "%";
+  if (p.route_share) txt += "\nRoute share: " + p.route_share + "%";
+  if (p.rz_share) txt += "\nRed zone touches: " + p.rz_share;
+  if (p.qb_situation) txt += "\nQB situation: " + p.qb_situation;
+  if (p.role) txt += "\nRole: " + p.role;
+  return txt;
+}
 function byeWarn(p) {
   if (!p.bye || p.pos === "K" || p.pos === "DST") return "";
   const mine = st.hist.filter(o => st.status[o] === "M").map(o => PLAYERS[o - 1]);
@@ -421,6 +435,11 @@ function writeupCore(c) {
     return "Safest pick left: A confidence, and even his bad weeks grade out around " + p.floor + ". Our board scores him " + p.score + " and " + c.need + "." + tail;
   if (lens === "upside")
     return "Biggest ceiling on the board: if it clicks, he plays like a " + p.ceil + "-rated player (elite shelf). Board score " + p.score + ", " + c.need + "." + tail;
+  if (lens === "opp") {
+    const usage = p.pos === "RB" ? (p.carry_share ? p.carry_share + "% carry share, " + p.snap_share + "% snaps" : "limited usage data")
+                                 : (p.target_share ? p.target_share + "% target share, " + p.snap_share + "% snaps" : "limited usage data");
+    return "High-usage player falling to later ADP (" + p.pos + p.posRank + ", score " + p.score + "): " + usage + ", drafted around pick " + Math.round(p.adp) + ". " + c.need + "." + tail;
+  }
   return "He is the best player left on our board (" + p.pos + p.posRank + ", score " + p.score + ") and " + c.need + ". " + valueWords(p) + tail;
 }
 
@@ -756,7 +775,7 @@ function render() {
       <td class="tierbar" style="background:${TIERC[p.tier]}"></td>
       <td class="rk">${p.overall}</td>
       <td class="pos ${p.pos}">${p.pos}${p.posRank}</td>
-      <td class="name" title="${p.exp.replace(/"/g, "&quot;")}\nRISK: ${p.risk.replace(/"/g, "&quot;")}">${p.name}${p.team ? `<small>${p.team}${p.bye ? " · Bye " + p.bye : ""}</small>` : ""}</td>
+      <td class="name" title="${p.exp.replace(/"/g, "&quot;")}\nRISK: ${p.risk.replace(/"/g, "&quot;")}${oppTooltip(p)}">${p.name}${p.team ? `<small>${p.team}${p.bye ? " · Bye " + p.bye : ""}</small>` : ""}</td>
       <td class="num">${p.score}</td><td class="num">${p.vorp}</td>
       <td class="num">${p.adp}</td><td class="num">${edge}</td>
       <td>${gone}</td><td class="act">${act}</td></tr>`);
