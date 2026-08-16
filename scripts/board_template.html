@@ -143,21 +143,28 @@
   #ticker .tk.me { border-color: var(--green); }
   #ticker .tk.me .tteam { color: var(--green); }
   #ticker .tk.now { border-color: var(--hivis); background: rgba(245,217,10,.08); }
-  #playercard { position: fixed; inset: 0; background: rgba(13,17,23,.95); z-index: 100; display: none; overflow-y: auto; padding: 20px; }
-  .pc-container { max-width: 800px; margin: 0 auto; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 24px; }
-  .pc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
-  .pc-header h2 { font-size: 24px; margin: 0; }
-  .pc-header .pos { font-size: 18px; margin-left: 12px; }
-  .pc-close { background: none; border: 1px solid var(--line); color: var(--dim); border-radius: 6px; padding: 6px 16px; cursor: pointer; font-weight: 600; }
-  .pc-close:hover { color: var(--text); border-color: var(--text); }
-  .pc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-  .pc-section { background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; padding: 14px; }
-  .pc-section h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--dim); margin: 0 0 10px 0; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
-  .pc-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 13px; }
-  .pc-row .label { color: var(--dim); }
-  .pc-row .value { font-weight: 600; font-variant-numeric: tabular-nums; }
-  .pc-full { grid-column: 1 / -1; }
-  .pc-full .value { margin-top: 6px; line-height: 1.5; }
+  #playercard { position: fixed; inset: 0; background: rgba(13,17,23,.97); z-index: 100; display: none; overflow-y: auto; padding: 30px 20px; }
+  .pc-container { max-width: 680px; margin: 0 auto; background: var(--panel); border: 2px solid var(--hivis); border-radius: 0; padding: 0; }
+  .pc-header { background: linear-gradient(180deg, #1a1f2e 0%, var(--panel) 100%); padding: 24px 28px 20px; border-bottom: 2px solid var(--hivis); position: relative; }
+  .pc-close { position: absolute; top: 20px; right: 24px; background: none; border: 1px solid var(--line); color: var(--dim); padding: 4px 12px; cursor: pointer; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+  .pc-close:hover { color: var(--hivis); border-color: var(--hivis); }
+  .pc-name { font-size: 32px; font-weight: 800; letter-spacing: -0.5px; margin: 0 0 8px 0; line-height: 1.1; }
+  .pc-meta { display: flex; gap: 20px; flex-wrap: wrap; font-size: 13px; color: var(--dim); margin-top: 12px; }
+  .pc-meta span { display: flex; align-items: center; gap: 6px; }
+  .pc-meta .label { color: var(--dim); font-size: 10px; text-transform: uppercase; letter-spacing: 1px; }
+  .pc-meta .val { color: var(--text); font-weight: 700; font-variant-numeric: tabular-nums; }
+  .pc-lede { padding: 24px 28px; font-size: 15px; line-height: 1.7; color: var(--text); background: var(--panel2); border-left: 3px solid var(--hivis); margin: 0; font-weight: 400; }
+  .pc-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); margin: 0; }
+  .pc-stat { background: var(--panel); padding: 20px 16px; text-align: center; }
+  .pc-stat-val { font-size: 36px; font-weight: 800; color: var(--hivis); display: block; margin-bottom: 4px; font-variant-numeric: tabular-nums; }
+  .pc-stat-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--dim); font-weight: 700; }
+  .pc-situation { padding: 18px 28px; background: var(--panel2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); font-size: 13px; color: var(--dim); text-align: center; }
+  .pc-situation span { color: var(--text); font-weight: 600; }
+  .pc-risk { margin: 20px 28px; padding: 16px 18px; background: rgba(248,81,73,.08); border-left: 3px solid var(--red); font-size: 13px; line-height: 1.6; color: var(--text); }
+  .pc-risk-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--red); font-weight: 700; margin-bottom: 8px; }
+  .pc-footer { padding: 16px 28px; border-top: 1px solid var(--line); font-size: 11px; color: var(--dim); text-align: center; letter-spacing: 0.5px; }
+  .pc-text { padding: 0 28px 20px; font-size: 13px; line-height: 1.6; color: var(--dim); }
+  .pc-text-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--hivis); font-weight: 700; margin: 20px 0 8px; }
 </style>
 </head>
 <body>
@@ -229,53 +236,29 @@
 <div id="playercard">
   <div class="pc-container">
     <div class="pc-header">
-      <div><h2 id="pc-name"></h2></div>
       <button class="pc-close" onclick="closePlayerCard()">Close</button>
-    </div>
-    <div class="pc-grid">
-      <div class="pc-section">
-        <h3>Basic Info</h3>
-        <div class="pc-row"><span class="label">Team</span><span class="value" id="pc-team"></span></div>
-        <div class="pc-row"><span class="label">Bye Week</span><span class="value" id="pc-bye"></span></div>
-        <div class="pc-row"><span class="label">Age</span><span class="value" id="pc-age"></span></div>
-        <div class="pc-row"><span class="label">ADP</span><span class="value" id="pc-adp"></span></div>
-        <div class="pc-row"><span class="label">Our Rank</span><span class="value" id="pc-overall"></span></div>
-      </div>
-      <div class="pc-section">
-        <h3>Situation</h3>
-        <div class="pc-row"><span class="label">Role</span><span class="value" id="pc-role"></span></div>
-        <div class="pc-row"><span class="label">QB Situation</span><span class="value" id="pc-qbsit"></span></div>
-        <div class="pc-row"><span class="label">Team QB</span><span class="value" id="pc-teamqb"></span></div>
-        <div class="pc-row"><span class="label">Committee/Handcuff</span><span class="value" id="pc-handcuff"></span></div>
-      </div>
-      <div class="pc-section">
-        <h3>Opportunity (<span id="pc-season"></span>)</h3>
-        <div class="pc-row"><span class="label">Games Played</span><span class="value" id="pc-games"></span></div>
-        <div class="pc-row"><span class="label">Snap Share</span><span class="value" id="pc-snap"></span></div>
-        <div class="pc-row"><span class="label">Target Share</span><span class="value" id="pc-tgt"></span></div>
-        <div class="pc-row"><span class="label">Carry Share</span><span class="value" id="pc-carry"></span></div>
-        <div class="pc-row"><span class="label">Red Zone Touches</span><span class="value" id="pc-rz"></span></div>
-      </div>
-      <div class="pc-section">
-        <h3>Counting Stats (<span id="pc-season2"></span>)</h3>
-        <div class="pc-row"><span class="label">Rush Att / Yds / TD</span><span class="value" id="pc-rush"></span></div>
-        <div class="pc-row"><span class="label">Rec / Yds / TD</span><span class="value" id="pc-rec"></span></div>
-        <div class="pc-row"><span class="label">Pass Yds / TD</span><span class="value" id="pc-pass"></span></div>
-        <div class="pc-row"><span class="label">PPR Points</span><span class="value" id="pc-pts"></span></div>
-      </div>
-      <div class="pc-section pc-full">
-        <h3>Expectation</h3>
-        <div class="pc-row"><span class="value" id="pc-exp"></span></div>
-      </div>
-      <div class="pc-section pc-full">
-        <h3>Why We Rank Here</h3>
-        <div class="pc-row"><span class="value" id="pc-why"></span></div>
-      </div>
-      <div class="pc-section pc-full">
-        <h3>Main Risk</h3>
-        <div class="pc-row"><span class="value" id="pc-risk"></span></div>
+      <h1 class="pc-name" id="pc-name"></h1>
+      <div class="pc-meta">
+        <span><span class="label">Team</span><span class="val" id="pc-team"></span></span>
+        <span><span class="label">Bye</span><span class="val" id="pc-bye"></span></span>
+        <span><span class="label">Age</span><span class="val" id="pc-age"></span></span>
+        <span><span class="label">ADP</span><span class="val" id="pc-adp"></span></span>
+        <span><span class="label">Our Rank</span><span class="val" id="pc-overall"></span></span>
       </div>
     </div>
+    <p class="pc-lede" id="pc-lede"></p>
+    <div class="pc-stats">
+      <div class="pc-stat"><span class="pc-stat-val" id="pc-stat1-val"></span><span class="pc-stat-label" id="pc-stat1-label"></span></div>
+      <div class="pc-stat"><span class="pc-stat-val" id="pc-stat2-val"></span><span class="pc-stat-label" id="pc-stat2-label"></span></div>
+      <div class="pc-stat"><span class="pc-stat-val" id="pc-stat3-val"></span><span class="pc-stat-label" id="pc-stat3-label"></span></div>
+    </div>
+    <div class="pc-situation" id="pc-sit-line"></div>
+    <div class="pc-risk" id="pc-risk-box" style="display:none">
+      <div class="pc-risk-label">Main Risk</div>
+      <div id="pc-risk-text"></div>
+    </div>
+    <div class="pc-text" id="pc-extra"></div>
+    <div class="pc-footer" id="pc-footer"></div>
   </div>
 </div>
 <script>
@@ -487,33 +470,119 @@ function oppTooltip(p) {
   if (p.role) txt += "\nRole: " + p.role;
   return txt;
 }
+function generateLede(p) {
+  const season = p.stats_season || "2024";
+  const isRookie = !p.games_played || p.sample_note?.includes("Rookie");
+  
+  if (isRookie) {
+    const exp = p.exp || "Rookie entering the NFL";
+    return exp + (p.why ? " " + p.why : "");
+  }
+  
+  // Start with expectation
+  let lede = p.exp || "";
+  
+  // Add usage context
+  if (p.pos === "RB" && p.carry_share) {
+    lede += ` He commanded ${p.carry_share}% of the team's carries`;
+    if (p.rush_att) lede += ` (${p.rush_att} attempts, ${p.rush_yds} yards)`;
+    lede += ` in ${season}`;
+    if (p.role) lede += `, operating as a ${p.role} back`;
+    lede += ".";
+  } else if ((p.pos === "WR" || p.pos === "TE") && p.target_share) {
+    lede += ` He saw ${p.target_share}% of team targets`;
+    if (p.rec) lede += ` (${p.rec} catches, ${p.rec_yds} yards)`;
+    lede += ` in ${season}`;
+    if (p.qb_situation && p.team_qb) lede += ` with ${p.qb_situation} QB play from ${p.team_qb}`;
+    lede += ".";
+  } else if (p.pos === "QB" && p.pass_yds) {
+    lede += ` He threw for ${p.pass_yds} yards and ${p.pass_td} touchdowns across ${p.games_played} games in ${season}.`;
+  }
+  
+  // Add why if it exists and adds new info
+  if (p.why && !lede.includes(p.why.substring(0, 30))) {
+    lede += " " + p.why;
+  }
+  
+  return lede || p.exp || "No scouting report available.";
+}
+
 function openPlayerCard(overall) {
   const p = PLAYERS[overall - 1];
+  const season = p.stats_season || "2024";
+  const isRookie = !p.games_played || p.sample_note?.includes("Rookie");
+  
+  // Header
   $("pc-name").innerHTML = p.name + ` <span class="pos ${p.pos}">${p.pos}${p.posRank}</span>`;
-  $("pc-team").textContent = p.team || "-";
-  $("pc-bye").textContent = p.bye || "-";
-  $("pc-age").textContent = p.age || "-";
+  $("pc-team").textContent = p.team || "—";
+  $("pc-bye").textContent = p.bye || "—";
+  $("pc-age").textContent = p.age || "—";
   $("pc-adp").textContent = Math.round(p.adp);
   $("pc-overall").textContent = "#" + p.overall;
-  $("pc-role").textContent = p.role || "-";
-  $("pc-qbsit").textContent = p.qb_situation || "-";
-  $("pc-teamqb").textContent = p.team_qb || "-";
-  $("pc-handcuff").textContent = p.handcuff || "-";
-  const season = p.stats_season || "2024";
-  $("pc-season").textContent = season;
-  $("pc-season2").textContent = season;
-  $("pc-games").textContent = p.games_played || "0";
-  $("pc-snap").textContent = p.snap_share ? p.snap_share + "%" : "-";
-  $("pc-tgt").textContent = p.target_share ? p.target_share + "%" : "-";
-  $("pc-carry").textContent = p.carry_share ? p.carry_share + "%" : "-";
-  $("pc-rz").textContent = p.rz_share || "-";
-  $("pc-rush").textContent = p.rush_att ? `${p.rush_att} / ${p.rush_yds} / ${p.rush_td}` : "-";
-  $("pc-rec").textContent = p.rec ? `${p.rec} / ${p.rec_yds} / ${p.rec_td}` : "-";
-  $("pc-pass").textContent = p.pass_yds ? `${p.pass_yds} / ${p.pass_td}` : "-";
-  $("pc-pts").textContent = p.actual_ppg ? (p.actual_ppg * p.games_played).toFixed(1) : "-";
-  $("pc-exp").textContent = p.exp || "-";
-  $("pc-why").textContent = p.why || "-";
-  $("pc-risk").textContent = p.risk || "-";
+  
+  // Lede
+  $("pc-lede").textContent = generateLede(p);
+  
+  // Position-aware giant stats
+  if (p.pos === "RB") {
+    $("pc-stat1-val").textContent = p.carry_share ? p.carry_share + "%" : "—";
+    $("pc-stat1-label").textContent = isRookie ? "Carry Share (no NFL sample)" : "Carry Share";
+    $("pc-stat2-val").textContent = p.rz_share || "—";
+    $("pc-stat2-label").textContent = "Red Zone Touches";
+    $("pc-stat3-val").textContent = p.rush_yds || "—";
+    $("pc-stat3-label").textContent = `Rush Yards (${season})`;
+  } else if (p.pos === "WR" || p.pos === "TE") {
+    $("pc-stat1-val").textContent = p.target_share ? p.target_share + "%" : "—";
+    $("pc-stat1-label").textContent = isRookie ? "Target Share (no NFL sample)" : "Target Share";
+    $("pc-stat2-val").textContent = p.rec || "—";
+    $("pc-stat2-label").textContent = `Receptions (${season})`;
+    $("pc-stat3-val").textContent = p.rec_yds || "—";
+    $("pc-stat3-label").textContent = `Receiving Yards`;
+  } else if (p.pos === "QB") {
+    $("pc-stat1-val").textContent = p.snap_share ? p.snap_share + "%" : "—";
+    $("pc-stat1-label").textContent = "Snap Share";
+    $("pc-stat2-val").textContent = p.pass_yds || "—";
+    $("pc-stat2-label").textContent = `Pass Yards (${season})`;
+    $("pc-stat3-val").textContent = p.pass_td || "—";
+    $("pc-stat3-label").textContent = "Pass TD";
+  } else {
+    $("pc-stat1-val").textContent = "—";
+    $("pc-stat1-label").textContent = "N/A";
+    $("pc-stat2-val").textContent = "—";
+    $("pc-stat2-label").textContent = "N/A";
+    $("pc-stat3-val").textContent = "—";
+    $("pc-stat3-label").textContent = "N/A";
+  }
+  
+  // Situation line
+  const sitParts = [];
+  if (p.role) sitParts.push(p.role);
+  if (p.qb_situation) sitParts.push(p.qb_situation + " QB");
+  if (p.team_qb) sitParts.push(p.team_qb);
+  if (p.handcuff) sitParts.push("depth: " + p.handcuff);
+  $("pc-sit-line").innerHTML = sitParts.length 
+    ? sitParts.map(s => `<span>${s}</span>`).join(" · ") 
+    : "—";
+  
+  // Risk box
+  if (p.risk && p.risk !== "-") {
+    $("pc-risk-text").textContent = p.risk;
+    $("pc-risk-box").style.display = "block";
+  } else {
+    $("pc-risk-box").style.display = "none";
+  }
+  
+  // Extra text (only if adds something)
+  let extra = "";
+  if (p.why && !generateLede(p).includes(p.why.substring(0, 30))) {
+    extra += `<div class="pc-text-label">Why We Rank Here</div>${p.why}`;
+  }
+  $("pc-extra").innerHTML = extra;
+  
+  // Footer
+  const sampleText = p.sample_note || (isRookie ? "Rookie, no NFL sample" : `${p.games_played} games, ${season} season`);
+  $("pc-footer").textContent = `FF26 · opportunity first · ${sampleText}`;
+  
   $("playercard").style.display = "block";
 }
 function closePlayerCard() {
