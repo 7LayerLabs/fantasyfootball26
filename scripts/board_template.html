@@ -99,6 +99,13 @@
   .bestrow .p { width: 36px; font-weight: 700; }
   .bestrow .n { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .bestrow .v { color: var(--dim); font-variant-numeric: tabular-nums; }
+  .campwatch { font-size: 12px; line-height: 1.6; }
+  .campwatch-player { padding: 4px 0; border-bottom: 1px solid var(--line); }
+  .campwatch-player:last-child { border-bottom: none; }
+  .campwatch-player .cw-name { font-weight: 600; }
+  .campwatch-player .cw-pos { font-weight: 700; font-size: 11px; margin-left: 6px; }
+  .campwatch-player .cw-note { color: var(--dim); font-size: 11px; margin-top: 2px; }
+  .campwatch-badge { display: inline-block; background: var(--red); color: white; font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 3px; margin-left: 4px; letter-spacing: 0.5px; }
   #topbtns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   .ghost { background: none; border: 1px solid var(--line); color: var(--dim); border-radius: 6px; padding: 7px; cursor: pointer; font-size: 12.5px; font-weight: 600; }
   .ghost:hover { color: var(--text); }
@@ -185,6 +192,10 @@
       <div class="legend">Percentage = chance he is still on the board at your next turn, from live market prices.</div></div>
     <div class="card"><h2>Best available by position</h2><div id="bestpos"></div></div>
     <div class="card"><h2>My roster</h2><div id="roster"></div></div>
+    <div class="card"><h2>Camp watch <span class="campwatch-badge">NO MODEL</span></h2>
+      <div class="campwatch" id="campwatch"></div>
+      <div class="legend">Late-breaking camp names not yet in the 230-player pool. No model rating. Track manually.</div>
+    </div>
     <div class="card"><h2>My team so far</h2><div id="gradebody" class="why" style="margin:0"></div></div>
     <div class="card" id="topbtns-card"><h2>Draft controls</h2>
       <div id="topbtns">
@@ -202,6 +213,7 @@
 <div id="recap"></div>
 <script>
 const PLAYERS = __DATA__;
+const CAMP_WATCH = __CAMP_WATCH__;
 const TIERC = {"ELITE":"var(--elite)","TIER 1":"var(--t1)","TIER 2":"var(--t2)","TIER 3":"var(--t3)","TIER 4":"var(--t4)","TIER 5":"var(--t5)","TIER 6":"var(--t6)","TIER 7":"var(--t7)"};
 const STARTERS = {QB:1, RB:2, WR:2, TE:1, K:1, DST:1};
 const SLOTS = ["QB","RB","RB","WR","WR","TE","FLEX","K","DST","BN","BN","BN","BN","BN","BN"];
@@ -815,6 +827,14 @@ function render() {
       <span class="n">${b ? b.name : "none left"}</span>
       <span class="v">${b ? "our #" + b.overall + ", " + v + " pts" : ""}</span></div>`;
   }).join("") + `<div class="legend">"our #" = rank on our board. "+pts" = season points he gives you over a waiver-wire pickup at that spot. Bigger = harder to replace.</div>`;
+
+  $("campwatch").innerHTML = CAMP_WATCH.map(p => {
+    const posClass = p.pos === "QB" ? "QB" : p.pos === "RB" ? "RB" : p.pos === "WR" ? "WR" : p.pos === "TE" ? "TE" : "";
+    return `<div class="campwatch-player">
+      <div><span class="cw-name">${p.player}</span><span class="cw-pos pos ${posClass}">${p.pos}</span></div>
+      <div class="cw-note">${p.note}</div>
+    </div>`;
+  }).join("");
 }
 
 $("search").addEventListener("input", e => { query = e.target.value.trim().toLowerCase(); render(); });

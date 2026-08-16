@@ -1,6 +1,6 @@
 # Our Board vs ESPN Consensus Rankings (PPR)
 
-Compared 2026-08-12 against ESPN's staff consensus position rankings (8 analysts, updated Aug 11) and Field Yates' overall PPR Top 160 (updated Aug 5). Our board: 2026_Fantasy_Football_Draft_Engine_100_PERCENT_FIXED.xlsx, 223 players.
+Compared 2026-08-12 against ESPN's staff consensus position rankings (8 analysts, updated Aug 11) and Field Yates' overall PPR Top 160 (updated Aug 5). Our board: 2026_Fantasy_Football_Draft_Engine_100_PERCENT_FIXED.xlsx, 230 players.
 
 ## Headline numbers
 
