@@ -1,7 +1,13 @@
 """Pull computed values from the recalced workbook into board data JSON."""
 import openpyxl, json, warnings
+from pathlib import Path
+
 warnings.filterwarnings("ignore")
-P = r"C:\Users\derek\Downloads\Documents\2026_Fantasy_Football_Draft_Engine_100_PERCENT_FIXED.xlsx"
+
+SCRIPT_DIR = Path(__file__).parent
+WORKSPACE = SCRIPT_DIR.parent
+P = WORKSPACE / "2026_Fantasy_Football_Draft_Engine_100_PERCENT_FIXED.xlsx"
+
 wb = openpyxl.load_workbook(P, data_only=True)
 de, ls = wb["Draft Engine"], wb["LIVE SOURCE"]
 
@@ -37,6 +43,8 @@ for r in range(3, 233):
     })
 out.sort(key=lambda p: p["overall"])
 assert len(out) == 230 and [p["overall"] for p in out] == list(range(1, 231))
-with open(r"C:\Users\derek\AppData\Local\Temp\claude\C--Users-derek\51be7128-2b08-4038-953f-b27b86e2ee5a\scratchpad\board_data.json", "w", encoding="utf-8") as f:
+
+with open(SCRIPT_DIR / "board_data.json", "w", encoding="utf-8") as f:
     json.dump(out, f)
+
 print("OK", len(out), "players;", out[0]["name"], "->", out[-1]["name"])

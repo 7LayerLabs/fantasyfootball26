@@ -6,7 +6,7 @@
 
 | File | What it is |
 |------|-----------|
-| `2026_Fantasy_Football_Draft_Engine_100_PERCENT_FIXED.xlsx` | The engine. 17 tabs (the last one, How It Works, is a plain-English guide to the whole system), one canonical data chain: LIVE SOURCE (223 players) + Manual Adjustments feed the Draft Engine tab, and every rankings tab (FINAL Master, Top 200, position tabs, K, DST) is a live formula view of it. Zero copied rankings. QA Checks tab must show ALL CHECKS PASS. |
+| `2026_Fantasy_Football_Draft_Engine_100_PERCENT_FIXED.xlsx` | The engine. 18 tabs (the last one, How It Works, is a plain-English guide to the whole system), one canonical data chain: LIVE SOURCE (230 players) + Manual Adjustments feed the Draft Engine tab, and every rankings tab (FINAL Master, Top 200, position tabs, K, DST) is a live formula view of it. Zero copied rankings. QA Checks tab must show ALL CHECKS PASS. |
 | `2026_Fantasy_Football_Draft_Engine_CLEAN_FINAL.xlsx` | The original source workbook the engine was rebuilt from (static copies, kept for reference). |
 | `draft-board.html` | The draft app. One file, no server, works offline. Open it in a browser. |
 
@@ -30,10 +30,36 @@
 
 The app embeds a snapshot of the workbook's computed values. After changing the workbook (e.g. a new injury adjustment):
 
-1. `recalc.ps1` - opens the workbook in Excel, full recalc, saves (QA values refresh).
+1. `recalc.ps1` - opens the workbook in Excel, full recalc, saves (QA values refresh). Windows + Excel COM only.
 2. `extract_board.py` - pulls the computed values into `board_data.json`.
 3. `bake_state.py` - injects the data into `board_template.html` and writes `draft-board.html`. Bump the storage KEY version in the template on every resync (saved draft states key on overall rank and must not survive a data change).
 
-`build.py` regenerates the entire workbook from scratch (formulas, QA tab, formatting). Scripts contain absolute paths from the original machine; adjust before running elsewhere.
+`build.py` regenerates the entire workbook from scratch (formulas, QA tab, formatting).
 
-Built 2026-08-11. Player pool: 223 (32 QB, 50 RB, 70 WR, 27 TE, 12 K, 32 DST). Ratings source: FantasyPros-derived model, PPR.
+## Refreshing ADP data
+
+Market ADP changes weekly during draft season. To update:
+
+```bash
+# Option 1: Use the refresh script (requires manual ADP file or API setup)
+python3 scripts/refresh_adp.py
+
+# Option 2: Manually edit scripts/players.json ADP values
+```
+
+See `scripts/refresh_adp.py` for details on ADP data sources (Sleeper, FantasyPros, or manual JSON).
+
+After updating ADP, rebuild the board:
+
+```bash
+# Windows: recalc.ps1, then extract and bake
+# Linux/Mac: manually open Excel, recalc, save, then:
+python3 scripts/extract_board.py
+python3 scripts/bake_state.py
+```
+
+## Camp watch list
+
+`scripts/camp_watch.json` tracks late-breaking camp names not yet in the 230-player pool. Do not add these to `players.json` with fake model ratings.
+
+Built 2026-08-11. Player pool: 230 (32 QB, 50 RB, 70 WR, 27 TE, 12 K, 32 DST). Ratings source: FantasyPros-derived model, PPR.

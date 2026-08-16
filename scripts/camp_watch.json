@@ -1,0 +1,54 @@
+{
+ "watchlist": [
+  {
+   "player": "De'Zhaun Stribling",
+   "pos": "WR",
+   "team": "",
+   "note": "Featured in The Flex (Aug 14-15); no model rating yet",
+   "source": "dbtech45.com/theflex"
+  },
+  {
+   "player": "Jonah Coleman",
+   "pos": "RB",
+   "team": "",
+   "note": "Featured in The Flex (Aug 14-15); no model rating yet",
+   "source": "dbtech45.com/theflex"
+  },
+  {
+   "player": "Jam Miller",
+   "pos": "RB",
+   "team": "",
+   "note": "Featured in The Flex (Aug 14-15); no model rating yet",
+   "source": "dbtech45.com/theflex"
+  },
+  {
+   "player": "MarShawn Lloyd",
+   "pos": "RB",
+   "team": "GB",
+   "note": "Featured in The Flex (Aug 14-15); no model rating yet",
+   "source": "dbtech45.com/theflex"
+  },
+  {
+   "player": "Cade Klubnik",
+   "pos": "QB",
+   "team": "",
+   "note": "Featured in The Flex (Aug 14-15); college QB, no model rating yet",
+   "source": "dbtech45.com/theflex"
+  },
+  {
+   "player": "Caleb Douglas",
+   "pos": "WR",
+   "team": "",
+   "note": "Featured in The Flex (Aug 14-15); no model rating yet",
+   "source": "dbtech45.com/theflex"
+  },
+  {
+   "player": "Omar Cooper Jr.",
+   "pos": "WR",
+   "team": "",
+   "note": "Already on board but not marked as rookie; check status",
+   "source": "roster"
+  }
+ ],
+ "instructions": "This watch list tracks camp buzz and late-breaking names not yet in the 230-player pool. Do NOT add these to players.json with invented base ratings. Use this list to (1) track names during camp, (2) remind yourself to re-rate manually if they earn a real spot, (3) optionally display in draft-board.html as 'camp watch' names. If you add them to players.json, use model_path: 'MANUAL WATCH LIST' and mark them explicitly as unrated."
+}

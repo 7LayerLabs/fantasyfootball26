@@ -7,16 +7,18 @@ identical row order, so cross-sheet refs are direct, not SUMIFS.
 """
 import json
 import openpyxl
+from pathlib import Path
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from openpyxl.utils import get_column_letter
 from openpyxl.workbook.defined_name import DefinedName
 from openpyxl.worksheet.datavalidation import DataValidation
 from openpyxl.formatting.rule import CellIsRule, FormulaRule
 
-SCRATCH = r"C:\Users\derek\AppData\Local\Temp\claude\C--Users-derek\51be7128-2b08-4038-953f-b27b86e2ee5a\scratchpad"
-OUT = r"C:\Users\derek\Downloads\Documents\2026_Fantasy_Football_Draft_Engine_100_PERCENT_FIXED.xlsx"
+SCRIPT_DIR = Path(__file__).parent
+WORKSPACE = SCRIPT_DIR.parent
+OUT = WORKSPACE / "2026_Fantasy_Football_Draft_Engine_100_PERCENT_FIXED.xlsx"
 
-with open(SCRATCH + r"\players.json", encoding="utf-8") as f:
+with open(SCRIPT_DIR / "players.json", encoding="utf-8") as f:
     data = json.load(f)
 players = data["players"]
 cfg = data["config"]
