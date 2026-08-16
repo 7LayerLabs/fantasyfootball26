@@ -26,7 +26,7 @@ PLAYERS_JSON = SCRIPT_DIR / "players.json"
 def load_nfl_data():
     """Load 2025 regular season NFL data."""
     if not NFL_DATA_AVAILABLE:
-        return None, None, None, None
+        return None, None, None, None, None
     
     # Try 2025 first, fall back to 2024 if not available
     for year in [2025, 2024]:
@@ -45,19 +45,19 @@ def load_nfl_data():
             snaps = nfl.import_snap_counts([year])
             snaps_reg = snaps[snaps['game_type'] == 'REG'].copy()
             
-            # Load rosters for team mapping
+            # Load rosters for age/team mapping
             rosters = nfl.import_seasonal_rosters([year])
             
             print(f"Successfully loaded {year} data")
-            return pbp_reg, weekly_reg, snaps_reg, rosters
+            return pbp_reg, weekly_reg, snaps_reg, rosters, year
         except Exception as e:
             print(f"Failed to load {year} data: {e}")
             if year == 2024:
                 print("No NFL data available, using placeholder")
-                return None, None, None, None
+                return None, None, None, None, None
             continue
     
-    return None, None, None, None
+    return None, None, None, None, None
 
 
 def calculate_qb_grades(pbp_reg):
@@ -100,12 +100,44 @@ def calculate_qb_grades(pbp_reg):
     return team_qb_grades
 
 
+def normalize_name(name):
+    """Normalize player name for matching."""
+    # Remove Jr., Sr., II, III, IV, V suffixes
+    name = name.replace(' Jr.', '').replace(' Sr.', '')
+    name = name.replace(' II', '').replace(' III', '').replace(' IV', '').replace(' V', '')
+    return name.strip()
+
+
+def find_best_name_match(player_name, nfl_players):
+    """Find best matching NFL player name."""
+    normalized = normalize_name(player_name)
+    
+    # Try exact match first
+    if normalized in nfl_players:
+        return nfl_players[normalized]
+    
+    # Try last name match
+    last_name = normalized.split()[-1]
+    matches = [p for p in nfl_players if p.split()[-1] == last_name]
+    if len(matches) == 1:
+        return nfl_players[matches[0]]
+    
+    return None
+
+
 def calculate_opportunity_metrics(weekly_reg, snaps_reg, pbp_reg):
-    """Calculate per-player opportunity metrics."""
+    """Calculate per-player opportunity metrics and counting stats."""
     if weekly_reg is None or pbp_reg is None:
         return {}
     
     metrics = {}
+    
+    # Build a normalized name lookup for NFL players
+    nfl_player_lookup = {}
+    for _, row in weekly_reg[['player_display_name']].drop_duplicates().iterrows():
+        nfl_name = row['player_display_name']
+        normalized = normalize_name(nfl_name)
+        nfl_player_lookup[normalized] = nfl_name
     
     # Aggregate weekly data by player (use display_name for matching)
     player_weekly = weekly_reg.groupby(['player_display_name', 'player_id', 'position', 'recent_team']).agg({
@@ -116,6 +148,8 @@ def calculate_opportunity_metrics(weekly_reg, snaps_reg, pbp_reg):
         'receptions': 'sum',
         'receiving_yards': 'sum',
         'receiving_tds': 'sum',
+        'passing_yards': 'sum',
+        'passing_tds': 'sum',
         'fantasy_points_ppr': 'sum',
         'week': 'count'
     }).reset_index()
@@ -199,7 +233,9 @@ def calculate_opportunity_metrics(weekly_reg, snaps_reg, pbp_reg):
         else:
             expected_ppg = actual_ppg
         
+        # Store both normalized and display name
         metrics[player] = {
+            '_display_name': player,
             'snap_share': snap_share,
             'route_share': route_share if pos in ['WR', 'TE', 'RB'] else 0,
             'carry_share': carry_share if pos == 'RB' else 0,
@@ -207,10 +243,19 @@ def calculate_opportunity_metrics(weekly_reg, snaps_reg, pbp_reg):
             'rz_share': rz_share,
             'expected_ppg': round(expected_ppg, 1),
             'actual_ppg': round(actual_ppg, 1),
-            'games_played': int(row['games'])
+            'games_played': int(row['games']),
+            # Counting stats
+            'rush_att': int(row['carries']) if pos in ['RB', 'QB'] else 0,
+            'rush_yds': int(row['rushing_yards']) if pos in ['RB', 'QB'] else 0,
+            'rush_td': int(row['rushing_tds']) if pos in ['RB', 'QB'] else 0,
+            'rec': int(row['receptions']) if pos in ['RB', 'WR', 'TE'] else 0,
+            'rec_yds': int(row['receiving_yards']) if pos in ['RB', 'WR', 'TE'] else 0,
+            'rec_td': int(row['receiving_tds']) if pos in ['RB', 'WR', 'TE'] else 0,
+            'pass_yds': int(row['passing_yards']) if pos == 'QB' else 0,
+            'pass_td': int(row['passing_tds']) if pos == 'QB' else 0
         }
     
-    return metrics
+    return metrics, nfl_player_lookup
 
 
 def determine_role(player, pos, metrics):
@@ -307,6 +352,65 @@ def generate_suggested_adjustments(players, metrics, qb_grades):
     return suggestions[:15]
 
 
+def get_player_age(rosters, player_name):
+    """Get player age from rosters if available."""
+    if rosters is None or rosters.empty:
+        return None
+    
+    # Try exact match first
+    player_data = rosters[rosters['player_name'] == player_name]
+    if player_data.empty:
+        # Try partial match on last name
+        last_name = player_name.split()[-1]
+        player_data = rosters[rosters['player_name'].str.contains(last_name, case=False, na=False)]
+    
+    if not player_data.empty and 'age' in rosters.columns:
+        age_val = player_data['age'].iloc[0]
+        if pd.notna(age_val):
+            return int(age_val)
+    return None
+
+
+def compute_team_qb(players):
+    """Find the starting QB for each team (highest base QB on that team)."""
+    team_qbs = {}
+    for p in players:
+        if p['pos'] == 'QB' and p.get('team'):
+            team = p['team']
+            if team not in team_qbs or p['base'] > team_qbs[team]['base']:
+                team_qbs[team] = {'name': p['player'], 'base': p['base']}
+    
+    return {team: qb['name'] for team, qb in team_qbs.items()}
+
+
+def compute_handcuffs_and_committee(players, metrics):
+    """Find handcuffs and committee mates for RBs."""
+    handcuffs = {}
+    
+    for p in players:
+        if p['pos'] == 'RB' and p.get('team'):
+            team = p['team']
+            player_name = p['player']
+            
+            # Get all RBs on same team
+            team_rbs = [
+                {
+                    'name': pl['player'],
+                    'carry_share': metrics.get(pl['player'], {}).get('carry_share', 0),
+                    'base': pl['base']
+                }
+                for pl in players
+                if pl['pos'] == 'RB' and pl.get('team') == team and pl['player'] != player_name
+            ]
+            
+            # Sort by carry_share desc, then base desc
+            team_rbs.sort(key=lambda x: (-x['carry_share'], -x['base']))
+            
+            handcuffs[player_name] = [rb['name'] for rb in team_rbs]
+    
+    return handcuffs
+
+
 def main():
     print("Loading players.json...")
     with open(PLAYERS_JSON, encoding='utf-8') as f:
@@ -315,32 +419,51 @@ def main():
     players = data['players']
     
     # Load NFL data
-    pbp_reg, weekly_reg, snaps_reg, rosters = load_nfl_data()
+    pbp_reg, weekly_reg, snaps_reg, rosters, season_year = load_nfl_data()
     
     # Calculate metrics
     if pbp_reg is not None:
         qb_grades = calculate_qb_grades(pbp_reg)
-        metrics = calculate_opportunity_metrics(weekly_reg, snaps_reg, pbp_reg)
+        metrics, nfl_name_lookup = calculate_opportunity_metrics(weekly_reg, snaps_reg, pbp_reg)
         print(f"Calculated metrics for {len(metrics)} players")
         print(f"QB grades for {len(qb_grades)} teams")
+        print(f"Using {season_year} season data")
     else:
         qb_grades = {}
         metrics = {}
+        nfl_name_lookup = {}
+        season_year = None
         print("Using placeholder data (nfl_data_py not available)")
     
     # Generate suggested adjustments
     suggestions = generate_suggested_adjustments(players, metrics, qb_grades)
     
+    # Compute team QBs and handcuffs
+    team_qbs = compute_team_qb(players)
+    handcuffs = compute_handcuffs_and_committee(players, metrics)
+    
     # Update players with new fields
     updated_count = 0
+    matched_count = 0
     for p in players:
         player = p['player']
         pos = p['pos']
         team = p.get('team', '')
         
-        # Add opportunity metrics
+        # Add season year label
+        p['stats_season'] = season_year if season_year else None
+        
+        # Try to find player in NFL data with better name matching
+        matched_name = None
         if player in metrics:
-            m = metrics[player]
+            matched_name = player
+        else:
+            # Try normalized name matching
+            matched_name = find_best_name_match(player, nfl_name_lookup)
+        
+        # Add opportunity metrics and counting stats
+        if matched_name and matched_name in metrics:
+            m = metrics[matched_name]
             p['snap_share'] = m['snap_share']
             p['route_share'] = m['route_share']
             p['carry_share'] = m['carry_share']
@@ -350,11 +473,23 @@ def main():
             p['actual_ppg'] = m['actual_ppg']
             p['games_played'] = m['games_played']
             
+            # Counting stats
+            p['rush_att'] = m['rush_att']
+            p['rush_yds'] = m['rush_yds']
+            p['rush_td'] = m['rush_td']
+            p['rec'] = m['rec']
+            p['rec_yds'] = m['rec_yds']
+            p['rec_td'] = m['rec_td']
+            p['pass_yds'] = m['pass_yds']
+            p['pass_td'] = m['pass_td']
+            
             # Sample note
             if m['games_played'] < 10:
-                p['sample_note'] = f"{m['games_played']} games"
+                p['sample_note'] = f"{m['games_played']} games ({season_year} season)" if season_year else f"{m['games_played']} games"
             else:
-                p['sample_note'] = f"{m['games_played']} games"
+                p['sample_note'] = f"{m['games_played']} games ({season_year} season)" if season_year else f"{m['games_played']} games"
+            
+            matched_count += 1
         else:
             # Rookies / no data
             p['snap_share'] = 0
@@ -365,10 +500,19 @@ def main():
             p['expected_ppg'] = 0
             p['actual_ppg'] = 0
             p['games_played'] = 0
+            p['rush_att'] = 0
+            p['rush_yds'] = 0
+            p['rush_td'] = 0
+            p['rec'] = 0
+            p['rec_yds'] = 0
+            p['rec_td'] = 0
+            p['pass_yds'] = 0
+            p['pass_td'] = 0
+            
             if p.get('model_path') == 'ROOKIE ENGINE':
                 p['sample_note'] = "Rookie, no NFL sample"
             else:
-                p['sample_note'] = "Limited data"
+                p['sample_note'] = "No stats match found"
         
         # Add QB situation
         if pos in ['WR', 'TE', 'RB'] and team in qb_grades:
@@ -379,9 +523,25 @@ def main():
         # Add role
         p['role'] = determine_role(player, pos, metrics)
         
+        # Add team QB
+        p['team_qb'] = team_qbs.get(team, "") if team else ""
+        
+        # Add handcuff/committee mates (RBs only)
+        if pos == 'RB':
+            p['handcuff'] = ", ".join(handcuffs.get(player, [])) if player in handcuffs else ""
+        else:
+            p['handcuff'] = ""
+        
+        # Add age if available
+        if rosters is not None:
+            age = get_player_age(rosters, player)
+            p['age'] = age if age else None
+        else:
+            p['age'] = None
+        
         # Calculate opportunity score for lens (high usage + low ADP = high opp score)
-        if player in metrics:
-            m = metrics[player]
+        if matched_name and matched_name in metrics:
+            m = metrics[matched_name]
             usage_score = 0
             if pos == 'RB':
                 usage_score = m['carry_share'] + m['snap_share'] * 0.5
@@ -407,9 +567,21 @@ def main():
         json.dump(data, f, indent=2, ensure_ascii=False)
     
     print(f"\nUpdated {updated_count} players")
+    print(f"Matched {matched_count} players with NFL stats")
+    if season_year:
+        print(f"Stats are from {season_year} regular season")
     print(f"\nGenerated {len(suggestions)} suggested rating adjustments:")
     for player, adj, reason, _ in suggestions:
         print(f"  {player:25s} {adj:+3.0f} - {reason}")
+    
+    # Report unmatched players
+    unmatched = [p['player'] for p in players if p.get('model_path') != 'ROOKIE ENGINE' and p.get('games_played', 0) == 0 and p['pos'] not in ['K', 'DST']]
+    if unmatched:
+        print(f"\nCould not match {len(unmatched)} non-rookie players:")
+        for name in unmatched[:10]:
+            print(f"  {name}")
+        if len(unmatched) > 10:
+            print(f"  ... and {len(unmatched) - 10} more")
     
     print(f"\nSaved to {PLAYERS_JSON}")
 

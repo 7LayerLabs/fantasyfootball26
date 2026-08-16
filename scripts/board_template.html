@@ -143,6 +143,21 @@
   #ticker .tk.me { border-color: var(--green); }
   #ticker .tk.me .tteam { color: var(--green); }
   #ticker .tk.now { border-color: var(--hivis); background: rgba(245,217,10,.08); }
+  #playercard { position: fixed; inset: 0; background: rgba(13,17,23,.95); z-index: 100; display: none; overflow-y: auto; padding: 20px; }
+  .pc-container { max-width: 800px; margin: 0 auto; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 24px; }
+  .pc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+  .pc-header h2 { font-size: 24px; margin: 0; }
+  .pc-header .pos { font-size: 18px; margin-left: 12px; }
+  .pc-close { background: none; border: 1px solid var(--line); color: var(--dim); border-radius: 6px; padding: 6px 16px; cursor: pointer; font-weight: 600; }
+  .pc-close:hover { color: var(--text); border-color: var(--text); }
+  .pc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .pc-section { background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; padding: 14px; }
+  .pc-section h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--dim); margin: 0 0 10px 0; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+  .pc-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 13px; }
+  .pc-row .label { color: var(--dim); }
+  .pc-row .value { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .pc-full { grid-column: 1 / -1; }
+  .pc-full .value { margin-top: 6px; line-height: 1.5; }
 </style>
 </head>
 <body>
@@ -211,6 +226,58 @@
   </div>
 </main>
 <div id="recap"></div>
+<div id="playercard">
+  <div class="pc-container">
+    <div class="pc-header">
+      <div><h2 id="pc-name"></h2></div>
+      <button class="pc-close" onclick="closePlayerCard()">Close</button>
+    </div>
+    <div class="pc-grid">
+      <div class="pc-section">
+        <h3>Basic Info</h3>
+        <div class="pc-row"><span class="label">Team</span><span class="value" id="pc-team"></span></div>
+        <div class="pc-row"><span class="label">Bye Week</span><span class="value" id="pc-bye"></span></div>
+        <div class="pc-row"><span class="label">Age</span><span class="value" id="pc-age"></span></div>
+        <div class="pc-row"><span class="label">ADP</span><span class="value" id="pc-adp"></span></div>
+        <div class="pc-row"><span class="label">Our Rank</span><span class="value" id="pc-overall"></span></div>
+      </div>
+      <div class="pc-section">
+        <h3>Situation</h3>
+        <div class="pc-row"><span class="label">Role</span><span class="value" id="pc-role"></span></div>
+        <div class="pc-row"><span class="label">QB Situation</span><span class="value" id="pc-qbsit"></span></div>
+        <div class="pc-row"><span class="label">Team QB</span><span class="value" id="pc-teamqb"></span></div>
+        <div class="pc-row"><span class="label">Committee/Handcuff</span><span class="value" id="pc-handcuff"></span></div>
+      </div>
+      <div class="pc-section">
+        <h3>Opportunity (<span id="pc-season"></span>)</h3>
+        <div class="pc-row"><span class="label">Games Played</span><span class="value" id="pc-games"></span></div>
+        <div class="pc-row"><span class="label">Snap Share</span><span class="value" id="pc-snap"></span></div>
+        <div class="pc-row"><span class="label">Target Share</span><span class="value" id="pc-tgt"></span></div>
+        <div class="pc-row"><span class="label">Carry Share</span><span class="value" id="pc-carry"></span></div>
+        <div class="pc-row"><span class="label">Red Zone Touches</span><span class="value" id="pc-rz"></span></div>
+      </div>
+      <div class="pc-section">
+        <h3>Counting Stats (<span id="pc-season2"></span>)</h3>
+        <div class="pc-row"><span class="label">Rush Att / Yds / TD</span><span class="value" id="pc-rush"></span></div>
+        <div class="pc-row"><span class="label">Rec / Yds / TD</span><span class="value" id="pc-rec"></span></div>
+        <div class="pc-row"><span class="label">Pass Yds / TD</span><span class="value" id="pc-pass"></span></div>
+        <div class="pc-row"><span class="label">PPR Points</span><span class="value" id="pc-pts"></span></div>
+      </div>
+      <div class="pc-section pc-full">
+        <h3>Expectation</h3>
+        <div class="pc-row"><span class="value" id="pc-exp"></span></div>
+      </div>
+      <div class="pc-section pc-full">
+        <h3>Why We Rank Here</h3>
+        <div class="pc-row"><span class="value" id="pc-why"></span></div>
+      </div>
+      <div class="pc-section pc-full">
+        <h3>Main Risk</h3>
+        <div class="pc-row"><span class="value" id="pc-risk"></span></div>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
 const PLAYERS = __DATA__;
 const CAMP_WATCH = __CAMP_WATCH__;
@@ -397,6 +464,15 @@ function valueWords(p) {
   if (e <= -5) return "We rank him #" + p.overall + " but drafts usually take him around pick " + Math.round(p.adp) + ", so grabbing him now means reaching about " + Math.abs(e) + " picks early.";
   return "His usual draft spot (pick " + Math.round(p.adp) + ") and our rank (#" + p.overall + ") agree, so this is a fair price.";
 }
+function compactUsage(p) {
+  if (p.pos === "K" || p.pos === "DST" || !p.games_played) return "";
+  let parts = [];
+  if (p.pos === "QB" && p.snap_share) parts.push(`${p.snap_share}% snap`);
+  else if (p.pos === "RB" && p.carry_share) parts.push(`${p.carry_share}% carry`);
+  else if ((p.pos === "WR" || p.pos === "TE") && p.target_share) parts.push(`${p.target_share}% tgt`);
+  if (p.role) parts.push(p.role);
+  return parts.length ? " · " + parts.join(", ") : "";
+}
 function oppTooltip(p) {
   if (p.pos === "K" || p.pos === "DST" || !p.games_played) return "";
   let txt = "\n---OPPORTUNITY---";
@@ -410,6 +486,38 @@ function oppTooltip(p) {
   if (p.qb_situation) txt += "\nQB situation: " + p.qb_situation;
   if (p.role) txt += "\nRole: " + p.role;
   return txt;
+}
+function openPlayerCard(overall) {
+  const p = PLAYERS[overall - 1];
+  $("pc-name").innerHTML = p.name + ` <span class="pos ${p.pos}">${p.pos}${p.posRank}</span>`;
+  $("pc-team").textContent = p.team || "-";
+  $("pc-bye").textContent = p.bye || "-";
+  $("pc-age").textContent = p.age || "-";
+  $("pc-adp").textContent = Math.round(p.adp);
+  $("pc-overall").textContent = "#" + p.overall;
+  $("pc-role").textContent = p.role || "-";
+  $("pc-qbsit").textContent = p.qb_situation || "-";
+  $("pc-teamqb").textContent = p.team_qb || "-";
+  $("pc-handcuff").textContent = p.handcuff || "-";
+  const season = p.stats_season || "2024";
+  $("pc-season").textContent = season;
+  $("pc-season2").textContent = season;
+  $("pc-games").textContent = p.games_played || "0";
+  $("pc-snap").textContent = p.snap_share ? p.snap_share + "%" : "-";
+  $("pc-tgt").textContent = p.target_share ? p.target_share + "%" : "-";
+  $("pc-carry").textContent = p.carry_share ? p.carry_share + "%" : "-";
+  $("pc-rz").textContent = p.rz_share || "-";
+  $("pc-rush").textContent = p.rush_att ? `${p.rush_att} / ${p.rush_yds} / ${p.rush_td}` : "-";
+  $("pc-rec").textContent = p.rec ? `${p.rec} / ${p.rec_yds} / ${p.rec_td}` : "-";
+  $("pc-pass").textContent = p.pass_yds ? `${p.pass_yds} / ${p.pass_td}` : "-";
+  $("pc-pts").textContent = p.actual_ppg ? (p.actual_ppg * p.games_played).toFixed(1) : "-";
+  $("pc-exp").textContent = p.exp || "-";
+  $("pc-why").textContent = p.why || "-";
+  $("pc-risk").textContent = p.risk || "-";
+  $("playercard").style.display = "block";
+}
+function closePlayerCard() {
+  $("playercard").style.display = "none";
 }
 function byeWarn(p) {
   if (!p.bye || p.pos === "K" || p.pos === "DST") return "";
@@ -775,7 +883,7 @@ function render() {
       <td class="tierbar" style="background:${TIERC[p.tier]}"></td>
       <td class="rk">${p.overall}</td>
       <td class="pos ${p.pos}">${p.pos}${p.posRank}</td>
-      <td class="name" title="${p.exp.replace(/"/g, "&quot;")}\nRISK: ${p.risk.replace(/"/g, "&quot;")}${oppTooltip(p)}">${p.name}${p.team ? `<small>${p.team}${p.bye ? " · Bye " + p.bye : ""}</small>` : ""}</td>
+      <td class="name" title="${p.exp.replace(/"/g, "&quot;")}\nRISK: ${p.risk.replace(/"/g, "&quot;")}${oppTooltip(p)}" onclick="openPlayerCard(${p.overall})" style="cursor:pointer">${p.name}${p.team ? `<small>${p.team}${p.bye ? " · Bye " + p.bye : ""}${compactUsage(p)}</small>` : ""}</td>
       <td class="num">${p.score}</td><td class="num">${p.vorp}</td>
       <td class="num">${p.adp}</td><td class="num">${edge}</td>
       <td>${gone}</td><td class="act">${act}</td></tr>`);

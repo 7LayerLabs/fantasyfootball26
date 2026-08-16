@@ -61,7 +61,21 @@ for i, p in enumerate(players):
         "sample_note": p.get("sample_note", ""),
         "qb_situation": p.get("qb_situation", ""),
         "role": p.get("role", ""),
-        "opp_score": p.get("opp_score", 0)
+        "opp_score": p.get("opp_score", 0),
+        # Add counting stats
+        "rush_att": p.get("rush_att", 0),
+        "rush_yds": p.get("rush_yds", 0),
+        "rush_td": p.get("rush_td", 0),
+        "rec": p.get("rec", 0),
+        "rec_yds": p.get("rec_yds", 0),
+        "rec_td": p.get("rec_td", 0),
+        "pass_yds": p.get("pass_yds", 0),
+        "pass_td": p.get("pass_td", 0),
+        # Add detail fields
+        "team_qb": p.get("team_qb", ""),
+        "handcuff": p.get("handcuff", ""),
+        "age": p.get("age"),
+        "stats_season": p.get("stats_season")
     })
 
 # Sort by score (base rating proxy)
