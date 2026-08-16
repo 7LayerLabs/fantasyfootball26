@@ -16,6 +16,15 @@ data = json.load(open(SCRIPT_DIR / "board_data.json", encoding="utf-8"))
 lookup = {norm(p["name"]): p["overall"] for p in data}
 assert len(lookup) == len(data), "normalization collision in player pool"
 
+# Load camp watch list
+try:
+    camp_watch = json.load(open(SCRIPT_DIR / "camp_watch.json", encoding="utf-8"))
+    print(f"camp watch loaded: {len(camp_watch['watchlist'])} players")
+except FileNotFoundError:
+    camp_watch = {"watchlist": [], "instructions": ""}
+    print("camp_watch.json not found; skipping camp watch")
+
+
 # merge ESPN overall ranks (Yates top 160, scraped 8/12) so mock-draft bots can draft off ESPN's board
 try:
     espn = json.load(open(SCRIPT_DIR / "espn_parsed.json", encoding="utf-8"))
@@ -44,8 +53,10 @@ if misses:
 
 init = {"status": status, "hist": hist, "teams": 10, "slot": 9}
 tpl = open(SCRIPT_DIR / "board_template.html", encoding="utf-8").read()
-assert "__DATA__" in tpl and "__INIT__" in tpl
-out = tpl.replace("__DATA__", json.dumps(data)).replace("__INIT__", json.dumps(init))
+assert "__DATA__" in tpl and "__INIT__" in tpl and "__CAMP_WATCH__" in tpl
+out = (tpl.replace("__DATA__", json.dumps(data))
+          .replace("__INIT__", json.dumps(init))
+          .replace("__CAMP_WATCH__", json.dumps(camp_watch["watchlist"])))
 dest = WORKSPACE / "draft-board.html"
 open(dest, "w", encoding="utf-8").write(out)
 mine_names = [n for n, m in PICKS if m]
