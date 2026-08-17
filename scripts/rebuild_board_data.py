@@ -18,19 +18,41 @@ with open(PLAYERS_JSON, encoding="utf-8") as f:
 
 players = data["players"]
 
+# First pass: group by position and find positional baselines
+pos_groups = {"QB": [], "RB": [], "WR": [], "TE": [], "K": [], "DST": []}
+for p in players:
+    pos = p["pos"]
+    if pos in pos_groups:
+        pos_groups[pos].append(p)
+
+# Calculate position-specific replacement levels
+# For skill positions: use a standard replacement level
+# For K and DST: use a replacement level very close to the top player to minimize VORP
+replacement_levels = {
+    "QB": 70,
+    "RB": 70,
+    "WR": 70,
+    "TE": 70,
+    "K": 92,   # Close to top K rating (94) so VORP is small
+    "DST": 91  # Close to top DST rating (93) so VORP is small
+}
+
 # Build output in the same format as extract_board.py
-# Since we don't have Excel calcs, use the base rating and approximate other fields
 out = []
 for i, p in enumerate(players):
     rating = round(p["base"], 1)
+    pos = p["pos"]
     
-    # Approximate VORP and score from base rating
-    # These are rough approximations since we don't have Excel formulas
-    vorp_proxy = max(0, (rating - 70) * 2)
+    # Position-aware VORP calculation
+    replacement = replacement_levels.get(pos, 70)
+    vorp_proxy = max(0, (rating - replacement) * 2)
+    
+    # For skill positions, score is rating-based
+    # For K/DST, score is also rating-based but VORP is tiny
     score_proxy = rating
     
     out.append({
-        "pos": p["pos"],
+        "pos": pos,
         "name": p["player"],
         "team": p.get("team", ""),
         "bye": p.get("bye", 0),
@@ -78,8 +100,18 @@ for i, p in enumerate(players):
         "stats_season": p.get("stats_season")
     })
 
-# Sort by score (base rating proxy)
-out.sort(key=lambda p: -p["score"])
+# Separate skill positions from K/DST
+skill_players = [p for p in out if p["pos"] in ["QB", "RB", "WR", "TE"]]
+kickers = [p for p in out if p["pos"] == "K"]
+defenses = [p for p in out if p["pos"] == "DST"]
+
+# Sort each group by score (rating)
+skill_players.sort(key=lambda p: -p["score"])
+kickers.sort(key=lambda p: -p["score"])
+defenses.sort(key=lambda p: -p["score"])
+
+# Concatenate: skill positions first, then kickers, then defenses
+out = skill_players + kickers + defenses
 
 # Assign overall ranks and position ranks
 pos_counts = {}
