@@ -28,33 +28,39 @@
     height: 100vh; display: flex; flex-direction: column; overflow: hidden;
   }
   header {
-    display: flex; align-items: center; gap: 16px; padding: 16px 20px 14px;
+    display: flex; align-items: center; gap: 12px; padding: 10px 20px 8px;
     background: var(--bg); 
     border-bottom: 3px double var(--gold);
-    position: relative;
+    position: sticky; top: 0; z-index: 10;
   }
   header::after {
     content: ""; position: absolute; bottom: -1px; left: 0; right: 0; height: 1px; background: var(--gold);
   }
   header h1 { 
-    font: 700 14px/1 "Segoe UI", system-ui, sans-serif;
+    font: 700 12px/1 "Segoe UI", system-ui, sans-serif;
     letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold);
   }
   header h1 span { color: var(--text); font-weight: 800; }
   .pickmeta { 
-    margin-left: auto; display: flex; gap: 20px; align-items: center; 
-    font: 600 13px/1 "Segoe UI", system-ui, sans-serif; 
+    margin-left: auto; display: flex; gap: 14px; align-items: center; 
+    font: 600 12px/1 "Segoe UI", system-ui, sans-serif; 
     font-variant-numeric: tabular-nums; 
   }
-  .pickmeta .big { font-size: 22px; font-weight: 800; color: var(--gold); }
+  .pickmeta .statgroup {
+    display: flex; align-items: baseline; gap: 6px;
+  }
+  .pickmeta .big { font-size: 16px; font-weight: 800; color: var(--gold); }
   .pickmeta label { 
-    color: var(--gold); font-size: 10px; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 1.5px; 
+    color: var(--dim); font-size: 9px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 1px; 
   }
   .pickmeta input { 
-    width: 44px; background: var(--panel); color: var(--text); 
-    border: 1px solid var(--gold); border-radius: 0; padding: 4px 6px; 
-    font: 600 13px/1 "Segoe UI", system-ui, sans-serif; text-align: center; 
+    width: 36px; background: var(--panel); color: var(--text); 
+    border: 1px solid var(--line); border-radius: 0; padding: 3px 5px; 
+    font: 600 11px/1 "Segoe UI", system-ui, sans-serif; text-align: center; 
+  }
+  .pickmeta input:focus {
+    border-color: var(--gold); outline: none;
   }
   main { flex: 1; display: flex; min-height: 0; }
   #left { flex: 1; display: flex; flex-direction: column; min-width: 0; }
@@ -108,9 +114,9 @@
     border-bottom: 1px solid var(--gold); z-index: 2;
   }
   thead th.num, td.num { text-align: right; }
-  tbody tr { border-bottom: 1px solid #1a1f28; cursor: default; }
+  tbody tr { border-bottom: 1px solid #1a1f28; cursor: default; transition: background .15s; }
   tbody tr:hover { background: rgba(201,162,39,.04); }
-  tbody td { padding: 8px 8px; vertical-align: middle; }
+  tbody td { padding: 10px 8px; vertical-align: middle; }
   tr.hit { outline: 2px solid var(--gold); outline-offset: -2px; }
   .rk { 
     color: var(--gold); width: 44px; 
@@ -118,13 +124,13 @@
   }
   .tierbar { width: 4px; padding: 0; }
   .name { 
-    font: 800 16px/1.3 "Segoe UI Semibold", system-ui, sans-serif; 
-    white-space: nowrap; color: var(--text); letter-spacing: -0.3px;
+    font: 800 15px/1.3 "Segoe UI Semibold", system-ui, sans-serif; 
+    white-space: nowrap; color: var(--text); letter-spacing: -0.2px;
   }
   .name small { 
-    color: var(--accent); 
-    font: 600 11px/1 "Segoe UI", system-ui, sans-serif; 
-    margin-left: 8px; letter-spacing: 0.5px;
+    color: var(--dim); 
+    font: 600 10.5px/1 "Segoe UI", system-ui, sans-serif; 
+    margin-left: 7px; letter-spacing: 0.3px; font-weight: 500;
   }
   .pos { 
     font: 700 11px/1 "Segoe UI", system-ui, sans-serif; 
@@ -142,27 +148,71 @@
   tr.taken .name, tr.taken .pos { text-decoration: line-through; color: #4b5563; }
   tr.mine { background: rgba(63,185,80,.06); border-left: 2px solid var(--accent); }
   tr.mine .name { color: var(--accent); }
-  .act { white-space: nowrap; width: 148px; }
+  .act { white-space: nowrap; width: 148px; opacity: 0; transition: opacity .15s; }
+  tbody tr:hover .act, tbody tr:focus-within .act { opacity: 1; }
+  @media (pointer: coarse) {
+    .act { opacity: 1; }
+  }
   .act button {
     border: 1px solid var(--line); background: none; color: var(--dim);
-    border-radius: 0; padding: 4px 9px; margin-left: 4px; cursor: pointer; 
-    font: 700 10px/1 "Segoe UI", system-ui, sans-serif;
+    border-radius: 0; padding: 3px 8px; margin-left: 3px; cursor: pointer; 
+    font: 700 9px/1 "Segoe UI", system-ui, sans-serif;
     text-transform: uppercase; letter-spacing: 0.5px;
     transition: all .15s;
   }
   .act button:hover { color: var(--text); border-color: var(--gold); }
-  .act .undo1 { color: var(--blue); }
+  .act button:focus { outline: 2px solid var(--gold); outline-offset: 1px; }
+  .act .undo1 { color: var(--blue); opacity: 1; }
   #side {
-    width: 340px; flex: none; overflow-y: auto; background: var(--bg);
-    border-left: 3px double var(--gold); padding: 16px 14px;
+    width: 360px; flex: none; overflow-y: auto; background: var(--bg);
+    border-left: 3px double var(--gold); padding: 0;
+    position: sticky; top: 54px; height: calc(100vh - 54px);
+  }
+  .side-section {
+    border-bottom: 1px solid var(--line);
+  }
+  .side-section.primary {
+    background: rgba(201,162,39,.02);
+    border-bottom: 3px double var(--gold);
+    position: relative;
+  }
+  .side-section.primary::after {
+    content: ""; position: absolute; bottom: -1px; left: 0; right: 0; height: 1px; background: var(--gold);
+  }
+  .section-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 16px; cursor: pointer; user-select: none;
+    transition: background .15s;
+  }
+  .section-header:hover {
+    background: rgba(201,162,39,.04);
+  }
+  .section-header h2 { 
+    font: 700 10px/1 "Segoe UI", system-ui, sans-serif;
+    text-transform: uppercase; letter-spacing: 2px; color: var(--gold); 
+    margin: 0;
+  }
+  .section-toggle {
+    color: var(--dim); font-size: 16px; line-height: 1;
+    transition: transform .15s;
+  }
+  .side-section.collapsed .section-toggle {
+    transform: rotate(-90deg);
+  }
+  .section-body {
+    padding: 0 16px 14px;
+    max-height: 1000px;
+    overflow: hidden;
+    transition: max-height .2s ease-out, padding .2s ease-out;
+  }
+  .side-section.collapsed .section-body {
+    max-height: 0;
+    padding: 0 16px;
   }
   .card { 
     background: none; 
-    border: 3px double var(--gold); border-radius: 0; 
-    padding: 14px 12px 12px; margin-bottom: 16px; position: relative;
-  }
-  .card::before {
-    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: var(--gold);
+    border: none; border-radius: 0; 
+    padding: 0; margin: 0;
   }
   .card h2 { 
     font: 700 10px/1 "Segoe UI", system-ui, sans-serif;
@@ -171,99 +221,108 @@
   }
   #suggest .s1 { 
     font: 800 18px/1.2 "Segoe UI Semibold", system-ui, sans-serif; 
-    letter-spacing: -0.3px;
+    letter-spacing: -0.3px; margin-bottom: 8px;
   }
   #suggest .why { 
-    color: var(--dim); font-size: 12px; line-height: 1.6; margin: 6px 0 12px; 
+    color: var(--text); font-size: 12px; line-height: 1.6; margin: 6px 0 10px;
+    font-weight: 400;
   }
-  .legend { 
-    color: var(--dim); font-size: 10.5px; line-height: 1.5; 
-    margin-top: 10px; border-top: 1px solid var(--gold); padding-top: 8px; 
+  #suggest .wait-cue {
+    color: var(--dim); font-size: 11px; line-height: 1.5; 
+    padding: 8px 10px; background: rgba(201,162,39,.04);
+    border-left: 2px solid var(--gold); margin-top: 8px;
   }
-  #lenses { display: flex; flex-wrap: wrap; gap: 2px; margin-bottom: 12px; }
+  #suggest .wait-cue strong {
+    color: var(--gold); font-weight: 700;
+  }
+  #lenses { display: flex; flex-wrap: wrap; gap: 3px; margin-bottom: 12px; }
   .lens { 
     background: none; border: 1px solid var(--line); color: var(--dim); 
-    border-radius: 0; padding: 5px 9px; cursor: pointer; 
-    font: 700 10px/1 "Segoe UI", system-ui, sans-serif;
-    text-transform: uppercase; letter-spacing: 1px;
+    border-radius: 0; padding: 4px 8px; cursor: pointer; 
+    font: 700 9px/1 "Segoe UI", system-ui, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
     transition: all .15s;
   }
   .lens:hover { border-color: var(--gold); color: var(--text); }
+  .lens:focus { outline: 2px solid var(--gold); outline-offset: 1px; }
   .lens.on { color: #0d1117; background: var(--gold); border-color: var(--gold); }
   #suggest .alt { 
-    font: 600 12px/1.5 "Segoe UI", system-ui, sans-serif; 
-    color: var(--text); padding: 4px 0; border-top: 1px solid var(--line); 
+    font: 600 11.5px/1.5 "Segoe UI", system-ui, sans-serif; 
+    color: var(--text); padding: 6px 0; border-top: 1px solid var(--line); 
   }
-  #suggest .alt span { color: var(--accent); }
+  #suggest .alt span { color: var(--dim); font-size: 10.5px; }
   .rosterrow { 
-    display: flex; gap: 8px; padding: 4px 0; 
-    font: 600 12.5px/1.3 "Segoe UI", system-ui, sans-serif;
+    display: flex; gap: 8px; padding: 3px 0; 
+    font: 600 12px/1.3 "Segoe UI", system-ui, sans-serif;
     font-variant-numeric: tabular-nums; 
   }
   .rosterrow .slot { 
-    width: 42px; color: var(--gold); 
-    font: 700 10px/1.5 "Segoe UI", system-ui, sans-serif; 
+    width: 38px; color: var(--gold); 
+    font: 700 9.5px/1.5 "Segoe UI", system-ui, sans-serif; 
     text-transform: uppercase; letter-spacing: 0.5px;
   }
   .rosterrow .who { flex: 1; }
   .rosterrow .who.empty { color: #3d4653; font-style: italic; }
   .bestrow { 
-    display: flex; gap: 8px; padding: 4px 0; 
-    font: 600 12.5px/1.3 "Segoe UI", system-ui, sans-serif;
+    display: flex; gap: 8px; padding: 3px 0; 
+    font: 600 12px/1.3 "Segoe UI", system-ui, sans-serif;
   }
   .bestrow .p { 
-    width: 36px; 
-    font: 700 11px/1.3 "Segoe UI", system-ui, sans-serif; 
+    width: 34px; 
+    font: 700 10px/1.3 "Segoe UI", system-ui, sans-serif; 
   }
   .bestrow .n { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .bestrow .v { color: var(--accent); font-variant-numeric: tabular-nums; }
-  .campwatch { font-size: 12px; line-height: 1.6; }
+  .bestrow .v { color: var(--dim); font-variant-numeric: tabular-nums; font-size: 10.5px; }
+  .campwatch { font-size: 11.5px; line-height: 1.6; }
   .campwatch-player { padding: 5px 0; border-bottom: 1px solid var(--line); }
   .campwatch-player:last-child { border-bottom: none; }
   .campwatch-player .cw-name { 
-    font: 700 13px/1.3 "Segoe UI", system-ui, sans-serif; 
+    font: 700 12px/1.3 "Segoe UI", system-ui, sans-serif; 
   }
   .campwatch-player .cw-pos { 
-    font: 700 10px/1 "Segoe UI", system-ui, sans-serif; 
-    margin-left: 6px; letter-spacing: 0.5px;
+    font: 700 9px/1 "Segoe UI", system-ui, sans-serif; 
+    margin-left: 5px; letter-spacing: 0.5px;
   }
-  .campwatch-player .cw-note { color: var(--dim); font-size: 11px; margin-top: 3px; }
+  .campwatch-player .cw-note { color: var(--dim); font-size: 10.5px; margin-top: 3px; }
   .campwatch-badge { 
     display: inline-block; background: var(--red); color: #0d1117; 
     font: 700 8px/1 "Segoe UI", system-ui, sans-serif; 
     padding: 2px 5px; border-radius: 0; margin-left: 4px; letter-spacing: 1px;
     text-transform: uppercase;
   }
-  #topbtns { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .legend { 
+    color: var(--dim); font-size: 10px; line-height: 1.5; 
+    margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line);
+  }
+  #topbtns { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
   .ghost { 
     background: none; border: 1px solid var(--line); color: var(--dim); 
-    border-radius: 0; padding: 8px 7px; cursor: pointer; 
-    font: 600 11px/1 "Segoe UI", system-ui, sans-serif;
+    border-radius: 0; padding: 7px 6px; cursor: pointer; 
+    font: 600 10px/1 "Segoe UI", system-ui, sans-serif;
     transition: all .15s;
   }
   .ghost:hover { color: var(--text); border-color: var(--gold); }
+  .ghost:focus { outline: 2px solid var(--gold); outline-offset: 1px; }
   .ghost.danger:hover { color: var(--red); border-color: var(--red); }
   .onclock { 
     background: var(--gold); color: #0d1117; 
-    font: 800 12px/1 "Segoe UI", system-ui, sans-serif; 
-    text-align: center; border-radius: 0; padding: 8px; margin-bottom: 12px; 
+    font: 800 11px/1 "Segoe UI", system-ui, sans-serif; 
+    text-align: center; border-radius: 0; padding: 7px 8px; margin-bottom: 10px; 
     letter-spacing: 2px; text-transform: uppercase;
   }
   .alertrow { 
     border-left: 3px solid var(--gold); background: rgba(201,162,39,.06); 
-    border-radius: 0; padding: 8px 10px; margin-bottom: 10px; 
-    font-size: 11.5px; line-height: 1.5; 
+    border-radius: 0; padding: 8px 10px; margin-bottom: 8px; 
+    font-size: 11px; line-height: 1.5; 
   }
-  .watchcell { width: 22px; cursor: pointer; text-align: center; }
-  .watchcell svg { vertical-align: middle; }
   .qrow { 
-    display: flex; gap: 8px; padding: 4px 0; 
-    font: 600 12px/1.3 "Segoe UI", system-ui, sans-serif; 
+    display: flex; gap: 8px; padding: 3px 0; 
+    font: 600 11.5px/1.3 "Segoe UI", system-ui, sans-serif; 
     align-items: center; 
   }
   .qrow .n { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .qrow .risk { 
-    font: 700 10px/1 "Segoe UI", system-ui, sans-serif; 
+    font: 700 9px/1 "Segoe UI", system-ui, sans-serif; 
     font-variant-numeric: tabular-nums; color: var(--accent);
   }
   .qrow .qx { 
@@ -273,17 +332,94 @@
     padding: 2px 6px; text-transform: uppercase; letter-spacing: 0.5px;
   }
   .qrow .qx:hover { color: var(--red); border-color: var(--red); }
+  .qrow .qx:focus { outline: 2px solid var(--gold); outline-offset: 1px; }
   .pickbtn { 
     background: var(--accent); color: #0d1117; border: none; border-radius: 0; 
-    padding: 4px 12px; cursor: pointer; 
-    font: 700 11px/1 "Segoe UI", system-ui, sans-serif; 
+    padding: 4px 11px; cursor: pointer; 
+    font: 700 10px/1 "Segoe UI", system-ui, sans-serif; 
     vertical-align: middle; margin-left: 8px; text-transform: uppercase; letter-spacing: 0.5px;
+    transition: filter .15s;
   }
   .pickbtn:hover { filter: brightness(1.15); }
+  .pickbtn:focus { outline: 2px solid var(--accent); outline-offset: 2px; }
   .pickbtn.alt-pick { 
-    padding: 3px 8px; 
-    font: 700 10px/1 "Segoe UI", system-ui, sans-serif; 
+    padding: 3px 7px; 
+    font: 700 9px/1 "Segoe UI", system-ui, sans-serif; 
     margin-left: 4px; 
+  }
+  .watchcell { width: 22px; cursor: pointer; text-align: center; }
+  .watchcell svg { vertical-align: middle; }
+  
+  /* Responsive: tablet and below */
+  @media (max-width: 1099px) {
+    #side {
+      width: 320px;
+    }
+    .name { font-size: 14px; }
+    tbody td { padding: 9px 6px; }
+  }
+  
+  /* Responsive: phone */
+  @media (max-width: 699px) {
+    body { height: 100dvh; }
+    header {
+      flex-wrap: wrap; padding: 8px 12px;
+    }
+    .pickmeta {
+      gap: 10px; font-size: 11px;
+    }
+    .pickmeta .big { font-size: 14px; }
+    .pickmeta input { width: 32px; font-size: 10px; padding: 2px 4px; }
+    main {
+      flex-direction: column;
+    }
+    #side {
+      position: fixed; bottom: 0; left: 0; right: 0; top: auto;
+      width: 100%; height: auto; max-height: 50vh;
+      border-left: none; border-top: 3px double var(--gold);
+      z-index: 20; overflow-y: auto;
+    }
+    #side::before {
+      content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: var(--gold); z-index: 1;
+    }
+    #left {
+      padding-bottom: 60px;
+    }
+    #controls {
+      flex-wrap: wrap; padding: 10px 12px; gap: 6px;
+    }
+    #search { min-width: 100%; font-size: 14px; }
+    .fbtn, .bchip { font-size: 10px; padding: 6px 8px; }
+    .hint { display: none; }
+    table { font-size: 12px; }
+    thead th { font-size: 9px; padding: 8px 4px; }
+    tbody td { padding: 8px 4px; font-size: 11px; }
+    .name { font-size: 13px; }
+    .name small { font-size: 9.5px; margin-left: 5px; }
+    .rk { font-size: 11px; width: 36px; }
+    .pos { width: 40px; font-size: 10px; }
+    .watchcell { width: 18px; }
+    .watchcell svg { width: 10px; height: 10px; }
+    .num { font-size: 10px; }
+    .act { width: auto; opacity: 1; }
+    .act button { padding: 3px 6px; font-size: 8px; margin-left: 2px; }
+    .col-vorp, .col-score { display: none; }
+    .side-section.primary { position: sticky; top: 0; z-index: 2; }
+    .section-body { padding: 0 12px 12px; }
+    #suggest .s1 { font-size: 16px; }
+    #suggest .why { font-size: 11px; }
+    .pickbtn { padding: 4px 10px; font-size: 9px; }
+    .onclock { font-size: 10px; padding: 6px; }
+    .legend { font-size: 9px; }
+  }
+  
+  /* Reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
   #recap { 
     position: fixed; inset: 0; background: rgba(13,17,23,.98); 
@@ -447,20 +583,22 @@
     margin-bottom: 10px; 
   }
   .pc-drop { 
-    margin: 24px 32px; padding: 18px 20px 16px; 
+    margin: 24px 32px; padding: 0; 
     background: rgba(201,162,39,.04); 
     border: 2px solid var(--gold); border-radius: 0; 
-    font-size: 13px; line-height: 1.65; color: var(--text); 
   }
   .pc-drop-label { 
     font: 700 9px/1 "Segoe UI", system-ui, sans-serif;
     text-transform: uppercase; letter-spacing: 2px; color: var(--gold); 
-    margin-bottom: 10px; 
+    padding: 14px 20px 0; 
+  }
+  .pc-drop-text {
+    padding: 10px 20px 14px;
+    font-size: 13px; line-height: 1.65; color: var(--text);
   }
   .pc-wait { 
-    margin: 24px 32px; padding: 18px 20px 16px; 
-    background: rgba(201,162,39,.04); 
-    border: 2px solid var(--gold); border-radius: 0; 
+    padding: 14px 20px 16px;
+    border-top: 1px solid var(--gold);
     font-size: 13px; line-height: 1.65; color: var(--text); 
   }
   .pc-wait-label { 
@@ -498,11 +636,11 @@
 <header>
   <h1>2026 <span>Draft Board</span></h1>
   <div class="pickmeta">
-    <div><label>On the clock</label><div class="big" id="curpick">1.01</div></div>
-    <div><label>My next</label><div class="big" id="mynext" style="color:var(--green)">-</div></div>
-    <div><label>My team</label><br><input id="myname" type="text" maxlength="24" style="width:130px;text-align:left" placeholder="My Team"></div>
-    <div><label>Teams</label><br><input id="teams" type="number" min="8" max="16" value="10"></div>
-    <div><label>My slot</label><br><input id="slot" type="number" min="1" max="16" value="5"></div>
+    <div class="statgroup"><label>On clock</label><div class="big" id="curpick">1.01</div></div>
+    <div class="statgroup"><label>My next</label><div class="big" id="mynext" style="color:var(--green)">-</div></div>
+    <div class="statgroup"><label>League</label><input id="myname" type="text" maxlength="20" style="width:100px;text-align:left" placeholder="My Team"></div>
+    <div class="statgroup"><label>Teams</label><input id="teams" type="number" min="8" max="16" value="10"></div>
+    <div class="statgroup"><label>Slot</label><input id="slot" type="number" min="1" max="16" value="5"></div>
   </div>
 </header>
 <div id="ticker"></div>
@@ -524,38 +662,95 @@
     </div>
     <div id="board"><table>
       <thead><tr>
-        <th></th><th></th><th class="rk">#</th><th>Pos</th><th>Player</th><th class="num">Score</th>
-        <th class="num" title="Season points above a waiver-wire replacement at his position">VORP</th><th class="num" title="Average Draft Position: the pick where drafts usually take him">ADP</th><th class="num" title="ADP minus our rank. Positive = bargain, he lasts longer than he should. Negative = a reach at this pick.">Value +/-</th><th></th><th class="act"></th>
+        <th></th><th></th><th class="rk">#</th><th>Pos</th><th>Player</th><th class="num col-score">Score</th>
+        <th class="num col-vorp" title="Season points above a waiver-wire replacement at his position">VORP</th><th class="num" title="Average Draft Position: the pick where drafts usually take him">ADP</th><th class="num" title="ADP minus our rank. Positive = bargain, he lasts longer than he should. Negative = a reach at this pick.">Value +/-</th><th></th><th class="act"></th>
       </tr></thead>
       <tbody id="rows"></tbody>
     </table></div>
   </div>
   <div id="side">
     <div id="alerts"></div>
-    <div class="card" id="suggest"><h2>Draft next</h2>
-      <div id="lenses">
-        <button class="lens on" data-l="best">Best Pick</button><button class="lens" data-l="value">Value</button><button class="lens" data-l="sleeper">Sleeper</button><button class="lens" data-l="rookie">Rookie</button><button class="lens" data-l="safe">Safe</button><button class="lens" data-l="upside">Upside</button><button class="lens" data-l="opp">Touches</button>
+    
+    <div class="side-section primary">
+      <div class="section-body">
+        <div class="card" id="suggest">
+          <h2>Pick now</h2>
+          <div id="lenses">
+            <button class="lens on" data-l="best">Best</button><button class="lens" data-l="value">Value</button><button class="lens" data-l="sleeper">Sleeper</button><button class="lens" data-l="rookie">Rookie</button><button class="lens" data-l="safe">Safe</button><button class="lens" data-l="upside">Upside</button><button class="lens" data-l="opp">Touches</button>
+          </div>
+          <div id="sugbody"></div>
+        </div>
       </div>
-      <div id="sugbody"></div></div>
-    <div class="card" id="queuecard" style="display:none"><h2>My watchlist</h2><div id="queue"></div>
-      <div class="legend">Percentage = chance he is still on the board at your next turn, from live market prices.</div></div>
-    <div class="card"><h2>Best available by position</h2><div id="bestpos"></div></div>
-    <div class="card"><h2>My roster</h2><div id="roster"></div></div>
-    <div class="card"><h2>Camp watch <span class="campwatch-badge">NO MODEL</span></h2>
-      <div class="campwatch" id="campwatch"></div>
-      <div class="legend">Late-breaking camp names not yet in the 230-player pool. No model rating. Track manually.</div>
     </div>
-    <div class="card"><h2>My team so far</h2><div id="gradebody" class="why" style="margin:0"></div></div>
-    <div class="card" id="topbtns-card"><h2>Draft controls</h2>
-      <div id="topbtns">
-        <button class="ghost" id="mockbtn" style="color:var(--hivis)">Start mock draft</button>
-        <button class="ghost" id="speedbtn" title="Quick: opponents pick instantly. Normal: opponents take 15 seconds to 2 minutes per pick, real lobby pacing.">Speed: Quick</button>
-        <button class="ghost" id="slotmode" title="Random: every mock deals you a fresh seat, like a real lobby. Manual: mocks use whatever My Slot says, for practicing one seat.">Mock seat: Random</button>
-        <button class="ghost" id="regen" title="Re-deals your slot and re-rolls the opponents">New draft order</button>
-        <button class="ghost" id="undo">Undo last</button>
-        <button class="ghost danger" id="reset">Reset draft</button>
+    
+    <div class="side-section" id="queuecard-section" style="display:none">
+      <div class="section-header" onclick="toggleSection('queuecard-section')">
+        <h2>My watchlist</h2>
+        <span class="section-toggle">▼</span>
       </div>
-      <div class="legend">Mocks deal you a random seat (switch Mock seat to Manual to practice a specific slot). Picks are on a 1:00 clock; at zero the app drafts your top watchlist player, or the top suggestion if the list is empty.</div>
+      <div class="section-body">
+        <div id="queue"></div>
+        <div class="legend">Percentage = chance he is still on the board at your next turn, from live market prices.</div>
+      </div>
+    </div>
+    
+    <div class="side-section collapsed">
+      <div class="section-header" onclick="toggleSection(this.parentElement)">
+        <h2>Best available by position</h2>
+        <span class="section-toggle">▼</span>
+      </div>
+      <div class="section-body">
+        <div id="bestpos"></div>
+      </div>
+    </div>
+    
+    <div class="side-section collapsed">
+      <div class="section-header" onclick="toggleSection(this.parentElement)">
+        <h2>My roster</h2>
+        <span class="section-toggle">▼</span>
+      </div>
+      <div class="section-body">
+        <div id="roster"></div>
+      </div>
+    </div>
+    
+    <div class="side-section collapsed">
+      <div class="section-header" onclick="toggleSection(this.parentElement)">
+        <h2>Camp watch <span class="campwatch-badge">NO MODEL</span></h2>
+        <span class="section-toggle">▼</span>
+      </div>
+      <div class="section-body">
+        <div class="campwatch" id="campwatch"></div>
+        <div class="legend">Late-breaking camp names not yet in the 230-player pool. No model rating. Track manually.</div>
+      </div>
+    </div>
+    
+    <div class="side-section collapsed">
+      <div class="section-header" onclick="toggleSection(this.parentElement)">
+        <h2>My team so far</h2>
+        <span class="section-toggle">▼</span>
+      </div>
+      <div class="section-body">
+        <div id="gradebody" class="why" style="margin:0; color:var(--text);"></div>
+      </div>
+    </div>
+    
+    <div class="side-section collapsed" id="topbtns-card">
+      <div class="section-header" onclick="toggleSection(this.parentElement)">
+        <h2>Draft controls</h2>
+        <span class="section-toggle">▼</span>
+      </div>
+      <div class="section-body">
+        <div id="topbtns">
+          <button class="ghost" id="mockbtn" style="color:var(--hivis)">Start mock</button>
+          <button class="ghost" id="speedbtn" title="Quick: opponents pick instantly. Normal: opponents take 15 seconds to 2 minutes per pick, real lobby pacing.">Speed: Quick</button>
+          <button class="ghost" id="slotmode" title="Random: every mock deals you a fresh seat, like a real lobby. Manual: mocks use whatever My Slot says, for practicing one seat.">Seat: Random</button>
+          <button class="ghost" id="regen" title="Re-deals your slot and re-rolls the opponents">New order</button>
+          <button class="ghost" id="undo">Undo last</button>
+          <button class="ghost danger" id="reset">Reset draft</button>
+        </div>
+        <div class="legend">Mocks deal you a random seat (switch to Manual to practice a specific slot). Picks are on a 1:00 clock; at zero the app drafts your top watchlist player, or the top suggestion if the list is empty.</div>
+      </div>
     </div>
   </div>
 </main>
@@ -586,11 +781,11 @@
     </div>
     <div class="pc-drop" id="pc-drop-box" style="display:none">
       <div class="pc-drop-label">The Drop</div>
-      <div id="pc-drop-text"></div>
-    </div>
-    <div class="pc-wait" id="pc-wait-box" style="display:none">
-      <div class="pc-wait-label">Wait</div>
-      <div id="pc-wait-text"></div>
+      <div class="pc-drop-text" id="pc-drop-text"></div>
+      <div class="pc-wait" id="pc-wait-inner">
+        <div class="pc-wait-label">Wait</div>
+        <div id="pc-wait-text"></div>
+      </div>
     </div>
     <div class="pc-text" id="pc-extra"></div>
     <div class="pc-footer" id="pc-footer"></div>
@@ -621,6 +816,11 @@ const $ = id => document.getElementById(id);
 const save = () => localStorage.setItem(KEY, JSON.stringify(st));
 const picksMade = () => st.hist.length;
 const fmtPick = n => Math.ceil(n / st.teams) + "." + String((n - 1) % st.teams + 1).padStart(2, "0");
+
+function toggleSection(el) {
+  if (typeof el === 'string') el = document.getElementById(el);
+  el.classList.toggle('collapsed');
+}
 
 function myPicks() {  // snake pick numbers for my slot
   const out = [];
@@ -1148,23 +1348,14 @@ function openPlayerCard(overall) {
   // Drop box (always show for skill positions)
   if (p.pos !== "K" && p.pos !== "DST") {
     $("pc-drop-text").textContent = generateDrop(p);
+    $("pc-wait-text").innerHTML = generateWait(p);
     $("pc-drop-box").style.display = "block";
   } else if (p.posRank) {
     $("pc-drop-text").textContent = generateDrop(p);
+    $("pc-wait-text").innerHTML = generateWait(p);
     $("pc-drop-box").style.display = "block";
   } else {
     $("pc-drop-box").style.display = "none";
-  }
-  
-  // Wait box (always show for skill positions)
-  if (p.pos !== "K" && p.pos !== "DST") {
-    $("pc-wait-text").innerHTML = generateWait(p);
-    $("pc-wait-box").style.display = "block";
-  } else if (p.posRank) {
-    $("pc-wait-text").innerHTML = generateWait(p);
-    $("pc-wait-box").style.display = "block";
-  } else {
-    $("pc-wait-box").style.display = "none";
   }
   
   // Extra text (only if adds something)
@@ -1553,7 +1744,7 @@ function render() {
       <td class="rk">${p.overall}</td>
       <td class="pos ${p.pos}">${p.pos}${p.posRank}</td>
       <td class="name" title="${p.exp.replace(/"/g, "&quot;")}\nRISK: ${p.risk.replace(/"/g, "&quot;")}${oppTooltip(p)}" onclick="openPlayerCard(${p.overall})" style="cursor:pointer">${p.name}${p.team ? `<small>${p.team}${p.bye ? " · Bye " + p.bye : ""}${compactUsage(p)}</small>` : ""}</td>
-      <td class="num">${p.score}</td><td class="num">${p.vorp}</td>
+      <td class="num col-score">${p.score}</td><td class="num col-vorp">${p.vorp}</td>
       <td class="num">${p.adp}</td><td class="num">${edge}</td>
       <td>${gone}</td><td class="act">${act}</td></tr>`);
   }
@@ -1564,8 +1755,8 @@ function render() {
     + alerts().map(a => `<div class="alertrow">${a}</div>`).join("");
   if (mockDone && !recapClosed && $("recap").style.display !== "block") showRecap();
 
-  $("mockbtn").textContent = mockOn() ? "End mock" : "Start mock draft";
-  $("slotmode").textContent = st.randSlot ? "Mock seat: Random" : "Mock seat: Manual";
+  $("mockbtn").textContent = mockOn() ? "End mock" : "Start mock";
+  $("slotmode").textContent = st.randSlot ? "Seat: Random" : "Seat: Manual";
   $("speedbtn").textContent = st.speed === "normal" ? "Speed: Normal" : "Speed: Quick";
   document.querySelectorAll(".bchip").forEach(b => b.classList.toggle("on", !!st.block[b.dataset.b]));
 
@@ -1594,20 +1785,32 @@ function render() {
   ensureClock();
   const clockTag = mockOn() && onClock ? ` <span id="clockleft" style="font-variant-numeric:tabular-nums">1:00</span>` : "";
   const sug = suggestions();
+  
+  // Build wait cue for primary recommendation
+  let waitCue = "";
+  if (sug.length > 1) {
+    const s = sug[1];
+    const t = waitTarget();
+    const pct = t ? Math.round(survival(s.p, t) * 100) : 100;
+    const waitWord = pct >= 75 ? "likely" : pct >= 45 ? "could" : "probably won't";
+    waitCue = `<div class="wait-cue"><strong>Then wait:</strong> ${s.p.name} (${s.p.pos}${s.p.posRank}) ${waitWord} lasts to your next pick${pct < 100 ? " (" + pct + "% chance)" : ""}. ${s.need.charAt(0).toUpperCase() + s.need.slice(1)}.</div>`;
+  }
+  
   $("sugbody").innerHTML = (onClock ? `<div class="onclock">YOU ARE ON THE CLOCK${clockTag}</div>` : "") + (sug.length
     ? `<div class="s1">${sug[0].p.name} <span class="pos ${sug[0].p.pos}">${sug[0].p.pos}${sug[0].p.posRank}</span>
          <button class="pickbtn" onclick="mark(${sug[0].p.overall},'M')">Pick</button></div>
-       <div class="why">${writeup(sug[0])}${passOdds(sug[0].p)}</div>` +
-      sug.slice(1).map(s => { const t = waitTarget(); const pct = t ? Math.round(survival(s.p, t) * 100) + "% to last" : ""; return `<div class="alt">${s.p.name} <button class="pickbtn alt-pick" onclick="mark(${s.p.overall},'M')">Pick</button> <span>${s.p.pos}${s.p.posRank} - ${s.need}${Math.round(s.p.edge) >= 5 ? ", falling " + Math.round(s.p.edge) + " picks past his value" : ""}${pct ? " · " + pct : ""}</span></div>`; }).join("")
+       <div class="why">${writeup(sug[0])}${passOdds(sug[0].p)}</div>${waitCue}` +
+      sug.slice(2).map(s => { const t = waitTarget(); const pct = t ? Math.round(survival(s.p, t) * 100) + "% to last" : ""; return `<div class="alt">${s.p.name} <button class="pickbtn alt-pick" onclick="mark(${s.p.overall},'M')">Pick</button> <span>${s.p.pos}${s.p.posRank} - ${s.need.toLowerCase()}${Math.round(s.p.edge) >= 5 ? ", falling " + Math.round(s.p.edge) + " picks" : ""}${pct ? " · " + pct : ""}</span></div>`; }).join("")
     : "No available player fits this lens right now. Try another button.");
 
   const watched = PLAYERS.filter(p => st.watch[p.overall] && !st.status[p.overall] && !st.out[p.overall]);
-  $("queuecard").style.display = watched.length ? "" : "none";
+  const qsec = document.getElementById("queuecard-section");
+  if (qsec) qsec.style.display = watched.length ? "" : "none";
   const wt = waitTarget();
   $("queue").innerHTML = watched.map(p => {
     const s = wt ? Math.round(survival(p, wt) * 100) : 100;
     const col = s < 45 ? "var(--red)" : s < 75 ? "var(--hivis)" : "var(--green)";
-    return `<div class="qrow"><span class="pos ${p.pos}" style="width:40px;font-weight:700">${p.pos}${p.posRank}</span><span class="n">${p.name}</span><span class="risk" style="color:${col}">${s < 45 ? "AT RISK " + s + "%" : s + "%"}</span><button class="qx" onclick="toggleWatch(${p.overall})" title="Remove from watchlist">x</button></div>`;
+    return `<div class="qrow"><span class="pos ${p.pos}" style="width:38px;font-weight:700">${p.pos}${p.posRank}</span><span class="n">${p.name}</span><span class="risk" style="color:${col}">${s < 45 ? "AT RISK " + s + "%" : s + "%"}</span><button class="qx" onclick="toggleWatch(${p.overall})" title="Remove from watchlist">x</button></div>`;
   }).join("");
 
   $("gradebody").innerHTML = teamReport();
@@ -1621,8 +1824,8 @@ function render() {
     const v = b ? (b.vorp >= 0 ? "+" : "") + Math.round(b.vorp) : "";
     return `<div class="bestrow" title="${b ? "Our #" + b.overall + " overall. Projected " + v + " season points vs a waiver-wire " + pos + "." : ""}"><span class="p pos ${pos}">${pos}</span>
       <span class="n">${b ? b.name : "none left"}</span>
-      <span class="v">${b ? "our #" + b.overall + ", " + v + " pts" : ""}</span></div>`;
-  }).join("") + `<div class="legend">"our #" = rank on our board. "+pts" = season points he gives you over a waiver-wire pickup at that spot. Bigger = harder to replace.</div>`;
+      <span class="v">${b ? "#" + b.overall + (v ? ", " + v + " pts" : "") : ""}</span></div>`;
+  }).join("") + `<div class="legend">"#" = rank on our board. "+pts" = season points above a waiver-wire pickup. Bigger = harder to replace.</div>`;
 
   $("campwatch").innerHTML = CAMP_WATCH.map(p => {
     const posClass = p.pos === "QB" ? "QB" : p.pos === "RB" ? "RB" : p.pos === "WR" ? "WR" : p.pos === "TE" ? "TE" : "";
