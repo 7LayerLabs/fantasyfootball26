@@ -648,10 +648,55 @@ for nm, rng in err_ranges:
     rr += 1
 
 # =====================================================================
+# Player Detail: all player info from players.json in one sheet
+# =====================================================================
+pd_ws = sheet2("Player Detail",
+               "Player Detail: complete player profiles from players.json (opportunity + situation + counting stats)",
+               ["Pos", "Player", "Team", "Bye", "Base", "ADP", "Role", "QB Sit", "Team QB",
+                "Snap%", "Tgt%", "Carry%", "RZ", "Games", "Rush Att", "Rush Yds", "Rush TD",
+                "Rec", "Rec Yds", "Rec TD", "Pass Yds", "Pass TD", "Age", "Handcuff/Committee",
+                "Sample Note", "Expectation", "Why", "Risk"],
+               [6, 22, 6, 6, 10, 10, 12, 10, 18, 8, 8, 8, 8, 8, 10, 10, 8, 8, 10, 8, 10, 8, 6, 30, 30, 50, 60, 50],
+               tab_color="9370DB")
+
+for i, p in enumerate(players):
+    r = DS + i
+    pd_ws.cell(r, 1, p["pos"])
+    pd_ws.cell(r, 2, p["player"])
+    pd_ws.cell(r, 3, p.get("team", ""))
+    pd_ws.cell(r, 4, p.get("bye") or "")
+    pd_ws.cell(r, 5, round(p["base"], 1))
+    pd_ws.cell(r, 6, round(p["adp"], 1))
+    pd_ws.cell(r, 7, p.get("role", ""))
+    pd_ws.cell(r, 8, p.get("qb_situation", ""))
+    pd_ws.cell(r, 9, p.get("team_qb", ""))
+    pd_ws.cell(r, 10, p.get("snap_share", 0))
+    pd_ws.cell(r, 11, p.get("target_share", 0))
+    pd_ws.cell(r, 12, p.get("carry_share", 0))
+    pd_ws.cell(r, 13, p.get("rz_share", 0))
+    pd_ws.cell(r, 14, p.get("games_played", 0))
+    pd_ws.cell(r, 15, p.get("rush_att", 0))
+    pd_ws.cell(r, 16, p.get("rush_yds", 0))
+    pd_ws.cell(r, 17, p.get("rush_td", 0))
+    pd_ws.cell(r, 18, p.get("rec", 0))
+    pd_ws.cell(r, 19, p.get("rec_yds", 0))
+    pd_ws.cell(r, 20, p.get("rec_td", 0))
+    pd_ws.cell(r, 21, p.get("pass_yds", 0))
+    pd_ws.cell(r, 22, p.get("pass_td", 0))
+    pd_ws.cell(r, 23, p.get("age") or "")
+    pd_ws.cell(r, 24, p.get("handcuff", ""))
+    pd_ws.cell(r, 25, p.get("sample_note", ""))
+    pd_ws.cell(r, 26, p.get("expectation", ""))
+    pd_ws.cell(r, 27, p.get("why", ""))
+    pd_ws.cell(r, 28, p.get("risk", ""))
+
+numfmt(pd_ws, ["E", "F"], "0.0")
+
+# =====================================================================
 # tab order per Derek's spec
 # =====================================================================
-order = ["Draft Board", "League Config", "Manual Adjustments", "LIVE SOURCE", "FINAL Master",
-         "Top 200", "FINAL QB", "FINAL RB", "FINAL WR", "FINAL TE", "K", "DST",
+order = ["Draft Board", "League Config", "Manual Adjustments", "LIVE SOURCE", "Player Detail",
+         "FINAL Master", "Top 200", "FINAL QB", "FINAL RB", "FINAL WR", "FINAL TE", "K", "DST",
          "Draft Engine", "Draft Room", "Player Summaries", "QA Checks"]
 wb._sheets = [wb[n] for n in order]
 wb.active = wb["Draft Board"]
