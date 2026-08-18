@@ -114,6 +114,15 @@
     border-bottom: 1px solid var(--gold); z-index: 2;
   }
   thead th.num, td.num { text-align: right; }
+  .col-bye { 
+    text-align: center; width: 44px; 
+    font: 700 11px/1 "Segoe UI", system-ui, sans-serif;
+  }
+  .col-ppg { 
+    text-align: right; width: 50px;
+    font: 700 11px/1 "Segoe UI", system-ui, sans-serif;
+    font-variant-numeric: tabular-nums;
+  }
   tbody tr { border-bottom: 1px solid #1a1f28; cursor: default; transition: background .15s; }
   tbody tr:hover { background: rgba(201,162,39,.04); }
   tbody td { padding: 10px 8px; vertical-align: middle; }
@@ -401,6 +410,8 @@
     .watchcell { width: 18px; }
     .watchcell svg { width: 10px; height: 10px; }
     .num { font-size: 10px; }
+    .col-bye { font-size: 10px; width: 36px; }
+    .col-ppg { font-size: 10px; width: 42px; }
     .act { width: auto; opacity: 1; }
     .act button { padding: 3px 6px; font-size: 8px; margin-left: 2px; }
     .col-vorp, .col-score { display: none; }
@@ -662,8 +673,14 @@
     </div>
     <div id="board"><table>
       <thead><tr>
-        <th></th><th></th><th class="rk">#</th><th>Pos</th><th>Player</th><th class="num col-score">Score</th>
-        <th class="num col-vorp" title="Season points above a waiver-wire replacement at his position">VORP</th><th class="num" title="Average Draft Position: the pick where drafts usually take him">ADP</th><th class="num" title="ADP minus our rank. Positive = bargain, he lasts longer than he should. Negative = a reach at this pick.">Value +/-</th><th></th><th class="act"></th>
+        <th></th><th></th><th class="rk">#</th><th>Pos</th><th>Player</th>
+        <th class="col-bye" title="Bye week">Bye</th>
+        <th class="col-ppg" title="2024 PPR points per game (veterans with NFL sample). 2026 Excel projection not baked.">PPG</th>
+        <th class="num col-score">Score</th>
+        <th class="num col-vorp" title="Season points above a waiver-wire replacement at his position">VORP</th>
+        <th class="num" title="Average Draft Position: the pick where drafts usually take him">ADP</th>
+        <th class="num" title="ADP minus our rank. Positive = bargain, he lasts longer than he should. Negative = a reach at this pick.">Value +/-</th>
+        <th></th><th class="act"></th>
       </tr></thead>
       <tbody id="rows"></tbody>
     </table></div>
@@ -1733,6 +1750,8 @@ function render() {
     const gone = isOut ? '<span class="danger">OUT</span>'
       : !s && nmp && p.adp < nmp ? '<span class="danger">GONE</span>' : "";
     const edge = p.edge > 0 ? `<span class="edge-pos">+${p.edge}</span>` : p.edge < 0 ? `<span class="edge-neg">${p.edge}</span>` : "0";
+    const bye = p.bye || "—";
+    const ppg = p.ppg > 0 ? p.ppg.toFixed(1) : "—";
     const act = isOut
       ? `<button class="undo1" onclick="clearOut(${p.overall})">Back</button>`
       : s
@@ -1744,6 +1763,8 @@ function render() {
       <td class="rk">${p.overall}</td>
       <td class="pos ${p.pos}">${p.pos}${p.posRank}</td>
       <td class="name" title="${p.exp.replace(/"/g, "&quot;")}\nRISK: ${p.risk.replace(/"/g, "&quot;")}${oppTooltip(p)}" onclick="openPlayerCard(${p.overall})" style="cursor:pointer">${p.name}${p.team ? `<small>${p.team}${p.bye ? " · Bye " + p.bye : ""}${compactUsage(p)}</small>` : ""}</td>
+      <td class="col-bye">${bye}</td>
+      <td class="col-ppg num">${ppg}</td>
       <td class="num col-score">${p.score}</td><td class="num col-vorp">${p.vorp}</td>
       <td class="num">${p.adp}</td><td class="num">${edge}</td>
       <td>${gone}</td><td class="act">${act}</td></tr>`);
@@ -1815,9 +1836,12 @@ function render() {
 
   $("gradebody").innerHTML = teamReport();
 
-  $("roster").innerHTML = rosterAssign().map(s =>
-    `<div class="rosterrow"><span class="slot">${s.slot}</span>
-     <span class="who ${s.p ? "" : "empty"}">${s.p ? `<span class="pos ${s.p.pos}">${s.p.pos}</span> ${s.p.name}` : "open"}</span></div>`).join("");
+  $("roster").innerHTML = rosterAssign().map(s => {
+    const bye = s.p?.bye ? `<span style="color:var(--dim);font-size:10px;margin-left:6px">Bye ${s.p.bye}</span>` : "";
+    const ppg = s.p?.ppg > 0 ? `<span style="color:var(--dim);font-size:10px;margin-left:6px">${s.p.ppg.toFixed(1)} ppg</span>` : "";
+    return `<div class="rosterrow"><span class="slot">${s.slot}</span>
+     <span class="who ${s.p ? "" : "empty"}">${s.p ? `<span class="pos ${s.p.pos}">${s.p.pos}</span> ${s.p.name}${bye}${ppg}` : "open"}</span></div>`;
+  }).join("");
 
   $("bestpos").innerHTML = ["QB","RB","WR","TE","K","DST"].map(pos => {
     const b = PLAYERS.find(p => p.pos === pos && !st.status[p.overall] && !st.out[p.overall]);

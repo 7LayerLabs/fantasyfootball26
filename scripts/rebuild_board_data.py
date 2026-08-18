@@ -79,6 +79,7 @@ for i, p in enumerate(players):
         "rz_share": p.get("rz_share", 0),
         "expected_ppg": p.get("expected_ppg", 0),
         "actual_ppg": p.get("actual_ppg", 0),
+        "ppg": round(p.get("actual_ppg", 0), 1) if p.get("actual_ppg", 0) > 0 else 0,  # Display PPG: 2024 actual for veterans, 0 for rookies
         "games_played": p.get("games_played", 0),
         "sample_note": p.get("sample_note", ""),
         "qb_situation": p.get("qb_situation", ""),
