@@ -149,6 +149,21 @@
     font: 700 11px/1 "Segoe UI", system-ui, sans-serif;
     font-variant-numeric: tabular-nums;
   }
+  .col-market {
+    width: 70px; text-align: center;
+    font: 700 10px/1.2 "Segoe UI", system-ui, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .market-stamp {
+    display: block; margin-bottom: 2px;
+  }
+  .market-stamp.value, .market-stamp.falling { color: var(--accent); }
+  .market-stamp.fair { color: var(--dim); }
+  .market-stamp.reach { color: #8b6914; }
+  .market-subline {
+    display: block; font-size: 8.5px; color: var(--dim); 
+    font-weight: 500; letter-spacing: 0.3px; text-transform: lowercase;
+  }
   tbody tr { border-bottom: 1px solid #1a1f28; cursor: default; transition: background .15s; }
   tbody tr:hover { background: rgba(201,162,39,.04); }
   tbody td { padding: 10px 8px; vertical-align: middle; }
@@ -438,6 +453,8 @@
     .num { font-size: 10px; }
     .col-bye { font-size: 10px; width: 36px; }
     .col-ppg { font-size: 10px; width: 42px; }
+    .col-market { width: 62px; font-size: 9px; }
+    .market-subline { font-size: 7.5px; }
     .act { width: auto; opacity: 1; }
     .act button { padding: 3px 6px; font-size: 8px; margin-left: 2px; }
     .col-vorp, .col-score { display: none; }
@@ -708,7 +725,7 @@
         <th class="num col-score sortable" onclick="sortBy('score')" tabindex="0" role="button" aria-label="Sort by score">Score</th>
         <th class="num col-vorp sortable" onclick="sortBy('vorp')" tabindex="0" role="button" aria-label="Sort by VORP" title="Season points above a waiver-wire replacement at his position">VORP</th>
         <th class="num sortable" onclick="sortBy('adp')" tabindex="0" role="button" aria-label="Sort by ADP" title="Average Draft Position: the pick where drafts usually take him">ADP</th>
-        <th class="num sortable" onclick="sortBy('edge')" tabindex="0" role="button" aria-label="Sort by value" title="ADP minus our rank. Positive = bargain, he lasts longer than he should. Negative = a reach at this pick.">Value +/-</th>
+        <th class="sortable" onclick="sortBy('edge')" tabindex="0" role="button" aria-label="Sort by market value" title="Our rank vs ADP. Not live to the current pick unless FALLING. Raw edge: ADP minus our rank.">Market</th>
         <th></th><th class="act"></th>
       </tr></thead>
       <tbody id="rows"></tbody>
@@ -918,6 +935,11 @@ function sortPlayers(players) {
       case "adp":
         return mult * (a.adp - b.adp);
       case "edge":
+        // FALLING players sort first (regardless of direction), then by edge
+        const aFalling = !st.status[a.overall] && !st.out[a.overall] && picksMade() + 1 > a.adp;
+        const bFalling = !st.status[b.overall] && !st.out[b.overall] && picksMade() + 1 > b.adp;
+        if (aFalling && !bFalling) return -1;
+        if (!aFalling && bFalling) return 1;
         return mult * (a.edge - b.edge);
       default:
         return 0;
@@ -1839,6 +1861,24 @@ function render() {
     const edge = p.edge > 0 ? `<span class="edge-pos">+${p.edge}</span>` : p.edge < 0 ? `<span class="edge-neg">${p.edge}</span>` : "0";
     const bye = p.bye || "—";
     const ppg = p.ppg > 0 ? p.ppg.toFixed(1) : "—";
+    
+    // Market cell: stamp + subline + FALLING if applicable
+    const rounds = Math.round(p.edge / st.teams);
+    let stamp = "FAIR";
+    let stampClass = "fair";
+    if (p.edge >= 8) { stamp = "VALUE"; stampClass = "value"; }
+    else if (p.edge <= -8) { stamp = "REACH"; stampClass = "reach"; }
+    
+    // FALLING: player available and current pick > his ADP
+    const isFalling = !st.status[p.overall] && !st.out[p.overall] && picksMade() + 1 > p.adp;
+    if (isFalling) { stamp = "FALLING"; stampClass = "falling"; }
+    
+    let subline = "on time";
+    if (rounds > 0) subline = `${rounds} late`;
+    else if (rounds < 0) subline = `${Math.abs(rounds)} early`;
+    
+    const market = `<span class="market-stamp ${stampClass}">${stamp}</span><span class="market-subline">${subline}</span>`;
+    
     const act = isOut
       ? `<button class="undo1" onclick="clearOut(${p.overall})">Back</button>`
       : s
@@ -1853,7 +1893,8 @@ function render() {
       <td class="col-bye">${bye}</td>
       <td class="col-ppg num">${ppg}</td>
       <td class="num col-score">${p.score}</td><td class="num col-vorp">${p.vorp}</td>
-      <td class="num">${p.adp}</td><td class="num">${edge}</td>
+      <td class="num">${p.adp}</td>
+      <td class="col-market" title="Edge: ${p.edge > 0 ? '+' : ''}${p.edge} (ADP ${p.adp} - Rank ${p.overall})">${market}</td>
       <td>${gone}</td><td class="act">${act}</td></tr>`);
   }
   $("rows").innerHTML = rows.join("");
