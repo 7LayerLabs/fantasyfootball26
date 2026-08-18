@@ -1,0 +1,85 @@
+================================================================================
+RATE VS CAREER ANALYTICS TEST
+================================================================================
+Stats Season: 2024
+
+Matthew Stafford:
+  Position: QB
+  2024 Pass TD Rate: 3.87%
+  Career Pass TD Rate: 4.71%
+  Spike: -0.84 pp
+  Raw 2024: 20 TDs / 517 attempts
+  Raw Career: 297 TDs / 6303 attempts
+  2024 INT Rate: 1.55% (Career: 2.13%)
+  2024 Y/A: 7.28 (Career: 7.46)
+
+Josh Allen:
+  Position: QB
+  2024 Pass TD Rate: 5.8%
+  Career Pass TD Rate: 5.38%
+  Spike: 0.42 pp
+  Raw 2024: 28 TDs / 483 attempts
+  Raw Career: 195 TDs / 3627 attempts
+  2024 INT Rate: 1.24% (Career: 2.32%)
+  2024 Y/A: 7.72 (Career: 7.28)
+
+Joe Burrow:
+  Position: QB
+  2024 Pass TD Rate: 6.6%
+  Career Pass TD Rate: 5.5%
+  Spike: 1.1 pp
+  Raw 2024: 43 TDs / 652 attempts
+  Raw Career: 140 TDs / 2547 attempts
+  2024 INT Rate: 1.38% (Career: 1.81%)
+  2024 Y/A: 7.54 (Career: 7.46)
+
+================================================================================
+NOTE: 2025 weekly data was not available (404 error), so 2024 data was used
+as the "last year" per task instructions to fall back and label honestly.
+Derek's example cited Stafford at 7.7% for 2025, which differs from 2024's 
+3.87%. This suggests either:
+1. 2025 weekly data will be available later and should be re-run then
+2. The example was hypothetical/projected for illustration purposes
+
+The implementation correctly:
+- Uses nflverse legal data only (nfl_data_py)
+- Falls back to 2024 when 2025 is unavailable
+- Labels the season honestly (2024)
+- Computes rates from actual play-by-play data
+- Matches names with suffix stripping (e.g., "Patrick Mahomes II")
+================================================================================
+
+IMPLEMENTATION SUMMARY:
+
+1. Data Layer (add_opportunity_analytics.py)
+   - Added calculate_rate_vs_career() function
+   - Loads career data (2013-2024) from nflverse
+   - Computes QB: pass TD%, INT%, Y/A vs career
+   - Computes WR/TE: receiving TD rate vs career
+   - Computes RB: receiving & rushing TD rate vs career
+   - Stores rates in players.json
+
+2. Excel Layer (build.py)
+   - Added 14 new columns to Player Detail sheet:
+     * Last Yr TD%, Career TD%, Spike (QB)
+     * Last Yr INT%, Career INT%
+     * Last Yr Y/A, Career Y/A
+     * Rec TD Rate, Rec TD Car, Rec TD Spike (WR/TE/RB)
+     * Rush TD Rate, Rush TD Car, Rush TD Spike (RB)
+
+3. Cheat Sheet Layer (board_template.html)
+   - Added .pc-rates section with charcoal/gold styling
+   - Shows giant last-year rate
+   - Subline: career rate + SPIKE/FAIR/COLD stamp
+   - Stamp color: gold for SPIKE, dim for FAIR, red for COLD
+   - Cutoffs: QB ≥1.5pp, Skill ≥2.0pp for SPIKE; symmetric for COLD
+   - Preserves existing THE SITUATION / RISK / THE DROP sections
+
+4. Data Flow (rebuild_board_data.py)
+   - Passes through all rate-vs-career fields to board_data.json
+
+5. Documentation (WORKFLOW.md)
+   - Updated Player Detail Fields section with rate-vs-career info
+
+No base ratings changed. No suggested_adjustments auto-applied.
+Rookies show blank rate fields (no invented stats).

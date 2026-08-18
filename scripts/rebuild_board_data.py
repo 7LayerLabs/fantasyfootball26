@@ -98,7 +98,21 @@ for i, p in enumerate(players):
         "team_qb": p.get("team_qb", ""),
         "handcuff": p.get("handcuff", ""),
         "age": p.get("age"),
-        "stats_season": p.get("stats_season")
+        "stats_season": p.get("stats_season"),
+        # Add rate-vs-career fields
+        "pass_td_rate": p.get("pass_td_rate"),
+        "pass_td_rate_career": p.get("pass_td_rate_career"),
+        "pass_td_rate_spike": p.get("pass_td_rate_spike"),
+        "int_rate": p.get("int_rate"),
+        "int_rate_career": p.get("int_rate_career"),
+        "ypa": p.get("ypa"),
+        "ypa_career": p.get("ypa_career"),
+        "rec_td_rate": p.get("rec_td_rate"),
+        "rec_td_rate_career": p.get("rec_td_rate_career"),
+        "rec_td_rate_spike": p.get("rec_td_rate_spike"),
+        "rush_td_rate": p.get("rush_td_rate"),
+        "rush_td_rate_career": p.get("rush_td_rate_career"),
+        "rush_td_rate_spike": p.get("rush_td_rate_spike")
     })
 
 # Separate skill positions from K/DST
