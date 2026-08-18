@@ -37,9 +37,25 @@ def load_nfl_data():
             pbp = nfl.import_pbp_data([year], downcast=False)
             pbp_reg = pbp[pbp['season_type'] == 'REG'].copy()
             
-            # Load weekly data for stats
-            weekly = nfl.import_weekly_data([year], downcast=False)
-            weekly_reg = weekly[weekly['season_type'] == 'REG'].copy()
+            # Try weekly data, but if it fails, try seasonal player stats from nflverse-data releases
+            weekly_reg = None
+            try:
+                weekly = nfl.import_weekly_data([year], downcast=False)
+                weekly_reg = weekly[weekly['season_type'] == 'REG'].copy()
+                print(f"Loaded weekly data for {year}")
+            except Exception as weekly_err:
+                print(f"Weekly data unavailable for {year}: {weekly_err}")
+                print(f"Attempting to load seasonal player stats from nflverse-data releases...")
+                try:
+                    # Load from nflverse-data release (parquet preferred, fallback to CSV)
+                    url = f'https://github.com/nflverse/nflverse-data/releases/download/stats_player/stats_player_reg_{year}.parquet'
+                    seasonal = pd.read_parquet(url)
+                    print(f"Successfully loaded seasonal player stats for {year} from nflverse-data")
+                    # The seasonal format is already aggregated by player/season, which is what we need
+                    weekly_reg = seasonal
+                except Exception as seasonal_err:
+                    print(f"Seasonal stats also unavailable: {seasonal_err}")
+                    raise seasonal_err
             
             # Load snap counts
             snaps = nfl.import_snap_counts([year])
@@ -102,6 +118,8 @@ def calculate_qb_grades(pbp_reg):
 
 def normalize_name(name):
     """Normalize player name for matching."""
+    if not isinstance(name, str) or pd.isna(name):
+        return ""
     # Remove Jr., Sr., II, III, IV, V suffixes
     name = name.replace(' Jr.', '').replace(' Sr.', '')
     name = name.replace(' II', '').replace(' III', '').replace(' IV', '').replace(' V', '')
@@ -117,8 +135,17 @@ def find_best_name_match(player_name, nfl_players):
         return nfl_players[normalized]
     
     # Try last name match
-    last_name = normalized.split()[-1]
-    matches = [p for p in nfl_players if p.split()[-1] == last_name]
+    name_parts = normalized.split()
+    if len(name_parts) == 0:
+        return None
+    
+    last_name = name_parts[-1]
+    matches = []
+    for p in nfl_players:
+        p_parts = p.split()
+        if len(p_parts) > 0 and p_parts[-1] == last_name:
+            matches.append(p)
+    
     if len(matches) == 1:
         return nfl_players[matches[0]]
     
@@ -132,6 +159,9 @@ def calculate_opportunity_metrics(weekly_reg, snaps_reg, pbp_reg):
     
     metrics = {}
     
+    # Check if data is seasonal (already aggregated) or weekly (needs aggregation)
+    is_seasonal = 'games' in weekly_reg.columns and 'week' not in weekly_reg.columns
+    
     # Build a normalized name lookup for NFL players
     nfl_player_lookup = {}
     for _, row in weekly_reg[['player_display_name']].drop_duplicates().iterrows():
@@ -139,21 +169,28 @@ def calculate_opportunity_metrics(weekly_reg, snaps_reg, pbp_reg):
         normalized = normalize_name(nfl_name)
         nfl_player_lookup[normalized] = nfl_name
     
-    # Aggregate weekly data by player (use display_name for matching)
-    player_weekly = weekly_reg.groupby(['player_display_name', 'player_id', 'position', 'recent_team']).agg({
-        'carries': 'sum',
-        'rushing_yards': 'sum',
-        'rushing_tds': 'sum',
-        'targets': 'sum',
-        'receptions': 'sum',
-        'receiving_yards': 'sum',
-        'receiving_tds': 'sum',
-        'passing_yards': 'sum',
-        'passing_tds': 'sum',
-        'fantasy_points_ppr': 'sum',
-        'week': 'count'
-    }).reset_index()
-    player_weekly.rename(columns={'week': 'games'}, inplace=True)
+    if is_seasonal:
+        # Data is already aggregated by season - use it directly
+        print("Using seasonal data (already aggregated)")
+        player_weekly = weekly_reg.copy()
+        player_weekly['week'] = player_weekly.get('games', 0)  # Use games as a proxy for counting
+        player_weekly.rename(columns={'games': 'week'}, inplace=True)
+    else:
+        # Aggregate weekly data by player (use display_name for matching)
+        player_weekly = weekly_reg.groupby(['player_display_name', 'player_id', 'position', 'recent_team']).agg({
+            'carries': 'sum',
+            'rushing_yards': 'sum',
+            'rushing_tds': 'sum',
+            'targets': 'sum',
+            'receptions': 'sum',
+            'receiving_yards': 'sum',
+            'receiving_tds': 'sum',
+            'passing_yards': 'sum',
+            'passing_tds': 'sum',
+            'fantasy_points_ppr': 'sum',
+            'week': 'count'
+        }).reset_index()
+        player_weekly.rename(columns={'week': 'games'}, inplace=True)
     
     # Aggregate snap counts by player
     if snaps_reg is not None:
@@ -165,11 +202,18 @@ def calculate_opportunity_metrics(weekly_reg, snaps_reg, pbp_reg):
         player_snaps = pd.DataFrame()
     
     # Calculate team totals for share metrics
-    team_totals = weekly_reg.groupby('recent_team').agg({
-        'carries': 'sum',
-        'targets': 'sum'
-    }).reset_index()
-    team_totals.columns = ['team', 'team_carries', 'team_targets']
+    if is_seasonal:
+        team_totals = player_weekly.groupby('recent_team').agg({
+            'carries': 'sum',
+            'targets': 'sum'
+        }).reset_index()
+        team_totals.columns = ['team', 'team_carries', 'team_targets']
+    else:
+        team_totals = weekly_reg.groupby('recent_team').agg({
+            'carries': 'sum',
+            'targets': 'sum'
+        }).reset_index()
+        team_totals.columns = ['team', 'team_carries', 'team_targets']
     
     # Red zone stats from play-by-play
     rz_pbp = pbp_reg[pbp_reg['yardline_100'] <= 20].copy()
@@ -180,6 +224,11 @@ def calculate_opportunity_metrics(weekly_reg, snaps_reg, pbp_reg):
     # Build metrics dict (keyed by display_name)
     for _, row in player_weekly.iterrows():
         player = row['player_display_name']
+        
+        # Skip if player name is missing
+        if not isinstance(player, str) or pd.isna(player):
+            continue
+            
         team = row['recent_team']
         pos = row['position']
         
@@ -200,17 +249,28 @@ def calculate_opportunity_metrics(weekly_reg, snaps_reg, pbp_reg):
             if not snap_data.empty:
                 snap_share = round(snap_data['offense_pct'].iloc[0] * 100, 1)
         
+        # Get carries, targets, etc. - ensure we convert to scalar
+        carries = int(row['carries']) if pd.notna(row['carries']) else 0
+        targets = int(row['targets']) if pd.notna(row['targets']) else 0
+        rushing_yards = int(row['rushing_yards']) if pd.notna(row['rushing_yards']) else 0
+        rushing_tds = int(row['rushing_tds']) if pd.notna(row['rushing_tds']) else 0
+        receptions = int(row['receptions']) if pd.notna(row['receptions']) else 0
+        receiving_yards = int(row['receiving_yards']) if pd.notna(row['receiving_yards']) else 0
+        receiving_tds = int(row['receiving_tds']) if pd.notna(row['receiving_tds']) else 0
+        passing_yards = int(row['passing_yards']) if pd.notna(row['passing_yards']) else 0
+        passing_tds = int(row['passing_tds']) if pd.notna(row['passing_tds']) else 0
+        
         # Calculate shares
         if pos == 'RB':
-            carry_share = round(100 * row['carries'] / team_carries, 1) if team_carries > 0 else 0
+            carry_share = round(100 * carries / team_carries, 1) if team_carries > 0 else 0
             # Route share approximation for RBs: targets / team_targets * 0.8
-            route_share = round(100 * row['targets'] / team_targets * 0.8, 1) if team_targets > 0 and row['targets'] > 0 else 0
+            route_share = round(100 * targets / team_targets * 0.8, 1) if team_targets > 0 and targets > 0 else 0
         else:
             carry_share = 0
             # Route share approximation for WR/TE: targets / team_targets
-            route_share = round(100 * row['targets'] / team_targets, 1) if team_targets > 0 and row['targets'] > 0 else 0
+            route_share = round(100 * targets / team_targets, 1) if team_targets > 0 and targets > 0 else 0
         
-        target_share = round(100 * row['targets'] / team_targets, 1) if team_targets > 0 and row['targets'] > 0 else 0
+        target_share = round(100 * targets / team_targets, 1) if team_targets > 0 and targets > 0 else 0
         
         # Red zone share (total touches in RZ) - use abbreviated name
         player_abbrev = player.split()[0][0] + '.' + player.split()[-1]
@@ -222,14 +282,34 @@ def calculate_opportunity_metrics(weekly_reg, snaps_reg, pbp_reg):
         rz_share = round(rz_share, 0)
         
         # Expected fantasy points (simple volume-based proxy)
-        games = row['games'] if row['games'] > 0 else 1
-        actual_ppg = row['fantasy_points_ppr'] / games
+        try:
+            if 'games' in player_weekly.columns:
+                games = int(row['games']) if pd.notna(row['games']) else 1
+            elif 'week' in player_weekly.columns:
+                games = int(row['week']) if pd.notna(row['week']) else 1
+            else:
+                games = 1
+        except (ValueError, TypeError):
+            games = 1
+        
+        if games == 0:
+            games = 1
+        
+        # For seasonal data, fantasy_points_ppr might not exist
+        if 'fantasy_points_ppr' in row.index and pd.notna(row['fantasy_points_ppr']):
+            actual_ppg = row['fantasy_points_ppr'] / games
+        else:
+            # Calculate PPR points manually
+            ppr_points = (rushing_yards * 0.1 + rushing_tds * 6 + 
+                          receptions * 1 + receiving_yards * 0.1 + receiving_tds * 6 +
+                          passing_yards * 0.04 + passing_tds * 4)
+            actual_ppg = ppr_points / games
         
         # xFP proxy: based on usage
         if pos == 'RB':
-            expected_ppg = (row['carries'] / games) * 0.1 + (row['targets'] / games) * 0.5
+            expected_ppg = (carries / games) * 0.1 + (targets / games) * 0.5
         elif pos in ['WR', 'TE']:
-            expected_ppg = (row['targets'] / games) * 0.5
+            expected_ppg = (targets / games) * 0.5
         else:
             expected_ppg = actual_ppg
         
@@ -243,16 +323,16 @@ def calculate_opportunity_metrics(weekly_reg, snaps_reg, pbp_reg):
             'rz_share': rz_share,
             'expected_ppg': round(expected_ppg, 1),
             'actual_ppg': round(actual_ppg, 1),
-            'games_played': int(row['games']),
+            'games_played': int(games),
             # Counting stats
-            'rush_att': int(row['carries']) if pos in ['RB', 'QB'] else 0,
-            'rush_yds': int(row['rushing_yards']) if pos in ['RB', 'QB'] else 0,
-            'rush_td': int(row['rushing_tds']) if pos in ['RB', 'QB'] else 0,
-            'rec': int(row['receptions']) if pos in ['RB', 'WR', 'TE'] else 0,
-            'rec_yds': int(row['receiving_yards']) if pos in ['RB', 'WR', 'TE'] else 0,
-            'rec_td': int(row['receiving_tds']) if pos in ['RB', 'WR', 'TE'] else 0,
-            'pass_yds': int(row['passing_yards']) if pos == 'QB' else 0,
-            'pass_td': int(row['passing_tds']) if pos == 'QB' else 0
+            'rush_att': int(carries) if pos in ['RB', 'QB'] else 0,
+            'rush_yds': int(rushing_yards) if pos in ['RB', 'QB'] else 0,
+            'rush_td': int(rushing_tds) if pos in ['RB', 'QB'] else 0,
+            'rec': int(receptions) if pos in ['RB', 'WR', 'TE'] else 0,
+            'rec_yds': int(receiving_yards) if pos in ['RB', 'WR', 'TE'] else 0,
+            'rec_td': int(receiving_tds) if pos in ['RB', 'WR', 'TE'] else 0,
+            'pass_yds': int(passing_yards) if pos == 'QB' else 0,
+            'pass_td': int(passing_tds) if pos == 'QB' else 0
         }
     
     return metrics, nfl_player_lookup
@@ -414,77 +494,95 @@ def compute_handcuffs_and_committee(players, metrics):
 def calculate_rate_vs_career(weekly_reg, season_year, pbp_reg=None):
     """Calculate rate-vs-career analytics for QBs and skill positions.
     
+    Career definition: All regular seasons from 2013 through season_year (inclusive).
+    Last year = season_year only.
+    
     Returns dict keyed by player_display_name with:
     - QB: pass_td_rate, pass_td_rate_career, pass_td_rate_spike, int_rate, int_rate_career, ypa, ypa_career
     - WR/TE/RB: rec_td_rate, rec_td_rate_career, rec_td_rate_spike
     - RB: rush_td_rate, rush_td_rate_career, rush_td_rate_spike
     """
-    if not NFL_DATA_AVAILABLE or season_year is None:
+    if not NFL_DATA_AVAILABLE or season_year is None or weekly_reg is None:
         return {}
     
     print(f"Calculating rate-vs-career analytics using {season_year} as last year...")
     
-    # If weekly data is not available for the current season, try to use PBP
-    if weekly_reg is None and pbp_reg is not None:
-        print(f"Weekly data not available for {season_year}, deriving from play-by-play...")
-        weekly_reg = derive_weekly_from_pbp(pbp_reg)
-        if weekly_reg is None:
-            print("Could not derive weekly stats from PBP")
-            return {}
-    elif weekly_reg is None:
-        print("No data available for rate calculation")
-        return {}
+    # Check if weekly_reg is seasonal (already aggregated) or weekly (needs aggregation)
+    is_seasonal = 'games' in weekly_reg.columns and 'week' not in weekly_reg.columns
     
-    # Try to load all historical data up through season_year for career calculation
+    if is_seasonal:
+        print(f"Data is seasonal format (already aggregated by season)")
+        last_year_stats = weekly_reg.copy()
+    else:
+        print(f"Data is weekly format (aggregating by player)")
+        # Group by player for last year (season_year) - weekly format
+        last_year_stats = weekly_reg.groupby(['player_display_name', 'position']).agg({
+            'attempts': 'sum',
+            'completions': 'sum',
+            'passing_yards': 'sum',
+            'passing_tds': 'sum',
+            'interceptions': 'sum',
+            'targets': 'sum',
+            'receptions': 'sum',
+            'receiving_tds': 'sum',
+            'carries': 'sum',
+            'rushing_tds': 'sum'
+        }).reset_index()
+    
+    # Load career data from seasonal stats (2013 through season_year)
     career_years = list(range(2013, season_year + 1))
-    print(f"Loading career data from {career_years[0]} to {season_year}...")
+    print(f"Loading career data (seasonal) from {career_years[0]} to {season_year}...")
     
     try:
-        weekly_career = nfl.import_weekly_data(career_years, downcast=False)
-        weekly_career_reg = weekly_career[weekly_career['season_type'] == 'REG'].copy()
+        # Load all career years from nflverse-data releases
+        career_dfs = []
+        for year in career_years:
+            try:
+                url = f'https://github.com/nflverse/nflverse-data/releases/download/stats_player/stats_player_reg_{year}.parquet'
+                df = pd.read_parquet(url)
+                career_dfs.append(df)
+            except Exception as e:
+                print(f"  Warning: Could not load {year}: {e}")
+                continue
+        
+        if not career_dfs:
+            print("Warning: No career data loaded, skipping rate-vs-career calculation")
+            return {}
+        
+        career_all = pd.concat(career_dfs, ignore_index=True)
+        print(f"Loaded career data: {len(career_dfs)} seasons, {len(career_all)} player-season records")
+        
+        # Aggregate career stats across all seasons
+        career_stats = career_all.groupby(['player_display_name', 'position']).agg({
+            'attempts': 'sum',
+            'completions': 'sum',
+            'passing_yards': 'sum',
+            'passing_tds': 'sum',
+            'passing_interceptions': 'sum',
+            'targets': 'sum',
+            'receptions': 'sum',
+            'receiving_tds': 'sum',
+            'carries': 'sum',
+            'rushing_tds': 'sum'
+        }).reset_index()
+        
+        # Rename columns to match expected format
+        career_stats.rename(columns={'passing_interceptions': 'interceptions'}, inplace=True)
+        
     except Exception as e:
         print(f"Warning: Could not load full career data: {e}")
-        print("Falling back to single-season data only (no career comparison)")
         return {}
     
     rate_stats = {}
     
     # Build normalized name lookup
     nfl_player_lookup = {}
-    for _, row in weekly_reg[['player_display_name']].drop_duplicates().iterrows():
+    for _, row in last_year_stats[['player_display_name']].drop_duplicates().iterrows():
         nfl_name = row['player_display_name']
         normalized = normalize_name(nfl_name)
         nfl_player_lookup[normalized] = nfl_name
     
-    # Group by player for last year (season_year)
-    last_year_stats = weekly_reg.groupby(['player_display_name', 'position']).agg({
-        'attempts': 'sum',
-        'completions': 'sum',
-        'passing_yards': 'sum',
-        'passing_tds': 'sum',
-        'interceptions': 'sum',
-        'targets': 'sum',
-        'receptions': 'sum',
-        'receiving_tds': 'sum',
-        'carries': 'sum',
-        'rushing_tds': 'sum'
-    }).reset_index()
-    
-    # Group by player for career (all years through season_year)
-    career_stats = weekly_career_reg.groupby(['player_display_name', 'position']).agg({
-        'attempts': 'sum',
-        'completions': 'sum',
-        'passing_yards': 'sum',
-        'passing_tds': 'sum',
-        'interceptions': 'sum',
-        'targets': 'sum',
-        'receptions': 'sum',
-        'receiving_tds': 'sum',
-        'carries': 'sum',
-        'rushing_tds': 'sum'
-    }).reset_index()
-    
-    # Process each player
+    # Process each player from last year
     for _, row in last_year_stats.iterrows():
         player = row['player_display_name']
         pos = row['position']
@@ -500,9 +598,9 @@ def calculate_rate_vs_career(weekly_reg, season_year, pbp_reg=None):
         if pos == 'QB':
             # QB rates
             pass_att_last = row['attempts']
-            pass_td_last = row['passing_tds']
-            int_last = row['interceptions']
-            pass_yds_last = row['passing_yards']
+            pass_td_last = row.get('passing_tds', 0)
+            int_last = row.get('interceptions', 0)
+            pass_yds_last = row.get('passing_yards', 0)
             
             pass_att_career = career_row['attempts']
             pass_td_career = career_row['passing_tds']
@@ -539,11 +637,11 @@ def calculate_rate_vs_career(weekly_reg, season_year, pbp_reg=None):
         
         elif pos in ['WR', 'TE']:
             # Receiving TD rate
-            targets_last = row['targets'] if row['targets'] > 0 else row['receptions']
-            rec_td_last = row['receiving_tds']
+            targets_last = row.get('targets', 0) if row.get('targets', 0) > 0 else row.get('receptions', 0)
+            rec_td_last = row.get('receiving_tds', 0)
             
-            targets_career = career_row['targets'] if career_row['targets'] > 0 else career_row['receptions']
-            rec_td_career = career_row['receiving_tds']
+            targets_career = career_row.get('targets', 0) if career_row.get('targets', 0) > 0 else career_row.get('receptions', 0)
+            rec_td_career = career_row.get('receiving_tds', 0)
             
             if targets_last >= 20:  # Minimum threshold
                 rec_td_rate = 100.0 * rec_td_last / targets_last if targets_last > 0 else 0
@@ -558,18 +656,18 @@ def calculate_rate_vs_career(weekly_reg, season_year, pbp_reg=None):
         
         elif pos == 'RB':
             # Receiving TD rate
-            targets_last = row['targets'] if row['targets'] > 0 else row['receptions']
-            rec_td_last = row['receiving_tds']
+            targets_last = row.get('targets', 0) if row.get('targets', 0) > 0 else row.get('receptions', 0)
+            rec_td_last = row.get('receiving_tds', 0)
             
-            targets_career = career_row['targets'] if career_row['targets'] > 0 else career_row['receptions']
-            rec_td_career = career_row['receiving_tds']
+            targets_career = career_row.get('targets', 0) if career_row.get('targets', 0) > 0 else career_row.get('receptions', 0)
+            rec_td_career = career_row.get('receiving_tds', 0)
             
             # Rushing TD rate
-            rush_att_last = row['carries']
-            rush_td_last = row['rushing_tds']
+            rush_att_last = row.get('carries', 0)
+            rush_td_last = row.get('rushing_tds', 0)
             
-            rush_att_career = career_row['carries']
-            rush_td_career = career_row['rushing_tds']
+            rush_att_career = career_row.get('carries', 0)
+            rush_td_career = career_row.get('rushing_tds', 0)
             
             player_rates = {}
             
