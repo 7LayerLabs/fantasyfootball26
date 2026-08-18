@@ -411,6 +411,262 @@ def compute_handcuffs_and_committee(players, metrics):
     return handcuffs
 
 
+def calculate_rate_vs_career(weekly_reg, season_year, pbp_reg=None):
+    """Calculate rate-vs-career analytics for QBs and skill positions.
+    
+    Returns dict keyed by player_display_name with:
+    - QB: pass_td_rate, pass_td_rate_career, pass_td_rate_spike, int_rate, int_rate_career, ypa, ypa_career
+    - WR/TE/RB: rec_td_rate, rec_td_rate_career, rec_td_rate_spike
+    - RB: rush_td_rate, rush_td_rate_career, rush_td_rate_spike
+    """
+    if not NFL_DATA_AVAILABLE or season_year is None:
+        return {}
+    
+    print(f"Calculating rate-vs-career analytics using {season_year} as last year...")
+    
+    # If weekly data is not available for the current season, try to use PBP
+    if weekly_reg is None and pbp_reg is not None:
+        print(f"Weekly data not available for {season_year}, deriving from play-by-play...")
+        weekly_reg = derive_weekly_from_pbp(pbp_reg)
+        if weekly_reg is None:
+            print("Could not derive weekly stats from PBP")
+            return {}
+    elif weekly_reg is None:
+        print("No data available for rate calculation")
+        return {}
+    
+    # Try to load all historical data up through season_year for career calculation
+    career_years = list(range(2013, season_year + 1))
+    print(f"Loading career data from {career_years[0]} to {season_year}...")
+    
+    try:
+        weekly_career = nfl.import_weekly_data(career_years, downcast=False)
+        weekly_career_reg = weekly_career[weekly_career['season_type'] == 'REG'].copy()
+    except Exception as e:
+        print(f"Warning: Could not load full career data: {e}")
+        print("Falling back to single-season data only (no career comparison)")
+        return {}
+    
+    rate_stats = {}
+    
+    # Build normalized name lookup
+    nfl_player_lookup = {}
+    for _, row in weekly_reg[['player_display_name']].drop_duplicates().iterrows():
+        nfl_name = row['player_display_name']
+        normalized = normalize_name(nfl_name)
+        nfl_player_lookup[normalized] = nfl_name
+    
+    # Group by player for last year (season_year)
+    last_year_stats = weekly_reg.groupby(['player_display_name', 'position']).agg({
+        'attempts': 'sum',
+        'completions': 'sum',
+        'passing_yards': 'sum',
+        'passing_tds': 'sum',
+        'interceptions': 'sum',
+        'targets': 'sum',
+        'receptions': 'sum',
+        'receiving_tds': 'sum',
+        'carries': 'sum',
+        'rushing_tds': 'sum'
+    }).reset_index()
+    
+    # Group by player for career (all years through season_year)
+    career_stats = weekly_career_reg.groupby(['player_display_name', 'position']).agg({
+        'attempts': 'sum',
+        'completions': 'sum',
+        'passing_yards': 'sum',
+        'passing_tds': 'sum',
+        'interceptions': 'sum',
+        'targets': 'sum',
+        'receptions': 'sum',
+        'receiving_tds': 'sum',
+        'carries': 'sum',
+        'rushing_tds': 'sum'
+    }).reset_index()
+    
+    # Process each player
+    for _, row in last_year_stats.iterrows():
+        player = row['player_display_name']
+        pos = row['position']
+        
+        # Get career stats
+        career_row = career_stats[career_stats['player_display_name'] == player]
+        if career_row.empty:
+            continue
+        career_row = career_row.iloc[0]
+        
+        player_rates = {}
+        
+        if pos == 'QB':
+            # QB rates
+            pass_att_last = row['attempts']
+            pass_td_last = row['passing_tds']
+            int_last = row['interceptions']
+            pass_yds_last = row['passing_yards']
+            
+            pass_att_career = career_row['attempts']
+            pass_td_career = career_row['passing_tds']
+            int_career = career_row['interceptions']
+            pass_yds_career = career_row['passing_yards']
+            
+            if pass_att_last >= 100:  # Minimum threshold for last year
+                # TD rate
+                pass_td_rate = 100.0 * pass_td_last / pass_att_last if pass_att_last > 0 else 0
+                pass_td_rate_career = 100.0 * pass_td_career / pass_att_career if pass_att_career > 0 else 0
+                pass_td_rate_spike = pass_td_rate - pass_td_rate_career
+                
+                # INT rate
+                int_rate = 100.0 * int_last / pass_att_last if pass_att_last > 0 else 0
+                int_rate_career = 100.0 * int_career / pass_att_career if pass_att_career > 0 else 0
+                
+                # Y/A
+                ypa = pass_yds_last / pass_att_last if pass_att_last > 0 else 0
+                ypa_career = pass_yds_career / pass_att_career if pass_att_career > 0 else 0
+                
+                player_rates = {
+                    'pass_td_rate': round(pass_td_rate, 2),
+                    'pass_td_rate_career': round(pass_td_rate_career, 2),
+                    'pass_td_rate_spike': round(pass_td_rate_spike, 2),
+                    'int_rate': round(int_rate, 2),
+                    'int_rate_career': round(int_rate_career, 2),
+                    'ypa': round(ypa, 2),
+                    'ypa_career': round(ypa_career, 2),
+                    'pass_att_last': int(pass_att_last),
+                    'pass_td_last': int(pass_td_last),
+                    'pass_att_career': int(pass_att_career),
+                    'pass_td_career': int(pass_td_career)
+                }
+        
+        elif pos in ['WR', 'TE']:
+            # Receiving TD rate
+            targets_last = row['targets'] if row['targets'] > 0 else row['receptions']
+            rec_td_last = row['receiving_tds']
+            
+            targets_career = career_row['targets'] if career_row['targets'] > 0 else career_row['receptions']
+            rec_td_career = career_row['receiving_tds']
+            
+            if targets_last >= 20:  # Minimum threshold
+                rec_td_rate = 100.0 * rec_td_last / targets_last if targets_last > 0 else 0
+                rec_td_rate_career = 100.0 * rec_td_career / targets_career if targets_career > 0 else 0
+                rec_td_rate_spike = rec_td_rate - rec_td_rate_career
+                
+                player_rates = {
+                    'rec_td_rate': round(rec_td_rate, 2),
+                    'rec_td_rate_career': round(rec_td_rate_career, 2),
+                    'rec_td_rate_spike': round(rec_td_rate_spike, 2)
+                }
+        
+        elif pos == 'RB':
+            # Receiving TD rate
+            targets_last = row['targets'] if row['targets'] > 0 else row['receptions']
+            rec_td_last = row['receiving_tds']
+            
+            targets_career = career_row['targets'] if career_row['targets'] > 0 else career_row['receptions']
+            rec_td_career = career_row['receiving_tds']
+            
+            # Rushing TD rate
+            rush_att_last = row['carries']
+            rush_td_last = row['rushing_tds']
+            
+            rush_att_career = career_row['carries']
+            rush_td_career = career_row['rushing_tds']
+            
+            player_rates = {}
+            
+            if targets_last >= 20:  # Minimum threshold
+                rec_td_rate = 100.0 * rec_td_last / targets_last if targets_last > 0 else 0
+                rec_td_rate_career = 100.0 * rec_td_career / targets_career if targets_career > 0 else 0
+                rec_td_rate_spike = rec_td_rate - rec_td_rate_career
+                
+                player_rates.update({
+                    'rec_td_rate': round(rec_td_rate, 2),
+                    'rec_td_rate_career': round(rec_td_rate_career, 2),
+                    'rec_td_rate_spike': round(rec_td_rate_spike, 2)
+                })
+            
+            if rush_att_last >= 50:  # Minimum threshold
+                rush_td_rate = 100.0 * rush_td_last / rush_att_last if rush_att_last > 0 else 0
+                rush_td_rate_career = 100.0 * rush_td_career / rush_att_career if rush_att_career > 0 else 0
+                rush_td_rate_spike = rush_td_rate - rush_td_rate_career
+                
+                player_rates.update({
+                    'rush_td_rate': round(rush_td_rate, 2),
+                    'rush_td_rate_career': round(rush_td_rate_career, 2),
+                    'rush_td_rate_spike': round(rush_td_rate_spike, 2)
+                })
+        
+        if player_rates:
+            rate_stats[player] = player_rates
+    
+    print(f"Calculated rate-vs-career for {len(rate_stats)} players")
+    return rate_stats
+
+
+def derive_weekly_from_pbp(pbp_reg):
+    """Derive weekly-style stats from play-by-play data when weekly data is unavailable."""
+    if pbp_reg is None:
+        return None
+    
+    try:
+        # Aggregate QB stats from PBP
+        qb_stats = pbp_reg[pbp_reg['passer_player_name'].notna()].groupby('passer_player_name').agg({
+            'pass_attempt': 'sum',
+            'complete_pass': 'sum',
+            'pass_touchdown': 'sum',
+            'interception': 'sum',
+            'passing_yards': 'sum'
+        }).reset_index()
+        qb_stats.columns = ['player_display_name', 'attempts', 'completions', 'passing_tds', 'interceptions', 'passing_yards']
+        qb_stats['position'] = 'QB'
+        qb_stats['targets'] = 0
+        qb_stats['receptions'] = 0
+        qb_stats['receiving_tds'] = 0
+        qb_stats['carries'] = 0
+        qb_stats['rushing_tds'] = 0
+        
+        # Aggregate receiver stats from PBP
+        rec_stats = pbp_reg[pbp_reg['receiver_player_name'].notna()].groupby('receiver_player_name').agg({
+            'pass_attempt': 'sum',
+            'complete_pass': 'sum',
+            'pass_touchdown': 'sum'
+        }).reset_index()
+        rec_stats.columns = ['player_display_name', 'targets', 'receptions', 'receiving_tds']
+        # Infer position from targets (approximate - could be improved)
+        rec_stats['position'] = 'WR'  # Default; will need manual correction for TE/RB
+        rec_stats['attempts'] = 0
+        rec_stats['completions'] = 0
+        rec_stats['passing_tds'] = 0
+        rec_stats['interceptions'] = 0
+        rec_stats['passing_yards'] = 0
+        rec_stats['carries'] = 0
+        rec_stats['rushing_tds'] = 0
+        
+        # Aggregate rusher stats from PBP
+        rush_stats = pbp_reg[pbp_reg['rusher_player_name'].notna()].groupby('rusher_player_name').agg({
+            'rush_attempt': 'sum',
+            'rush_touchdown': 'sum'
+        }).reset_index()
+        rush_stats.columns = ['player_display_name', 'carries', 'rushing_tds']
+        rush_stats['position'] = 'RB'  # Default
+        rush_stats['attempts'] = 0
+        rush_stats['completions'] = 0
+        rush_stats['passing_tds'] = 0
+        rush_stats['interceptions'] = 0
+        rush_stats['passing_yards'] = 0
+        rush_stats['targets'] = 0
+        rush_stats['receptions'] = 0
+        rush_stats['receiving_tds'] = 0
+        
+        # Combine all stats
+        import pandas as pd
+        combined = pd.concat([qb_stats, rec_stats, rush_stats], ignore_index=True)
+        
+        return combined
+    except Exception as e:
+        print(f"Error deriving weekly stats from PBP: {e}")
+        return None
+
+
 def main():
     print("Loading players.json...")
     with open(PLAYERS_JSON, encoding='utf-8') as f:
@@ -428,11 +684,15 @@ def main():
         print(f"Calculated metrics for {len(metrics)} players")
         print(f"QB grades for {len(qb_grades)} teams")
         print(f"Using {season_year} season data")
+        
+        # Calculate rate-vs-career analytics
+        rate_vs_career = calculate_rate_vs_career(weekly_reg, season_year, pbp_reg)
     else:
         qb_grades = {}
         metrics = {}
         nfl_name_lookup = {}
         season_year = None
+        rate_vs_career = {}
         print("Using placeholder data (nfl_data_py not available)")
     
     # Generate suggested adjustments
@@ -538,6 +798,34 @@ def main():
             p['age'] = age if age else None
         else:
             p['age'] = None
+        
+        # Add rate-vs-career analytics
+        if matched_name and matched_name in rate_vs_career:
+            rate_stats = rate_vs_career[matched_name]
+            # Add all rate stats for this player
+            for key, value in rate_stats.items():
+                p[key] = value
+        else:
+            # Initialize rate-vs-career fields based on position
+            if pos == 'QB':
+                p['pass_td_rate'] = None
+                p['pass_td_rate_career'] = None
+                p['pass_td_rate_spike'] = None
+                p['int_rate'] = None
+                p['int_rate_career'] = None
+                p['ypa'] = None
+                p['ypa_career'] = None
+            elif pos in ['WR', 'TE']:
+                p['rec_td_rate'] = None
+                p['rec_td_rate_career'] = None
+                p['rec_td_rate_spike'] = None
+            elif pos == 'RB':
+                p['rec_td_rate'] = None
+                p['rec_td_rate_career'] = None
+                p['rec_td_rate_spike'] = None
+                p['rush_td_rate'] = None
+                p['rush_td_rate_career'] = None
+                p['rush_td_rate_spike'] = None
         
         # Calculate opportunity score for lens (high usage + low ADP = high opp score)
         if matched_name and matched_name in metrics:

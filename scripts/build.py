@@ -651,12 +651,18 @@ for nm, rng in err_ranges:
 # Player Detail: all player info from players.json in one sheet
 # =====================================================================
 pd_ws = sheet2("Player Detail",
-               "Player Detail: complete player profiles from players.json (opportunity + situation + counting stats)",
+               "Player Detail: complete player profiles from players.json (opportunity + situation + counting stats + rate-vs-career)",
                ["Pos", "Player", "Team", "Bye", "Base", "ADP", "Role", "QB Sit", "Team QB",
                 "Snap%", "Tgt%", "Carry%", "RZ", "Games", "Rush Att", "Rush Yds", "Rush TD",
-                "Rec", "Rec Yds", "Rec TD", "Pass Yds", "Pass TD", "Age", "Handcuff/Committee",
+                "Rec", "Rec Yds", "Rec TD", "Pass Yds", "Pass TD", 
+                "Last Yr TD%", "Career TD%", "Spike", "Last Yr INT%", "Career INT%", "Last Yr Y/A", "Career Y/A",
+                "Rec TD Rate", "Rec TD Car", "Rec TD Spike", "Rush TD Rate", "Rush TD Car", "Rush TD Spike",
+                "Age", "Handcuff/Committee",
                 "Sample Note", "Expectation", "Why", "Risk"],
-               [6, 22, 6, 6, 10, 10, 12, 10, 18, 8, 8, 8, 8, 8, 10, 10, 8, 8, 10, 8, 10, 8, 6, 30, 30, 50, 60, 50],
+               [6, 22, 6, 6, 10, 10, 12, 10, 18, 8, 8, 8, 8, 8, 10, 10, 8, 8, 10, 8, 10, 8, 
+                10, 10, 8, 10, 10, 8, 8, 
+                10, 10, 10, 10, 10, 10,
+                6, 30, 30, 50, 60, 50],
                tab_color="9370DB")
 
 for i, p in enumerate(players):
@@ -683,12 +689,25 @@ for i, p in enumerate(players):
     pd_ws.cell(r, 20, p.get("rec_td", 0))
     pd_ws.cell(r, 21, p.get("pass_yds", 0))
     pd_ws.cell(r, 22, p.get("pass_td", 0))
-    pd_ws.cell(r, 23, p.get("age") or "")
-    pd_ws.cell(r, 24, p.get("handcuff", ""))
-    pd_ws.cell(r, 25, p.get("sample_note", ""))
-    pd_ws.cell(r, 26, p.get("expectation", ""))
-    pd_ws.cell(r, 27, p.get("why", ""))
-    pd_ws.cell(r, 28, p.get("risk", ""))
+    pd_ws.cell(r, 23, p.get("pass_td_rate") if p.get("pass_td_rate") is not None else "")
+    pd_ws.cell(r, 24, p.get("pass_td_rate_career") if p.get("pass_td_rate_career") is not None else "")
+    pd_ws.cell(r, 25, p.get("pass_td_rate_spike") if p.get("pass_td_rate_spike") is not None else "")
+    pd_ws.cell(r, 26, p.get("int_rate") if p.get("int_rate") is not None else "")
+    pd_ws.cell(r, 27, p.get("int_rate_career") if p.get("int_rate_career") is not None else "")
+    pd_ws.cell(r, 28, p.get("ypa") if p.get("ypa") is not None else "")
+    pd_ws.cell(r, 29, p.get("ypa_career") if p.get("ypa_career") is not None else "")
+    pd_ws.cell(r, 30, p.get("rec_td_rate") if p.get("rec_td_rate") is not None else "")
+    pd_ws.cell(r, 31, p.get("rec_td_rate_career") if p.get("rec_td_rate_career") is not None else "")
+    pd_ws.cell(r, 32, p.get("rec_td_rate_spike") if p.get("rec_td_rate_spike") is not None else "")
+    pd_ws.cell(r, 33, p.get("rush_td_rate") if p.get("rush_td_rate") is not None else "")
+    pd_ws.cell(r, 34, p.get("rush_td_rate_career") if p.get("rush_td_rate_career") is not None else "")
+    pd_ws.cell(r, 35, p.get("rush_td_rate_spike") if p.get("rush_td_rate_spike") is not None else "")
+    pd_ws.cell(r, 36, p.get("age") or "")
+    pd_ws.cell(r, 37, p.get("handcuff", ""))
+    pd_ws.cell(r, 38, p.get("sample_note", ""))
+    pd_ws.cell(r, 39, p.get("expectation", ""))
+    pd_ws.cell(r, 40, p.get("why", ""))
+    pd_ws.cell(r, 41, p.get("risk", ""))
 
 numfmt(pd_ws, ["E", "F"], "0.0")
 

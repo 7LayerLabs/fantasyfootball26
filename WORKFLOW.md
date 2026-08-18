@@ -91,6 +91,14 @@ Both the Excel "Player Detail" sheet and the cheat-sheet player cards show:
 - Passing: Yards / TDs (QB)
 - Total PPR Points
 
+### Rate vs Career (NEW - 2024 season vs career)
+- **QB**: Last Yr TD% / Career TD% / Spike (pp), Last Yr INT% / Career INT%, Last Yr Y/A / Career Y/A
+- **WR/TE**: Rec TD Rate / Career Rec TD Rate / Spike (pp)
+- **RB**: Rec TD Rate / Career Rec TD Rate / Spike (pp), Rush TD Rate / Career Rush TD Rate / Spike (pp)
+- Spike = Last Year Rate - Career Rate (percentage points)
+- Shows "SPIKE" if last year significantly above career, "FAIR" if near career, "COLD" if below career
+- Rookies / unmatched: shown as blank or "No NFL sample"
+
 ### Scouting
 - Expectation: What to expect in 2026
 - Why We Rank Here: Rationale

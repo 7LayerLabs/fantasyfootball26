@@ -568,6 +568,38 @@
     font: 700 9px/1.3 "Segoe UI", system-ui, sans-serif;
     text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent); 
   }
+  .pc-rates { 
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0; 
+    background: var(--gold); margin: 0; border-top: none;
+    border-bottom: 3px double var(--gold);
+  }
+  .pc-rate { 
+    background: var(--bg); padding: 20px 16px; text-align: center; 
+    border-right: 1px solid var(--gold);
+  }
+  .pc-rate:last-child { border-right: none; }
+  .pc-rate-val { 
+    font: 800 42px/1 "Segoe UI Semibold", system-ui, sans-serif; 
+    color: var(--gold); display: block; margin-bottom: 6px; 
+    font-variant-numeric: tabular-nums; letter-spacing: -1px;
+  }
+  .pc-rate-label { 
+    font: 700 9px/1.3 "Segoe UI", system-ui, sans-serif;
+    text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent); 
+    margin-bottom: 8px;
+  }
+  .pc-rate-career { 
+    font: 600 11px/1.3 "Segoe UI", system-ui, sans-serif;
+    color: var(--dim); margin-top: 6px;
+  }
+  .pc-rate-stamp { 
+    display: inline-block; margin-left: 8px; padding: 3px 8px; 
+    font: 700 9px/1 "Segoe UI", system-ui, sans-serif;
+    text-transform: uppercase; letter-spacing: 1.5px; border-radius: 0;
+  }
+  .pc-rate-stamp.spike { color: var(--bg); background: var(--gold); }
+  .pc-rate-stamp.fair { color: var(--dim); border: 1px solid var(--line); }
+  .pc-rate-stamp.cold { color: var(--red); border: 1px solid var(--red); }
   .pc-situation { 
     padding: 20px 32px; background: none; 
     border-top: none; border-bottom: 1px solid var(--line); 
@@ -790,6 +822,23 @@
       <div class="pc-stat"><span class="pc-stat-val" id="pc-stat1-val"></span><span class="pc-stat-label" id="pc-stat1-label"></span></div>
       <div class="pc-stat"><span class="pc-stat-val" id="pc-stat2-val"></span><span class="pc-stat-label" id="pc-stat2-label"></span></div>
       <div class="pc-stat"><span class="pc-stat-val" id="pc-stat3-val"></span><span class="pc-stat-label" id="pc-stat3-label"></span></div>
+    </div>
+    <div class="pc-rates" id="pc-rates-section" style="display:none">
+      <div class="pc-rate" id="pc-rate1" style="display:none">
+        <div class="pc-rate-label" id="pc-rate1-label"></div>
+        <div class="pc-rate-val" id="pc-rate1-val"></div>
+        <div class="pc-rate-career" id="pc-rate1-career"></div>
+      </div>
+      <div class="pc-rate" id="pc-rate2" style="display:none">
+        <div class="pc-rate-label" id="pc-rate2-label"></div>
+        <div class="pc-rate-val" id="pc-rate2-val"></div>
+        <div class="pc-rate-career" id="pc-rate2-career"></div>
+      </div>
+      <div class="pc-rate" id="pc-rate3" style="display:none">
+        <div class="pc-rate-label" id="pc-rate3-label"></div>
+        <div class="pc-rate-val" id="pc-rate3-val"></div>
+        <div class="pc-rate-career" id="pc-rate3-career"></div>
+      </div>
     </div>
     <div class="pc-situation" id="pc-sit-line"></div>
     <div class="pc-risk" id="pc-risk-box" style="display:none">
@@ -1343,6 +1392,97 @@ function openPlayerCard(overall) {
     $("pc-stat3-val").textContent = "—";
     $("pc-stat3-label").textContent = "N/A";
   }
+  
+  // Rate vs Career section
+  let hasRateData = false;
+  if (p.pos === "QB" && p.pass_td_rate != null) {
+    hasRateData = true;
+    
+    // QB TD Rate
+    $("pc-rate1").style.display = "block";
+    $("pc-rate1-label").textContent = `${season} Pass TD Rate`;
+    $("pc-rate1-val").textContent = p.pass_td_rate + "%";
+    
+    const tdSpike = p.pass_td_rate_spike || 0;
+    const tdStamp = tdSpike >= 1.5 ? "spike" : tdSpike <= -1.5 ? "cold" : "fair";
+    const tdLabel = tdSpike >= 1.5 ? "SPIKE" : tdSpike <= -1.5 ? "COLD" : "FAIR";
+    $("pc-rate1-career").innerHTML = `career ${p.pass_td_rate_career || "—"}%<span class="pc-rate-stamp ${tdStamp}">${tdLabel}</span>`;
+    
+    // INT Rate
+    if (p.int_rate != null) {
+      $("pc-rate2").style.display = "block";
+      $("pc-rate2-label").textContent = `${season} INT Rate`;
+      $("pc-rate2-val").textContent = p.int_rate + "%";
+      $("pc-rate2-career").innerHTML = `career ${p.int_rate_career || "—"}%`;
+    } else {
+      $("pc-rate2").style.display = "none";
+    }
+    
+    // Y/A
+    if (p.ypa != null) {
+      $("pc-rate3").style.display = "block";
+      $("pc-rate3-label").textContent = `${season} Yards/Att`;
+      $("pc-rate3-val").textContent = p.ypa.toFixed(1);
+      $("pc-rate3-career").innerHTML = `career ${p.ypa_career ? p.ypa_career.toFixed(1) : "—"}`;
+    } else {
+      $("pc-rate3").style.display = "none";
+    }
+  } else if ((p.pos === "WR" || p.pos === "TE") && p.rec_td_rate != null) {
+    hasRateData = true;
+    
+    // Rec TD Rate
+    $("pc-rate1").style.display = "block";
+    $("pc-rate1-label").textContent = `${season} Rec TD Rate`;
+    $("pc-rate1-val").textContent = p.rec_td_rate + "%";
+    
+    const recSpike = p.rec_td_rate_spike || 0;
+    const recStamp = recSpike >= 2.0 ? "spike" : recSpike <= -2.0 ? "cold" : "fair";
+    const recLabel = recSpike >= 2.0 ? "SPIKE" : recSpike <= -2.0 ? "COLD" : "FAIR";
+    $("pc-rate1-career").innerHTML = `career ${p.rec_td_rate_career || "—"}%<span class="pc-rate-stamp ${recStamp}">${recLabel}</span>`;
+    
+    $("pc-rate2").style.display = "none";
+    $("pc-rate3").style.display = "none";
+  } else if (p.pos === "RB") {
+    let rbRates = 0;
+    
+    if (p.rec_td_rate != null) {
+      rbRates++;
+      hasRateData = true;
+      $("pc-rate1").style.display = "block";
+      $("pc-rate1-label").textContent = `${season} Rec TD Rate`;
+      $("pc-rate1-val").textContent = p.rec_td_rate + "%";
+      
+      const recSpike = p.rec_td_rate_spike || 0;
+      const recStamp = recSpike >= 2.0 ? "spike" : recSpike <= -2.0 ? "cold" : "fair";
+      const recLabel = recSpike >= 2.0 ? "SPIKE" : recSpike <= -2.0 ? "COLD" : "FAIR";
+      $("pc-rate1-career").innerHTML = `career ${p.rec_td_rate_career || "—"}%<span class="pc-rate-stamp ${recStamp}">${recLabel}</span>`;
+    } else {
+      $("pc-rate1").style.display = "none";
+    }
+    
+    if (p.rush_td_rate != null) {
+      rbRates++;
+      hasRateData = true;
+      $("pc-rate2").style.display = "block";
+      $("pc-rate2-label").textContent = `${season} Rush TD Rate`;
+      $("pc-rate2-val").textContent = p.rush_td_rate + "%";
+      
+      const rushSpike = p.rush_td_rate_spike || 0;
+      const rushStamp = rushSpike >= 2.0 ? "spike" : rushSpike <= -2.0 ? "cold" : "fair";
+      const rushLabel = rushSpike >= 2.0 ? "SPIKE" : rushSpike <= -2.0 ? "COLD" : "FAIR";
+      $("pc-rate2-career").innerHTML = `career ${p.rush_td_rate_career || "—"}%<span class="pc-rate-stamp ${rushStamp}">${rushLabel}</span>`;
+    } else {
+      $("pc-rate2").style.display = "none";
+    }
+    
+    $("pc-rate3").style.display = "none";
+  } else {
+    $("pc-rate1").style.display = "none";
+    $("pc-rate2").style.display = "none";
+    $("pc-rate3").style.display = "none";
+  }
+  
+  $("pc-rates-section").style.display = hasRateData ? "grid" : "none";
   
   // Situation line
   const sitParts = [];
