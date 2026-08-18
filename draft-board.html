@@ -113,6 +113,32 @@
     text-transform: uppercase; letter-spacing: 1.5px; text-align: left; padding: 10px 8px 8px;
     border-bottom: 1px solid var(--gold); z-index: 2;
   }
+  thead th.sortable {
+    cursor: pointer; user-select: none; position: relative;
+    transition: color .15s;
+  }
+  thead th.sortable:hover {
+    color: var(--text);
+  }
+  thead th.sortable:focus {
+    outline: 2px solid var(--gold); outline-offset: -2px;
+  }
+  thead th.sortable.active::after {
+    content: "";
+    display: inline-block;
+    margin-left: 4px;
+    width: 0;
+    height: 0;
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+    vertical-align: middle;
+  }
+  thead th.sortable.active.asc::after {
+    border-bottom: 4px solid var(--gold);
+  }
+  thead th.sortable.active.desc::after {
+    border-top: 4px solid var(--gold);
+  }
   thead th.num, td.num { text-align: right; }
   .col-bye { 
     text-align: center; width: 44px; 
@@ -122,6 +148,22 @@
     text-align: right; width: 50px;
     font: 700 11px/1 "Segoe UI", system-ui, sans-serif;
     font-variant-numeric: tabular-nums;
+  }
+  .col-market {
+    width: 70px; text-align: center;
+    font: 700 10px/1.2 "Segoe UI", system-ui, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .market-stamp {
+    display: block; margin-bottom: 2px;
+  }
+  .market-stamp.too-early { color: var(--dim); }
+  .market-stamp.now { color: var(--accent); }
+  .market-stamp.falling { color: var(--gold); }
+  .market-stamp.gone { color: var(--dim); }
+  .market-subline {
+    display: block; font-size: 8.5px; color: var(--dim); 
+    font-weight: 500; letter-spacing: 0.3px; text-transform: lowercase;
   }
   tbody tr { border-bottom: 1px solid #1a1f28; cursor: default; transition: background .15s; }
   tbody tr:hover { background: rgba(201,162,39,.04); }
@@ -412,6 +454,8 @@
     .num { font-size: 10px; }
     .col-bye { font-size: 10px; width: 36px; }
     .col-ppg { font-size: 10px; width: 42px; }
+    .col-market { width: 62px; font-size: 9px; }
+    .market-subline { font-size: 7.5px; }
     .act { width: auto; opacity: 1; }
     .act button { padding: 3px 6px; font-size: 8px; margin-left: 2px; }
     .col-vorp, .col-score { display: none; }
@@ -673,13 +717,16 @@
     </div>
     <div id="board"><table>
       <thead><tr>
-        <th></th><th></th><th class="rk">#</th><th>Pos</th><th>Player</th>
-        <th class="col-bye" title="Bye week">Bye</th>
-        <th class="col-ppg" title="2024 PPR points per game (veterans with NFL sample). 2026 Excel projection not baked.">PPG</th>
-        <th class="num col-score">Score</th>
-        <th class="num col-vorp" title="Season points above a waiver-wire replacement at his position">VORP</th>
-        <th class="num" title="Average Draft Position: the pick where drafts usually take him">ADP</th>
-        <th class="num" title="ADP minus our rank. Positive = bargain, he lasts longer than he should. Negative = a reach at this pick.">Value +/-</th>
+        <th></th><th></th>
+        <th class="rk sortable" onclick="sortBy('overall')" tabindex="0" role="button" aria-label="Sort by overall rank">#</th>
+        <th class="sortable" onclick="sortBy('pos')" tabindex="0" role="button" aria-label="Sort by position">Pos</th>
+        <th class="sortable" onclick="sortBy('name')" tabindex="0" role="button" aria-label="Sort by player name">Player</th>
+        <th class="col-bye sortable" onclick="sortBy('bye')" tabindex="0" role="button" aria-label="Sort by bye week" title="Bye week">Bye</th>
+        <th class="col-ppg sortable" onclick="sortBy('ppg')" tabindex="0" role="button" aria-label="Sort by PPG" title="2024 PPR points per game (veterans with NFL sample). 2026 Excel projection not baked.">PPG</th>
+        <th class="num col-score sortable" onclick="sortBy('score')" tabindex="0" role="button" aria-label="Sort by score">Score</th>
+        <th class="num col-vorp sortable" onclick="sortBy('vorp')" tabindex="0" role="button" aria-label="Sort by VORP" title="Season points above a waiver-wire replacement at his position">VORP</th>
+        <th class="num sortable" onclick="sortBy('adp')" tabindex="0" role="button" aria-label="Sort by ADP" title="Average Draft Position: the pick where drafts usually take him">ADP</th>
+        <th class="sortable" onclick="sortBy('edge')" tabindex="0" role="button" aria-label="Sort by market value" title="Our rank vs ADP. Not live to the current pick unless FALLING. Raw edge: ADP minus our rank.">Market</th>
         <th></th><th class="act"></th>
       </tr></thead>
       <tbody id="rows"></tbody>
@@ -825,6 +872,7 @@ st.name = st.name || "My Team";
 if (st.randSlot === undefined) st.randSlot = true;   // mocks deal a random seat unless switched to manual
 st.speed = st.speed || "quick";   // mock pacing: quick = instant bots, normal = real-lobby waits
 st.block = st.block || {};        // positions hidden from the big board (search still finds them)
+st.sort = st.sort || { col: "overall", dir: "asc" };  // current sort column and direction
 st.teams = Math.min(16, Math.max(8, st.teams || 10));
 st.slot = Math.min(st.teams, Math.max(1, st.slot || 1));
 
@@ -837,6 +885,73 @@ const fmtPick = n => Math.ceil(n / st.teams) + "." + String((n - 1) % st.teams +
 function toggleSection(el) {
   if (typeof el === 'string') el = document.getElementById(el);
   el.classList.toggle('collapsed');
+}
+
+function sortBy(col) {
+  // Toggle direction if same column, else use default direction for new column
+  if (st.sort.col === col) {
+    st.sort.dir = st.sort.dir === "asc" ? "desc" : "asc";
+  } else {
+    // Default direction: asc for #/ADP/Bye/Player, desc for everything else
+    st.sort.col = col;
+    st.sort.dir = ["overall", "adp", "bye", "name"].includes(col) ? "asc" : "desc";
+  }
+  save();
+  render();
+}
+
+function sortPlayers(players) {
+  const col = st.sort.col;
+  const dir = st.sort.dir;
+  const mult = dir === "asc" ? 1 : -1;
+  
+  return [...players].sort((a, b) => {
+    let valA, valB;
+    
+    switch (col) {
+      case "overall":
+        return mult * (a.overall - b.overall);
+      case "pos":
+        // Sort by position first, then posRank within position
+        if (a.pos !== b.pos) return mult * a.pos.localeCompare(b.pos);
+        return mult * (a.posRank - b.posRank);
+      case "name":
+        return mult * a.name.localeCompare(b.name);
+      case "bye":
+        valA = a.bye || 999;  // No bye sorts last
+        valB = b.bye || 999;
+        return mult * (valA - valB);
+      case "ppg":
+        valA = a.ppg || 0;
+        valB = b.ppg || 0;
+        // Put zeros/dashes at the end regardless of direction
+        if (valA === 0 && valB === 0) return 0;
+        if (valA === 0) return 1;
+        if (valB === 0) return -1;
+        return mult * (valA - valB);
+      case "score":
+        return mult * (a.score - b.score);
+      case "vorp":
+        return mult * (a.vorp - b.vorp);
+      case "adp":
+        return mult * (a.adp - b.adp);
+      case "edge":
+        // Market sort: by slack (falling first, then now, then too early)
+        const currentPick = picksMade() + 1;
+        const aSlack = a.adp - currentPick;
+        const bSlack = b.adp - currentPick;
+        
+        // FALLING (negative slack) sorts first, then NOW, then TOO EARLY
+        // Within each category, sort by magnitude
+        const aCategory = aSlack < 0 ? 0 : (aSlack <= 8 ? 1 : 2);
+        const bCategory = bSlack < 0 ? 0 : (bSlack <= 8 ? 1 : 2);
+        
+        if (aCategory !== bCategory) return aCategory - bCategory;
+        return mult * (aSlack - bSlack);
+      default:
+        return 0;
+    }
+  });
 }
 
 function myPicks() {  // snake pick numbers for my slot
@@ -1742,8 +1857,9 @@ function render() {
     ? fmtPick(mineUp[0]) + (mineUp[1] ? `<span style="font-size:12px;color:var(--dim)"> then ${fmtPick(mineUp[1])}</span>` : "")
     : "-";
   const hit = firstAvailable();
+  const visiblePlayers = sortPlayers(visible());
   const rows = [];
-  for (const p of visible()) {
+  for (const p of visiblePlayers) {
     const s = st.status[p.overall] || "";
     const isOut = !!st.out[p.overall];
     const cls = (isOut ? "taken" : s === "T" ? "taken" : s === "M" ? "mine" : "") + (hit === p ? " hit" : "");
@@ -1752,6 +1868,41 @@ function render() {
     const edge = p.edge > 0 ? `<span class="edge-pos">+${p.edge}</span>` : p.edge < 0 ? `<span class="edge-neg">${p.edge}</span>` : "0";
     const bye = p.bye || "—";
     const ppg = p.ppg > 0 ? p.ppg.toFixed(1) : "—";
+    
+    // Market cell: LIVE verdict based on current pick number
+    const currentPick = picksMade() + 1;
+    const slack = p.adp - currentPick;  // picks until market price
+    const isAvailable = !st.status[p.overall] && !st.out[p.overall];
+    
+    let stamp = "—";
+    let stampClass = "gone";
+    let subline = "";
+    
+    if (isAvailable) {
+      // TOO EARLY: more than ~1 round before market (currentPick + 8 <= ADP)
+      if (currentPick + 8 <= p.adp) {
+        stamp = "TOO EARLY";
+        stampClass = "too-early";
+        subline = `${Math.round(slack)} picks left`;
+      }
+      // FALLING: past his ADP
+      else if (currentPick > p.adp) {
+        stamp = "FALLING";
+        stampClass = "falling";
+        subline = `${Math.round(currentPick - p.adp)} past ADP`;
+      }
+      // NOW: within ~1 round of the sooner of (our rank, ADP)
+      else {
+        stamp = "NOW";
+        stampClass = "now";
+        const soonerMark = Math.min(p.overall, p.adp);
+        subline = p.overall < p.adp ? `our #${p.overall}` : `ADP ${Math.round(p.adp)}`;
+      }
+    }
+    
+    const market = `<span class="market-stamp ${stampClass}">${stamp}</span><span class="market-subline">${subline}</span>`;
+    const staticEdge = p.edge > 0 ? `+${p.edge.toFixed(1)}` : p.edge.toFixed(1);  // Keep static edge in tooltip
+    
     const act = isOut
       ? `<button class="undo1" onclick="clearOut(${p.overall})">Back</button>`
       : s
@@ -1766,10 +1917,20 @@ function render() {
       <td class="col-bye">${bye}</td>
       <td class="col-ppg num">${ppg}</td>
       <td class="num col-score">${p.score}</td><td class="num col-vorp">${p.vorp}</td>
-      <td class="num">${p.adp}</td><td class="num">${edge}</td>
+      <td class="num">${p.adp}</td>
+      <td class="col-market" title="Static edge: ${staticEdge} (ADP ${p.adp} - Rank ${p.overall}). Live: ${stamp} at pick ${currentPick}.">${market}</td>
       <td>${gone}</td><td class="act">${act}</td></tr>`);
   }
   $("rows").innerHTML = rows.join("");
+  
+  // Update sort indicators on headers
+  document.querySelectorAll("thead th.sortable").forEach(th => {
+    th.classList.remove("active", "asc", "desc");
+  });
+  const activeHeader = document.querySelector(`thead th.sortable[onclick*="${st.sort.col}"]`);
+  if (activeHeader) {
+    activeHeader.classList.add("active", st.sort.dir);
+  }
 
   const mockDone = st.mock && picksMade() >= st.teams * 15;
   $("alerts").innerHTML = (mockDone ? `<div class="alertrow"><b>Mock draft complete.</b> <button class="pickbtn" onclick="showRecap()" style="margin-left:4px">View recap</button> Full rosters and where you finished. Start mock draft runs another; the room re-rolls every time.</div>` : "")
@@ -1909,6 +2070,15 @@ for (const id of ["teams", "slot"]) $(id).addEventListener("change", e => {
 $("myname").addEventListener("input", e => { st.name = e.target.value.trim() || "My Team"; save(); render(); });
 $("teams").value = st.teams; $("slot").value = st.slot; $("myname").value = st.name === "My Team" ? "" : st.name;
 if (mockOn()) document.body.classList.add('mode-mock');
+
+// Keyboard support for sortable headers
+document.addEventListener("keydown", e => {
+  if (e.target.classList && e.target.classList.contains("sortable") && (e.key === "Enter" || e.key === " ")) {
+    e.preventDefault();
+    e.target.click();
+  }
+});
+
 render();
 $("search").focus();
 botLoop();   // resume a mock in progress if the page was reloaded mid-draft
