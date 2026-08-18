@@ -157,9 +157,10 @@
   .market-stamp {
     display: block; margin-bottom: 2px;
   }
-  .market-stamp.value, .market-stamp.falling { color: var(--accent); }
-  .market-stamp.fair { color: var(--dim); }
-  .market-stamp.reach { color: #8b6914; }
+  .market-stamp.too-early { color: var(--dim); }
+  .market-stamp.now { color: var(--accent); }
+  .market-stamp.falling { color: var(--gold); }
+  .market-stamp.gone { color: var(--dim); }
   .market-subline {
     display: block; font-size: 8.5px; color: var(--dim); 
     font-weight: 500; letter-spacing: 0.3px; text-transform: lowercase;
@@ -935,12 +936,18 @@ function sortPlayers(players) {
       case "adp":
         return mult * (a.adp - b.adp);
       case "edge":
-        // FALLING players sort first (regardless of direction), then by edge
-        const aFalling = !st.status[a.overall] && !st.out[a.overall] && picksMade() + 1 > a.adp;
-        const bFalling = !st.status[b.overall] && !st.out[b.overall] && picksMade() + 1 > b.adp;
-        if (aFalling && !bFalling) return -1;
-        if (!aFalling && bFalling) return 1;
-        return mult * (a.edge - b.edge);
+        // Market sort: by slack (falling first, then now, then too early)
+        const currentPick = picksMade() + 1;
+        const aSlack = a.adp - currentPick;
+        const bSlack = b.adp - currentPick;
+        
+        // FALLING (negative slack) sorts first, then NOW, then TOO EARLY
+        // Within each category, sort by magnitude
+        const aCategory = aSlack < 0 ? 0 : (aSlack <= 8 ? 1 : 2);
+        const bCategory = bSlack < 0 ? 0 : (bSlack <= 8 ? 1 : 2);
+        
+        if (aCategory !== bCategory) return aCategory - bCategory;
+        return mult * (aSlack - bSlack);
       default:
         return 0;
     }
@@ -1862,22 +1869,39 @@ function render() {
     const bye = p.bye || "—";
     const ppg = p.ppg > 0 ? p.ppg.toFixed(1) : "—";
     
-    // Market cell: stamp + subline + FALLING if applicable
-    const rounds = Math.round(p.edge / st.teams);
-    let stamp = "FAIR";
-    let stampClass = "fair";
-    if (p.edge >= 8) { stamp = "VALUE"; stampClass = "value"; }
-    else if (p.edge <= -8) { stamp = "REACH"; stampClass = "reach"; }
+    // Market cell: LIVE verdict based on current pick number
+    const currentPick = picksMade() + 1;
+    const slack = p.adp - currentPick;  // picks until market price
+    const isAvailable = !st.status[p.overall] && !st.out[p.overall];
     
-    // FALLING: player available and current pick > his ADP
-    const isFalling = !st.status[p.overall] && !st.out[p.overall] && picksMade() + 1 > p.adp;
-    if (isFalling) { stamp = "FALLING"; stampClass = "falling"; }
+    let stamp = "—";
+    let stampClass = "gone";
+    let subline = "";
     
-    let subline = "on time";
-    if (rounds > 0) subline = `${rounds} late`;
-    else if (rounds < 0) subline = `${Math.abs(rounds)} early`;
+    if (isAvailable) {
+      // TOO EARLY: more than ~1 round before market (currentPick + 8 <= ADP)
+      if (currentPick + 8 <= p.adp) {
+        stamp = "TOO EARLY";
+        stampClass = "too-early";
+        subline = `${Math.round(slack)} picks left`;
+      }
+      // FALLING: past his ADP
+      else if (currentPick > p.adp) {
+        stamp = "FALLING";
+        stampClass = "falling";
+        subline = `${Math.round(currentPick - p.adp)} past ADP`;
+      }
+      // NOW: within ~1 round of the sooner of (our rank, ADP)
+      else {
+        stamp = "NOW";
+        stampClass = "now";
+        const soonerMark = Math.min(p.overall, p.adp);
+        subline = p.overall < p.adp ? `our #${p.overall}` : `ADP ${Math.round(p.adp)}`;
+      }
+    }
     
     const market = `<span class="market-stamp ${stampClass}">${stamp}</span><span class="market-subline">${subline}</span>`;
+    const staticEdge = p.edge > 0 ? `+${p.edge.toFixed(1)}` : p.edge.toFixed(1);  // Keep static edge in tooltip
     
     const act = isOut
       ? `<button class="undo1" onclick="clearOut(${p.overall})">Back</button>`
@@ -1894,7 +1918,7 @@ function render() {
       <td class="col-ppg num">${ppg}</td>
       <td class="num col-score">${p.score}</td><td class="num col-vorp">${p.vorp}</td>
       <td class="num">${p.adp}</td>
-      <td class="col-market" title="Edge: ${p.edge > 0 ? '+' : ''}${p.edge} (ADP ${p.adp} - Rank ${p.overall})">${market}</td>
+      <td class="col-market" title="Static edge: ${staticEdge} (ADP ${p.adp} - Rank ${p.overall}). Live: ${stamp} at pick ${currentPick}.">${market}</td>
       <td>${gone}</td><td class="act">${act}</td></tr>`);
   }
   $("rows").innerHTML = rows.join("");
