@@ -40,7 +40,9 @@ replacement_levels = {
 # Build output in the same format as extract_board.py
 out = []
 for i, p in enumerate(players):
-    rating = round(p["base"], 1)
+    # Apply adjustment if present
+    adjustment = p.get("adjustment", 0)
+    rating = round(p["base"] + adjustment, 1)
     pos = p["pos"]
     
     # Position-aware VORP calculation

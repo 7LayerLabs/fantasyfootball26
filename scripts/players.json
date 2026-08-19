@@ -50,7 +50,9 @@
       "pass_att_last": 460,
       "pass_td_last": 25,
       "pass_att_career": 0,
-      "pass_td_career": 0
+      "pass_td_career": 0,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "QB",
@@ -61,7 +63,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Elite QB1; weekly top-5 expectation with overall QB1 upside.  WHY: He produced 19.0 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here.  RISK: Passing-TD efficiency, rushing volume and supporting-cast health are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 1",
       "team": "CHI",
       "expectation": "Elite QB1; weekly top-5 expectation with overall QB1 upside.",
@@ -102,7 +104,9 @@
       "pass_att_last": 568,
       "pass_td_last": 27,
       "pass_att_career": 1130,
-      "pass_td_career": 47
+      "pass_td_career": 47,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "QB",
@@ -113,7 +117,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Elite QB1; weekly top-5 expectation with overall QB1 upside.  WHY: He produced 21.1 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here.  RISK: Passing-TD efficiency, rushing volume and supporting-cast health are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 1",
       "team": "NE",
       "expectation": "Elite QB1; weekly top-5 expectation with overall QB1 upside.",
@@ -154,7 +158,9 @@
       "pass_att_last": 492,
       "pass_td_last": 31,
       "pass_att_career": 830,
-      "pass_td_career": 46
+      "pass_td_career": 46,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "QB",
@@ -165,7 +171,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Strong every-week QB1; frequent top-8 finishes expected.  WHY: He produced 18.7 PPR/FP points per game across 16 games. The workload/efficiency profile gives the model a rate-based reason to keep him here.  RISK: Passing-TD efficiency, rushing volume and supporting-cast health are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 1",
       "team": "LAC",
       "expectation": "Strong every-week QB1; frequent top-8 finishes expected.",
@@ -206,7 +212,9 @@
       "pass_att_last": 512,
       "pass_td_last": 26,
       "pass_att_career": 3438,
-      "pass_td_career": 163
+      "pass_td_career": 163,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "QB",
@@ -217,7 +225,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Strong every-week QB1; frequent top-8 finishes expected.  WHY: He produced 17.1 PPR/FP points per game across 13 games. The workload/efficiency profile gives the model a rate-based reason to keep him here.  RISK: Passing-TD efficiency, rushing volume and supporting-cast health are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 2",
       "team": "BAL",
       "expectation": "Strong every-week QB1; frequent top-8 finishes expected.",
@@ -258,7 +266,9 @@
       "pass_att_last": 302,
       "pass_td_last": 21,
       "pass_att_career": 0,
-      "pass_td_career": 0
+      "pass_td_career": 0,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "QB",
@@ -269,7 +279,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Strong every-week QB1; frequent top-8 finishes expected.  WHY: He produced 19.1 PPR/FP points per game across 16 games. The workload/efficiency profile gives the model a rate-based reason to keep him here.  RISK: Passing-TD efficiency, rushing volume and supporting-cast health are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 2",
       "team": "PHI",
       "expectation": "Strong every-week QB1; frequent top-8 finishes expected.",
@@ -310,7 +320,9 @@
       "pass_att_last": 454,
       "pass_td_last": 25,
       "pass_att_career": 2393,
-      "pass_td_career": 110
+      "pass_td_career": 110,
+      "adjustment": -0.45,
+      "adjustment_reason": "QB7: Slot below Burrow."
     },
     {
       "pos": "QB",
@@ -321,7 +333,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Strong every-week QB1; frequent top-8 finishes expected.  WHY: He produced 21.1 PPR/FP points per game across 14 games. The workload/efficiency profile gives the model a rate-based reason to keep him here.  RISK: Passing-TD efficiency, rushing volume and supporting-cast health are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 2",
       "team": "KC",
       "expectation": "Strong every-week QB1; frequent top-8 finishes expected.",
@@ -362,7 +374,9 @@
       "pass_att_last": 502,
       "pass_td_last": 22,
       "pass_att_career": 4673,
-      "pass_td_career": 267
+      "pass_td_career": 267,
+      "adjustment": -1.21,
+      "adjustment_reason": "QB10: 2025 was 4.4% TD vs 5.7% career (14g); down from 7."
     },
     {
       "pos": "QB",
@@ -373,7 +387,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Strong every-week QB1; frequent top-8 finishes expected.  WHY: He produced 16.7 PPR/FP points per game across 7 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 78 versus model overall rank 64.  RISK: Availability/sample risk is elevated after only 7 games; talent is not being punished as heavily as durability.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 2",
       "team": "WAS",
       "expectation": "Strong every-week QB1; frequent top-8 finishes expected.",
@@ -414,7 +428,9 @@
       "pass_att_last": 188,
       "pass_td_last": 8,
       "pass_att_career": 668,
-      "pass_td_career": 33
+      "pass_td_career": 33,
+      "adjustment": 0.8,
+      "adjustment_reason": "QB8: Maintain position."
     },
     {
       "pos": "QB",
@@ -425,7 +441,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Low-end QB1/high-end QB2 in a 10-team league; startable most weeks.  WHY: He produced 17.4 PPR/FP points per game across 8 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 86 versus model overall rank 70.  RISK: Availability/sample risk is elevated after only 8 games; talent is not being punished as heavily as durability.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 2",
       "team": "CIN",
       "expectation": "Low-end QB1/high-end QB2 in a 10-team league; startable most weeks.",
@@ -466,7 +482,9 @@
       "pass_att_last": 259,
       "pass_td_last": 17,
       "pass_att_career": 2806,
-      "pass_td_career": 157
+      "pass_td_career": 157,
+      "adjustment": 2.91,
+      "adjustment_reason": "QB6: 2025 rate held strong; health fade was too harsh."
     },
     {
       "pos": "QB",
@@ -477,7 +495,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Low-end QB1/high-end QB2 in a 10-team league; startable most weeks.  WHY: He produced 21.1 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 94 versus model overall rank 77.  RISK: Passing-TD efficiency, rushing volume and supporting-cast health are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 2",
       "team": "LAR",
       "expectation": "Low-end QB1/high-end QB2 in a 10-team league; startable most weeks.",
@@ -518,7 +536,9 @@
       "pass_att_last": 597,
       "pass_td_last": 46,
       "pass_att_career": 6900,
-      "pass_td_career": 343
+      "pass_td_career": 343,
+      "adjustment": 1.08,
+      "adjustment_reason": "QB9: Mid-30s TDs in 2025, not 46; move up."
     },
     {
       "pos": "QB",
@@ -529,7 +549,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Low-end QB1/high-end QB2 in a 10-team league; startable most weeks.  WHY: He produced 18.6 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 102 versus model overall rank 79.  RISK: Passing-TD efficiency, rushing volume and supporting-cast health are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 2",
       "team": "DEN",
       "expectation": "Low-end QB1/high-end QB2 in a 10-team league; startable most weeks.",
@@ -570,7 +590,9 @@
       "pass_att_last": 612,
       "pass_td_last": 25,
       "pass_att_career": 1179,
-      "pass_td_career": 54
+      "pass_td_career": 54,
+      "adjustment": -2.25,
+      "adjustment_reason": "QB16: Ankle fracture + 2 surgeries, 6.4 Y/A; down from 11."
     },
     {
       "pos": "QB",
@@ -581,7 +603,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Low-end QB1/high-end QB2 in a 10-team league; startable most weeks.  WHY: He produced 19.0 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 110 versus model overall rank 82.  RISK: Passing-TD efficiency, rushing volume and supporting-cast health are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 2",
       "team": "DAL",
       "expectation": "Low-end QB1/high-end QB2 in a 10-team league; startable most weeks.",
@@ -622,7 +644,9 @@
       "pass_att_last": 600,
       "pass_td_last": 30,
       "pass_att_career": 4759,
-      "pass_td_career": 243
+      "pass_td_career": 243,
+      "adjustment": 0.38,
+      "adjustment_reason": "QB11: Slight bump."
     },
     {
       "pos": "QB",
@@ -633,7 +657,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: QB2/streaming tier; useful when matchup and supporting cast line up.  WHY: He produced 20.6 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 118 versus model overall rank 87.  RISK: Passing-TD efficiency, rushing volume and supporting-cast health are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 3",
       "team": "JAX",
       "expectation": "QB2/streaming tier; useful when matchup and supporting cast line up.",
@@ -674,7 +698,9 @@
       "pass_att_last": 560,
       "pass_td_last": 29,
       "pass_att_career": 2594,
-      "pass_td_career": 98
+      "pass_td_career": 98,
+      "adjustment": -0.69,
+      "adjustment_reason": "QB14: Slot below Dart."
     },
     {
       "pos": "QB",
@@ -685,7 +711,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: QB2/streaming tier; useful when matchup and supporting cast line up.  WHY: He produced 20.8 PPR/FP points per game across 9 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 126 versus model overall rank 95.  RISK: Availability/sample risk is elevated after only 9 games; talent is not being punished as heavily as durability.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 3",
       "team": "SF",
       "expectation": "QB2/streaming tier; useful when matchup and supporting cast line up.",
@@ -726,7 +752,9 @@
       "pass_att_last": 284,
       "pass_td_last": 20,
       "pass_att_career": 1353,
-      "pass_td_career": 84
+      "pass_td_career": 84,
+      "adjustment": -1.84,
+      "adjustment_reason": "QB18: Slot below Baker."
     },
     {
       "pos": "QB",
@@ -737,7 +765,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: QB2/streaming tier; useful when matchup and supporting cast line up.  WHY: He produced 17.6 PPR/FP points per game across 14 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 134 versus model overall rank 101.  RISK: Passing-TD efficiency, rushing volume and supporting-cast health are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 3",
       "team": "NYG",
       "expectation": "QB2/streaming tier; useful when matchup and supporting cast line up.",
@@ -778,7 +806,9 @@
       "pass_att_last": 339,
       "pass_td_last": 15,
       "pass_att_career": 339,
-      "pass_td_career": 15
+      "pass_td_career": 15,
+      "adjustment": 1.44,
+      "adjustment_reason": "QB13: Sophomore legs bet (2025 was rookie year)."
     },
     {
       "pos": "QB",
@@ -789,7 +819,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: QB2/streaming tier; useful when matchup and supporting cast line up.  WHY: He produced 17.9 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 142 versus model overall rank 106.  RISK: Passing-TD efficiency, rushing volume and supporting-cast health are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 3",
       "team": "DET",
       "expectation": "QB2/streaming tier; useful when matchup and supporting cast line up.",
@@ -830,7 +860,9 @@
       "pass_att_last": 578,
       "pass_td_last": 34,
       "pass_att_career": 5224,
-      "pass_td_career": 256
+      "pass_td_career": 256,
+      "adjustment": 2.36,
+      "adjustment_reason": "QB12: 34 TD, 7.9 Y/A in 2025; move up from 16."
     },
     {
       "pos": "QB",
@@ -841,7 +873,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: QB2/streaming tier; useful when matchup and supporting cast line up.  WHY: He produced 16.2 PPR/FP points per game across 5 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 150 versus model overall rank 119.  RISK: Availability/sample risk is elevated after only 5 games; talent is not being punished as heavily as durability.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 3",
       "team": "MIN",
       "expectation": "QB2/streaming tier; useful when matchup and supporting cast line up.",
@@ -882,7 +914,9 @@
       "pass_att_last": 161,
       "pass_td_last": 6,
       "pass_att_career": 2941,
-      "pass_td_career": 121
+      "pass_td_career": 121,
+      "adjustment": 0.79,
+      "adjustment_reason": "QB19: Slight bump."
     },
     {
       "pos": "QB",
@@ -893,7 +927,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: QB2/streaming tier; useful when matchup and supporting cast line up.  WHY: He produced 16.1 PPR/FP points per game across 15 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 158 versus model overall rank 126.  RISK: Passing-TD efficiency, rushing volume and supporting-cast health are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 3",
       "team": "GB",
       "expectation": "QB2/streaming tier; useful when matchup and supporting cast line up.",
@@ -934,7 +968,9 @@
       "pass_att_last": 439,
       "pass_td_last": 23,
       "pass_att_career": 1526,
-      "pass_td_career": 83
+      "pass_td_career": 83,
+      "adjustment": 3.46,
+      "adjustment_reason": "QB15: Move up into mid-tier."
     },
     {
       "pos": "QB",
@@ -945,7 +981,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Bench/streaming option; needs matchup, rushing or TD spike weeks.  WHY: He produced 16.6 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 166 versus model overall rank 130.  RISK: Passing-TD efficiency, rushing volume and supporting-cast health are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 4",
       "team": "TB",
       "expectation": "Bench/streaming option; needs matchup, rushing or TD spike weeks.",
@@ -986,7 +1022,9 @@
       "pass_att_last": 543,
       "pass_td_last": 26,
       "pass_att_career": 3938,
-      "pass_td_career": 197
+      "pass_td_career": 197,
+      "adjustment": 2.67,
+      "adjustment_reason": "QB17: Durable, not a 13; move up."
     },
     {
       "pos": "QB",
@@ -997,7 +1035,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Bench/streaming option; needs matchup, rushing or TD spike weeks.  WHY: He produced 14.9 PPR/FP points per game across 11 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 174 versus model overall rank 144.  RISK: Passing-TD efficiency, rushing volume and supporting-cast health are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 4",
       "team": "NO",
       "expectation": "Bench/streaming option; needs matchup, rushing or TD spike weeks.",
@@ -1038,7 +1076,9 @@
       "pass_att_last": 327,
       "pass_td_last": 10,
       "pass_att_career": 327,
-      "pass_td_career": 10
+      "pass_td_career": 10,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "QB",
@@ -1049,7 +1089,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Bench/streaming option; needs matchup, rushing or TD spike weeks.  WHY: He produced 15.5 PPR/FP points per game across 14 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 182 versus model overall rank 154.  RISK: Passing-TD efficiency, rushing volume and supporting-cast health are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 4",
       "team": "HOU",
       "expectation": "Bench/streaming option; needs matchup, rushing or TD spike weeks.",
@@ -1090,7 +1130,9 @@
       "pass_att_last": 423,
       "pass_td_last": 19,
       "pass_att_career": 1454,
-      "pass_td_career": 62
+      "pass_td_career": 62,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "QB",
@@ -1101,7 +1143,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Bench/streaming option; needs matchup, rushing or TD spike weeks.  WHY: He produced 14.7 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 190 versus model overall rank 157.  RISK: Passing-TD efficiency, rushing volume and supporting-cast health are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 4",
       "team": "SEA",
       "expectation": "Bench/streaming option; needs matchup, rushing or TD spike weeks.",
@@ -1142,7 +1184,9 @@
       "pass_att_last": 477,
       "pass_td_last": 25,
       "pass_att_career": 2833,
-      "pass_td_career": 123
+      "pass_td_career": 123,
+      "adjustment": 5.45,
+      "adjustment_reason": "QB20: Locked into top 20."
     },
     {
       "pos": "QB",
@@ -1153,7 +1197,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Bench/streaming option; needs matchup, rushing or TD spike weeks.  WHY: He produced 18.0 PPR/FP points per game across 13 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 198 versus model overall rank 158.  RISK: Passing-TD efficiency, rushing volume and supporting-cast health are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 5",
       "team": "IND",
       "expectation": "Bench/streaming option; needs matchup, rushing or TD spike weeks.",
@@ -1194,7 +1238,9 @@
       "pass_att_last": 384,
       "pass_td_last": 19,
       "pass_att_career": 2625,
-      "pass_td_career": 89
+      "pass_td_career": 89,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "QB",
@@ -1205,7 +1251,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Bench/streaming option; needs matchup, rushing or TD spike weeks.  WHY: He produced 12.8 PPR/FP points per game across 4 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 206 versus model overall rank 160.  RISK: Availability/sample risk is elevated after only 4 games; talent is not being punished as heavily as durability.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 5",
       "team": "MIA",
       "expectation": "Bench/streaming option; needs matchup, rushing or TD spike weeks.",
@@ -1242,7 +1288,9 @@
       "int_rate": null,
       "int_rate_career": null,
       "ypa": null,
-      "ypa_career": null
+      "ypa_career": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "QB",
@@ -1253,7 +1301,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Deep QB2; waiver-level in a normal 10-team format.  WHY: He produced 14.3 PPR/FP points per game across 16 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 214 versus model overall rank 163.  RISK: Passing-TD efficiency, rushing volume and supporting-cast health are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 5",
       "team": "CAR",
       "expectation": "Deep QB2; waiver-level in a normal 10-team format.",
@@ -1294,7 +1342,9 @@
       "pass_att_last": 478,
       "pass_td_last": 23,
       "pass_att_career": 1389,
-      "pass_td_career": 49
+      "pass_td_career": 49,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "QB",
@@ -1305,7 +1355,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Deep QB2; waiver-level in a normal 10-team format.  WHY: He produced 11.4 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 222 versus model overall rank 164.  RISK: Passing-TD efficiency, rushing volume and supporting-cast health are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 5",
       "team": "TEN",
       "expectation": "Deep QB2; waiver-level in a normal 10-team format.",
@@ -1346,7 +1396,9 @@
       "pass_att_last": 540,
       "pass_td_last": 15,
       "pass_att_career": 540,
-      "pass_td_career": 15
+      "pass_td_career": 15,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "QB",
@@ -1357,7 +1409,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Deep QB2; waiver-level in a normal 10-team format.  WHY: He produced 16.8 PPR/FP points per game across 14 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 230 versus model overall rank 169.  RISK: Passing-TD efficiency, rushing volume and supporting-cast health are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 5",
       "team": "ARI",
       "expectation": "Deep QB2; waiver-level in a normal 10-team format.",
@@ -1398,7 +1450,9 @@
       "pass_att_last": 485,
       "pass_td_last": 23,
       "pass_att_career": 2246,
-      "pass_td_career": 76
+      "pass_td_career": 76,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "QB",
@@ -1409,7 +1463,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Deep QB2; waiver-level in a normal 10-team format.  WHY: He produced 12.7 PPR/FP points per game across 15 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 238 versus model overall rank 170.  RISK: Passing-TD efficiency, rushing volume and supporting-cast health are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 5",
       "team": "NYJ",
       "expectation": "Deep QB2; waiver-level in a normal 10-team format.",
@@ -1450,7 +1504,9 @@
       "pass_att_last": 448,
       "pass_td_last": 19,
       "pass_att_career": 3103,
-      "pass_td_career": 124
+      "pass_td_career": 124,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "QB",
@@ -1461,7 +1517,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Deep QB2; waiver-level in a normal 10-team format.  WHY: He produced 14.6 PPR/FP points per game across 16 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 246 versus model overall rank 172.  RISK: Passing-TD efficiency, rushing volume and supporting-cast health are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 5",
       "team": "PIT",
       "expectation": "Deep QB2; waiver-level in a normal 10-team format.",
@@ -1502,7 +1558,9 @@
       "pass_att_last": 498,
       "pass_td_last": 24,
       "pass_att_career": 6078,
-      "pass_td_career": 356
+      "pass_td_career": 356,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "QB",
@@ -1513,7 +1571,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Deep QB2; waiver-level in a normal 10-team format.  WHY: He produced 12.5 PPR/FP points per game across 14 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 254 versus model overall rank 183.  RISK: Passing-TD efficiency, rushing volume and supporting-cast health are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 6",
       "team": "ATL",
       "expectation": "Deep QB2; waiver-level in a normal 10-team format.",
@@ -1554,7 +1612,9 @@
       "pass_att_last": 384,
       "pass_td_last": 20,
       "pass_att_career": 2421,
-      "pass_td_career": 120
+      "pass_td_career": 120,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "QB",
@@ -1565,7 +1625,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Deep QB2; waiver-level in a normal 10-team format.  WHY: He produced 10.9 PPR/FP points per game across 10 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 262 versus model overall rank 188.  RISK: Passing-TD efficiency, rushing volume and supporting-cast health are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 6",
       "team": "LV",
       "expectation": "Deep QB2; waiver-level in a normal 10-team format.",
@@ -1606,7 +1666,9 @@
       "pass_att_last": 269,
       "pass_td_last": 10,
       "pass_att_career": 5851,
-      "pass_td_career": 294
+      "pass_td_career": 294,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "QB",
@@ -1617,7 +1679,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Deep QB2; waiver-level in a normal 10-team format.  WHY: The 2026 opportunity and projection carry most of the grade because detailed 2025 rate data is incomplete. Market price is favorable around ADP 270 versus model overall rank 200.  RISK: Evidence is thinner than for established veterans, so camp, depth-chart and role news can move the grade materially.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 7",
       "team": "CLE",
       "expectation": "Deep QB2; waiver-level in a normal 10-team format.",
@@ -1658,7 +1720,9 @@
       "pass_att_last": 216,
       "pass_td_last": 5,
       "pass_att_career": 2305,
-      "pass_td_career": 123
+      "pass_td_career": 123,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -1705,7 +1769,9 @@
       "rec_td_rate_spike": 0.44,
       "rush_td_rate": 2.44,
       "rush_td_rate_career": 3.11,
-      "rush_td_rate_spike": -0.67
+      "rush_td_rate_spike": -0.67,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -1752,7 +1818,9 @@
       "rec_td_rate_spike": 0.93,
       "rush_td_rate": 5.35,
       "rush_td_rate_career": 5.78,
-      "rush_td_rate_spike": -0.43
+      "rush_td_rate_spike": -0.43,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -1799,7 +1867,9 @@
       "rush_td_rate_spike": -0.52,
       "rec_td_rate": 5.43,
       "rec_td_rate_career": 4.63,
-      "rec_td_rate_spike": 0.8
+      "rec_td_rate_spike": 0.8,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -1846,7 +1916,9 @@
       "rec_td_rate_spike": 0.71,
       "rush_td_rate": 5.57,
       "rush_td_rate_career": 4.45,
-      "rush_td_rate_spike": 1.12
+      "rush_td_rate_spike": 1.12,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -1857,7 +1929,7 @@
       "model_path": "ROOKIE ENGINE",
       "status": "Available",
       "narrative": "EXPECTATION: Elite RB1 and first-round roster anchor with league-winning ceiling.  WHY: Rookie score 98.0, backed by No. 3 draft capital and a 6.73 NFL prospect grade. The 2026 role projection is strong enough to replace missing NFL history.  RISK: NFL translation and exact weekly role are the main variables; preseason first-team usage can move this rating quickly.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 1",
       "team": "ARI",
       "expectation": "Elite RB1 and first-round roster anchor with league-winning ceiling.",
@@ -1893,7 +1965,9 @@
       "rec_td_rate_spike": null,
       "rush_td_rate": null,
       "rush_td_rate_career": null,
-      "rush_td_rate_spike": null
+      "rush_td_rate_spike": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -1904,7 +1978,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Strong RB1; weekly top-12 expectation with multi-touchdown ceiling.  WHY: He produced 15.1 PPR/FP points per game across 9 games. The workload/efficiency profile gives the model a rate-based reason to keep him here.  RISK: Availability/sample risk is elevated after only 9 games; talent is not being punished as heavily as durability.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 2",
       "team": "LAC",
       "expectation": "Strong RB1; weekly top-12 expectation with multi-touchdown ceiling.",
@@ -1940,7 +2014,9 @@
       "rec_td_rate_spike": 0.0,
       "rush_td_rate": 3.23,
       "rush_td_rate_career": 3.23,
-      "rush_td_rate_spike": 0.0
+      "rush_td_rate_spike": 0.0,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -1987,7 +2063,9 @@
       "rec_td_rate_spike": -1.51,
       "rush_td_rate": 3.36,
       "rush_td_rate_career": 4.04,
-      "rush_td_rate_spike": -0.68
+      "rush_td_rate_spike": -0.68,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -1998,7 +2076,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Strong RB1; weekly top-12 expectation with multi-touchdown ceiling.  WHY: He produced 11.3 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 31 versus model overall rank 16.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 2",
       "team": "KC",
       "expectation": "Strong RB1; weekly top-12 expectation with multi-touchdown ceiling.",
@@ -2034,7 +2112,9 @@
       "rec_td_rate_spike": -1.24,
       "rush_td_rate": 2.26,
       "rush_td_rate_career": 3.53,
-      "rush_td_rate_spike": -1.27
+      "rush_td_rate_spike": -1.27,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -2081,7 +2161,9 @@
       "rec_td_rate_spike": null,
       "rush_td_rate": null,
       "rush_td_rate_career": null,
-      "rush_td_rate_spike": null
+      "rush_td_rate_spike": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -2092,7 +2174,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Strong RB1; weekly top-12 expectation with multi-touchdown ceiling.  WHY: He produced 15.5 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 40 versus model overall rank 21.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 2",
       "team": "LAR",
       "expectation": "Strong RB1; weekly top-12 expectation with multi-touchdown ceiling.",
@@ -2128,7 +2210,9 @@
       "rec_td_rate_spike": 0.67,
       "rush_td_rate": 3.86,
       "rush_td_rate_career": 4.3,
-      "rush_td_rate_spike": -0.43
+      "rush_td_rate_spike": -0.43,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -2139,7 +2223,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Strong RB1; weekly top-12 expectation with multi-touchdown ceiling.  WHY: He produced 12.9 PPR/FP points per game across 16 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 44 versus model overall rank 23.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 2",
       "team": "NYJ",
       "expectation": "Strong RB1; weekly top-12 expectation with multi-touchdown ceiling.",
@@ -2175,7 +2259,9 @@
       "rec_td_rate_spike": -1.52,
       "rush_td_rate": 1.65,
       "rush_td_rate_career": 2.38,
-      "rush_td_rate_spike": -0.74
+      "rush_td_rate_spike": -0.74,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -2222,7 +2308,9 @@
       "rec_td_rate_spike": 0.0,
       "rush_td_rate": 1.88,
       "rush_td_rate_career": 1.88,
-      "rush_td_rate_spike": 0.0
+      "rush_td_rate_spike": 0.0,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -2233,7 +2321,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: RB2 with RB1 weeks; should be a regular starter.  WHY: He produced 16.5 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 52 versus model overall rank 26.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 2",
       "team": "BAL",
       "expectation": "RB2 with RB1 weeks; should be a regular starter.",
@@ -2269,7 +2357,9 @@
       "rec_td_rate_spike": -2.04,
       "rush_td_rate": 5.21,
       "rush_td_rate_career": 4.58,
-      "rush_td_rate_spike": 0.63
+      "rush_td_rate_spike": 0.63,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -2316,7 +2406,9 @@
       "rec_td_rate_spike": -0.27,
       "rush_td_rate": 2.59,
       "rush_td_rate_career": 2.57,
-      "rush_td_rate_spike": 0.01
+      "rush_td_rate_spike": 0.01,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -2327,7 +2419,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: RB2 with RB1 weeks; should be a regular starter.  WHY: He produced 15.8 PPR/FP points per game across 15 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 61 versus model overall rank 33.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 3",
       "team": "GB",
       "expectation": "RB2 with RB1 weeks; should be a regular starter.",
@@ -2363,7 +2455,9 @@
       "rec_td_rate_spike": 1.69,
       "rush_td_rate": 5.56,
       "rush_td_rate_career": 4.02,
-      "rush_td_rate_spike": 1.53
+      "rush_td_rate_spike": 1.53,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -2374,7 +2468,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: RB2 with RB1 weeks; should be a regular starter.  WHY: He produced 14.5 PPR/FP points per game across 16 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 65 versus model overall rank 34.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 3",
       "team": "PHI",
       "expectation": "RB2 with RB1 weeks; should be a regular starter.",
@@ -2410,7 +2504,9 @@
       "rec_td_rate_spike": 0.73,
       "rush_td_rate": 2.5,
       "rush_td_rate_career": 3.01,
-      "rush_td_rate_spike": -0.51
+      "rush_td_rate_spike": -0.51,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -2421,7 +2517,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: RB2 with RB1 weeks; should be a regular starter.  WHY: He produced 15.2 PPR/FP points per game across 16 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 69 versus model overall rank 35.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 3",
       "team": "DAL",
       "expectation": "RB2 with RB1 weeks; should be a regular starter.",
@@ -2457,7 +2553,9 @@
       "rec_td_rate_spike": 1.17,
       "rush_td_rate": 4.37,
       "rush_td_rate_career": 2.56,
-      "rush_td_rate_spike": 1.8
+      "rush_td_rate_spike": 1.8,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -2468,7 +2566,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: RB2 with RB1 weeks; should be a regular starter.  WHY: He produced 14.9 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 73 versus model overall rank 39.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 3",
       "team": "NO",
       "expectation": "RB2 with RB1 weeks; should be a regular starter.",
@@ -2504,7 +2602,9 @@
       "rec_td_rate_spike": 8.39,
       "rush_td_rate": 2.69,
       "rush_td_rate_career": 2.79,
-      "rush_td_rate_spike": -0.09
+      "rush_td_rate_spike": -0.09,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -2515,7 +2615,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: RB2 with RB1 weeks; should be a regular starter.  WHY: He produced 16.0 PPR/FP points per game across 8 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 78 versus model overall rank 42.  RISK: Availability/sample risk is elevated after only 8 games; talent is not being punished as heavily as durability.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 3",
       "team": "NYG",
       "expectation": "RB2 with RB1 weeks; should be a regular starter.",
@@ -2551,7 +2651,9 @@
       "rec_td_rate_spike": 0.0,
       "rush_td_rate": 4.95,
       "rush_td_rate_career": 4.95,
-      "rush_td_rate_spike": 0.0
+      "rush_td_rate_spike": 0.0,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -2562,7 +2664,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: RB2 with RB1 weeks; should be a regular starter.  WHY: He produced 14.3 PPR/FP points per game across 16 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 82 versus model overall rank 47.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 4",
       "team": "CHI",
       "expectation": "RB2 with RB1 weeks; should be a regular starter.",
@@ -2598,7 +2700,9 @@
       "rec_td_rate_spike": -0.46,
       "rush_td_rate": 4.04,
       "rush_td_rate_career": 3.55,
-      "rush_td_rate_spike": 0.48
+      "rush_td_rate_spike": 0.48,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -2609,7 +2713,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: RB2/FLEX; useful weekly but role and receiving volume matter.  WHY: He produced 13.8 PPR/FP points per game across 10 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 86 versus model overall rank 48.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 4",
       "team": "TB",
       "expectation": "RB2/FLEX; useful weekly but role and receiving volume matter.",
@@ -2645,7 +2749,9 @@
       "rec_td_rate_spike": 5.12,
       "rush_td_rate": 0.58,
       "rush_td_rate_career": 2.37,
-      "rush_td_rate_spike": -1.79
+      "rush_td_rate_spike": -1.79,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -2656,7 +2762,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: RB2/FLEX; useful weekly but role and receiving volume matter.  WHY: He produced 12.2 PPR/FP points per game across 14 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 90 versus model overall rank 49.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 4",
       "team": "CLE",
       "expectation": "RB2/FLEX; useful weekly but role and receiving volume matter.",
@@ -2692,7 +2798,9 @@
       "rec_td_rate_spike": 0.0,
       "rush_td_rate": 3.04,
       "rush_td_rate_career": 3.04,
-      "rush_td_rate_spike": 0.0
+      "rush_td_rate_spike": 0.0,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -2703,7 +2811,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: RB2/FLEX; useful weekly but role and receiving volume matter.  WHY: He produced 9.8 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 94 versus model overall rank 59.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 4",
       "team": "HOU",
       "expectation": "RB2/FLEX; useful weekly but role and receiving volume matter.",
@@ -2739,7 +2847,9 @@
       "rec_td_rate_spike": -1.4,
       "rush_td_rate": 5.06,
       "rush_td_rate_career": 3.99,
-      "rush_td_rate_spike": 1.07
+      "rush_td_rate_spike": 1.07,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -2750,7 +2860,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: RB2/FLEX; useful weekly but role and receiving volume matter.  WHY: He produced 12.2 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 99 versus model overall rank 60.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 4",
       "team": "NE",
       "expectation": "RB2/FLEX; useful weekly but role and receiving volume matter.",
@@ -2786,7 +2896,9 @@
       "rec_td_rate_spike": 0.0,
       "rush_td_rate": 5.0,
       "rush_td_rate_career": 5.0,
-      "rush_td_rate_spike": 0.0
+      "rush_td_rate_spike": 0.0,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -2797,7 +2909,7 @@
       "model_path": "ROOKIE ENGINE",
       "status": "Available",
       "narrative": "EXPECTATION: RB2/FLEX; useful weekly but role and receiving volume matter.  WHY: Rookie score 85.6, backed by No. 32 draft capital and a 6.38 NFL prospect grade. The 2026 role projection is strong enough to replace missing NFL history. Market price is favorable around ADP 103 versus model overall rank 66.  RISK: NFL translation and exact weekly role are the main variables; preseason first-team usage can move this rating quickly.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 4",
       "team": "SEA",
       "expectation": "RB2/FLEX; useful weekly but role and receiving volume matter.",
@@ -2833,7 +2945,9 @@
       "rec_td_rate_spike": null,
       "rush_td_rate": null,
       "rush_td_rate_career": null,
-      "rush_td_rate_spike": null
+      "rush_td_rate_spike": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -2844,7 +2958,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: RB2/FLEX; useful weekly but role and receiving volume matter.  WHY: He produced 13.6 PPR/FP points per game across 16 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 107 versus model overall rank 69.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 4",
       "team": "PIT",
       "expectation": "RB2/FLEX; useful weekly but role and receiving volume matter.",
@@ -2880,7 +2994,9 @@
       "rec_td_rate_spike": 3.44,
       "rush_td_rate": 2.84,
       "rush_td_rate_career": 2.15,
-      "rush_td_rate_spike": 0.69
+      "rush_td_rate_spike": 0.69,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -2891,7 +3007,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: RB2/FLEX; useful weekly but role and receiving volume matter.  WHY: He produced 12.7 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 111 versus model overall rank 74.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 4",
       "team": "PIT",
       "expectation": "RB2/FLEX; useful weekly but role and receiving volume matter.",
@@ -2927,7 +3043,9 @@
       "rec_td_rate_spike": -2.96,
       "rush_td_rate": 2.54,
       "rush_td_rate_career": 1.76,
-      "rush_td_rate_spike": 0.78
+      "rush_td_rate_spike": 0.78,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -2938,7 +3056,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: RB2/FLEX; useful weekly but role and receiving volume matter.  WHY: He produced 10.9 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 115 versus model overall rank 81.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 4",
       "team": "TEN",
       "expectation": "RB2/FLEX; useful weekly but role and receiving volume matter.",
@@ -2974,7 +3092,9 @@
       "rec_td_rate_spike": -1.53,
       "rush_td_rate": 2.07,
       "rush_td_rate_career": 2.61,
-      "rush_td_rate_spike": -0.54
+      "rush_td_rate_spike": -0.54,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -2985,7 +3105,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: RB2/FLEX; useful weekly but role and receiving volume matter.  WHY: He produced 12.8 PPR/FP points per game across 14 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 120 versus model overall rank 84.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 5",
       "team": "NE",
       "expectation": "RB2/FLEX; useful weekly but role and receiving volume matter.",
@@ -3021,7 +3141,9 @@
       "rec_td_rate_spike": 3.7,
       "rush_td_rate": 5.38,
       "rush_td_rate_career": 3.35,
-      "rush_td_rate_spike": 2.04
+      "rush_td_rate_spike": 2.04,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -3032,7 +3154,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: RB2/FLEX; useful weekly but role and receiving volume matter.  WHY: He produced 13.0 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 124 versus model overall rank 86.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 5",
       "team": "TB",
       "expectation": "RB2/FLEX; useful weekly but role and receiving volume matter.",
@@ -3068,7 +3190,9 @@
       "rec_td_rate_spike": 1.74,
       "rush_td_rate": 4.39,
       "rush_td_rate_career": 4.31,
-      "rush_td_rate_spike": 0.07
+      "rush_td_rate_spike": 0.07,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -3079,7 +3203,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: FLEX/bench depth with upside if workload grows.  WHY: He produced 5.9 PPR/FP points per game across 15 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 128 versus model overall rank 89.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 5",
       "team": "JAX",
       "expectation": "FLEX/bench depth with upside if workload grows.",
@@ -3115,7 +3239,9 @@
       "rec_td_rate_spike": null,
       "rush_td_rate": 6.02,
       "rush_td_rate_career": 6.02,
-      "rush_td_rate_spike": 0.0
+      "rush_td_rate_spike": 0.0,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -3126,7 +3252,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: FLEX/bench depth with upside if workload grows.  WHY: He produced 12.2 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 132 versus model overall rank 96.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 5",
       "team": "DEN",
       "expectation": "FLEX/bench depth with upside if workload grows.",
@@ -3162,7 +3288,9 @@
       "rec_td_rate_spike": 0.0,
       "rush_td_rate": 4.79,
       "rush_td_rate_career": 4.79,
-      "rush_td_rate_spike": 0.0
+      "rush_td_rate_spike": 0.0,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -3173,7 +3301,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: FLEX/bench depth with upside if workload grows.  WHY: He produced 8.7 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 136 versus model overall rank 102.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 5",
       "team": "CHI",
       "expectation": "FLEX/bench depth with upside if workload grows.",
@@ -3209,7 +3337,9 @@
       "rec_td_rate_spike": 0.0,
       "rush_td_rate": 2.96,
       "rush_td_rate_career": 2.96,
-      "rush_td_rate_spike": 0.0
+      "rush_td_rate_spike": 0.0,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -3220,7 +3350,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: FLEX/bench depth with upside if workload grows.  WHY: He produced 8.4 PPR/FP points per game across 15 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 141 versus model overall rank 107.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 5",
       "team": "CAR",
       "expectation": "FLEX/bench depth with upside if workload grows.",
@@ -3256,7 +3386,9 @@
       "rec_td_rate_spike": 5.07,
       "rush_td_rate": 0.75,
       "rush_td_rate_career": 2.59,
-      "rush_td_rate_spike": -1.84
+      "rush_td_rate_spike": -1.84,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -3267,7 +3399,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: FLEX/bench depth with upside if workload grows.  WHY: He produced 9.9 PPR/FP points per game across 12 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 145 versus model overall rank 111.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 5",
       "team": "MIN",
       "expectation": "FLEX/bench depth with upside if workload grows.",
@@ -3303,7 +3435,9 @@
       "rec_td_rate_spike": -2.06,
       "rush_td_rate": 1.52,
       "rush_td_rate_career": 3.32,
-      "rush_td_rate_spike": -1.81
+      "rush_td_rate_spike": -1.81,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -3314,7 +3448,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: FLEX/bench depth with upside if workload grows.  WHY: He produced 11.6 PPR/FP points per game across 10 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 149 versus model overall rank 113.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 5",
       "team": "DEN",
       "expectation": "FLEX/bench depth with upside if workload grows.",
@@ -3350,7 +3484,9 @@
       "rec_td_rate_spike": -1.37,
       "rush_td_rate": 2.61,
       "rush_td_rate_career": 4.3,
-      "rush_td_rate_spike": -1.68
+      "rush_td_rate_spike": -1.68,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -3361,7 +3497,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: FLEX/bench depth with upside if workload grows.  WHY: He produced 7.2 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 153 versus model overall rank 123.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 6",
       "team": "LAR",
       "expectation": "FLEX/bench depth with upside if workload grows.",
@@ -3394,7 +3530,9 @@
       "age": 24,
       "rush_td_rate": 4.14,
       "rush_td_rate_career": 2.96,
-      "rush_td_rate_spike": 1.18
+      "rush_td_rate_spike": 1.18,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -3405,7 +3543,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: FLEX/bench depth with upside if workload grows.  WHY: He produced 8.5 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 157 versus model overall rank 127.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 6",
       "team": "WAS",
       "expectation": "FLEX/bench depth with upside if workload grows.",
@@ -3441,7 +3579,9 @@
       "rec_td_rate_spike": -4.78,
       "rush_td_rate": 3.03,
       "rush_td_rate_career": 2.07,
-      "rush_td_rate_spike": 0.96
+      "rush_td_rate_spike": 0.96,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -3452,7 +3592,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: FLEX/bench depth with upside if workload grows.  WHY: He produced 8.2 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 162 versus model overall rank 129.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 6",
       "team": "WAS",
       "expectation": "FLEX/bench depth with upside if workload grows.",
@@ -3488,7 +3628,9 @@
       "rec_td_rate_spike": null,
       "rush_td_rate": 4.57,
       "rush_td_rate_career": 4.57,
-      "rush_td_rate_spike": 0.0
+      "rush_td_rate_spike": 0.0,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -3499,7 +3641,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: FLEX/bench depth with upside if workload grows.  WHY: He produced 8.1 PPR/FP points per game across 16 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 166 versus model overall rank 136.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 6",
       "team": "MIN",
       "expectation": "FLEX/bench depth with upside if workload grows.",
@@ -3532,7 +3674,9 @@
       "age": 26,
       "rush_td_rate": 3.77,
       "rush_td_rate_career": 3.29,
-      "rush_td_rate_spike": 0.48
+      "rush_td_rate_spike": 0.48,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -3543,7 +3687,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Bench stash/handcuff profile; value is tied to role change or injury ahead.  WHY: He produced 9.4 PPR/FP points per game across 16 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 170 versus model overall rank 143.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 6",
       "team": "HOU",
       "expectation": "Bench stash/handcuff profile; value is tied to role change or injury ahead.",
@@ -3579,7 +3723,9 @@
       "rec_td_rate_spike": 0.0,
       "rush_td_rate": 1.02,
       "rush_td_rate_career": 1.02,
-      "rush_td_rate_spike": 0.0
+      "rush_td_rate_spike": 0.0,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -3590,7 +3736,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Bench stash/handcuff profile; value is tied to role change or injury ahead.  WHY: He produced 7.0 PPR/FP points per game across 13 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 174 versus model overall rank 147.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 6",
       "team": "JAX",
       "expectation": "Bench stash/handcuff profile; value is tied to role change or injury ahead.",
@@ -3626,7 +3772,9 @@
       "rec_td_rate_spike": null,
       "rush_td_rate": 5.36,
       "rush_td_rate_career": 5.05,
-      "rush_td_rate_spike": 0.31
+      "rush_td_rate_spike": 0.31,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -3637,7 +3785,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Bench stash/handcuff profile; value is tied to role change or injury ahead.  WHY: He produced 10.7 PPR/FP points per game across 15 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 178 versus model overall rank 149.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 6",
       "team": "NYG",
       "expectation": "Bench stash/handcuff profile; value is tied to role change or injury ahead.",
@@ -3673,7 +3821,9 @@
       "rec_td_rate_spike": 1.2,
       "rush_td_rate": 1.14,
       "rush_td_rate_career": 1.9,
-      "rush_td_rate_spike": -0.77
+      "rush_td_rate_spike": -0.77,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -3684,7 +3834,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Bench stash/handcuff profile; value is tied to role change or injury ahead.  WHY: He produced 7.2 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 183 versus model overall rank 168.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 7",
       "team": "ARI",
       "expectation": "Bench stash/handcuff profile; value is tied to role change or injury ahead.",
@@ -3717,7 +3867,9 @@
       "age": 25,
       "rush_td_rate": 5.59,
       "rush_td_rate_career": 2.66,
-      "rush_td_rate_spike": 2.93
+      "rush_td_rate_spike": 2.93,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -3728,7 +3880,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Bench stash/handcuff profile; value is tied to role change or injury ahead.  WHY: He produced 11.3 PPR/FP points per game across 16 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 187 versus model overall rank 173.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 7",
       "team": "SEA",
       "expectation": "Bench stash/handcuff profile; value is tied to role change or injury ahead.",
@@ -3764,7 +3916,9 @@
       "rec_td_rate_spike": -0.86,
       "rush_td_rate": 6.52,
       "rush_td_rate_career": 4.92,
-      "rush_td_rate_spike": 1.6
+      "rush_td_rate_spike": 1.6,
+      "adjustment": -25,
+      "adjustment_reason": "Jan 2026 playoff ACL; opens on PUP, return may be as late as December (ESPN). Not draftable in a 10-team league."
     },
     {
       "pos": "RB",
@@ -3775,7 +3929,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Bench stash/handcuff profile; value is tied to role change or injury ahead.  WHY: The 2026 opportunity and projection carry most of the grade because detailed 2025 rate data is incomplete. Market price is favorable around ADP 191 versus model overall rank 177.  RISK: Evidence is thinner than for established veterans, so camp, depth-chart and role news can move the grade materially.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 7",
       "team": "CAR",
       "expectation": "Bench stash/handcuff profile; value is tied to role change or injury ahead.",
@@ -3811,7 +3965,9 @@
       "rec_td_rate_spike": null,
       "rush_td_rate": null,
       "rush_td_rate_career": null,
-      "rush_td_rate_spike": null
+      "rush_td_rate_spike": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -3822,7 +3978,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Bench stash/handcuff profile; value is tied to role change or injury ahead.  WHY: He produced 5.6 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 195 versus model overall rank 180.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 7",
       "team": "SEA",
       "expectation": "Bench stash/handcuff profile; value is tied to role change or injury ahead.",
@@ -3855,7 +4011,9 @@
       "age": 26,
       "rush_td_rate": 2.4,
       "rush_td_rate_career": 2.89,
-      "rush_td_rate_spike": -0.49
+      "rush_td_rate_spike": -0.49,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -3866,7 +4024,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Bench stash/handcuff profile; value is tied to role change or injury ahead.  WHY: The 2026 opportunity and projection carry most of the grade because detailed 2025 rate data is incomplete. Market price is favorable around ADP 199 versus model overall rank 187.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 7",
       "team": "DET",
       "expectation": "Bench stash/handcuff profile; value is tied to role change or injury ahead.",
@@ -3902,7 +4060,9 @@
       "rush_td_rate_spike": -1.58,
       "rec_td_rate": 3.85,
       "rec_td_rate_career": 2.86,
-      "rec_td_rate_spike": 0.99
+      "rec_td_rate_spike": 0.99,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -3913,7 +4073,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Bench stash/handcuff profile; value is tied to role change or injury ahead.  WHY: The 2026 opportunity and projection carry most of the grade because detailed 2025 rate data is incomplete. Market price is favorable around ADP 204 versus model overall rank 191.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 7",
       "team": "NO",
       "expectation": "Bench stash/handcuff profile; value is tied to role change or injury ahead.",
@@ -3949,7 +4109,9 @@
       "rec_td_rate_spike": -3.26,
       "rush_td_rate": 0.76,
       "rush_td_rate_career": 3.64,
-      "rush_td_rate_spike": -2.88
+      "rush_td_rate_spike": -2.88,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -3960,7 +4122,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Bench stash/handcuff profile; value is tied to role change or injury ahead.  WHY: The 2026 opportunity and projection carry most of the grade because detailed 2025 rate data is incomplete.  RISK: Touchdown variance, receiving-role changes and backfield competition are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 7",
       "team": "BAL",
       "expectation": "Bench stash/handcuff profile; value is tied to role change or injury ahead.",
@@ -3993,7 +4155,9 @@
       "age": 27,
       "rec_td_rate": 3.7,
       "rec_td_rate_career": 3.36,
-      "rec_td_rate_spike": 0.35
+      "rec_td_rate_spike": 0.35,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "TE",
@@ -4037,7 +4201,9 @@
       "age": 25,
       "rec_td_rate": 6.51,
       "rec_td_rate_career": 3.69,
-      "rec_td_rate_spike": 2.82
+      "rec_td_rate_spike": 2.82,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "TE",
@@ -4081,7 +4247,9 @@
       "age": 22,
       "rec_td_rate": 8.14,
       "rec_td_rate_career": 5.02,
-      "rec_td_rate_spike": 3.12
+      "rec_td_rate_spike": 3.12,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "TE",
@@ -4092,7 +4260,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Elite difference-making TE; positional advantage is the expectation.  WHY: He produced 10.3 PPR/FP points per game across 16 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 35 versus model overall rank 22.  RISK: Route share, target volume and touchdown volatility are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 2",
       "team": "CHI",
       "expectation": "Elite difference-making TE; positional advantage is the expectation.",
@@ -4125,7 +4293,9 @@
       "age": 21,
       "rec_td_rate": 7.32,
       "rec_td_rate_career": 7.32,
-      "rec_td_rate_spike": 0.0
+      "rec_td_rate_spike": 0.0,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "TE",
@@ -4136,7 +4306,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Every-week TE1 with real top-5 upside.  WHY: He produced 11.1 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here.  RISK: Route share, target volume and touchdown volatility are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 2",
       "team": "IND",
       "expectation": "Every-week TE1 with real top-5 upside.",
@@ -4172,7 +4342,9 @@
       "rec_td_rate_spike": 0.0,
       "rush_td_rate": 0.83,
       "rush_td_rate_career": 1.73,
-      "rush_td_rate_spike": -0.9
+      "rush_td_rate_spike": -0.9,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "TE",
@@ -4183,7 +4355,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Every-week TE1 with real top-5 upside.  WHY: He produced 14.7 PPR/FP points per game across 11 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 53 versus model overall rank 43.  RISK: Route share, target volume and touchdown volatility are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 2",
       "team": "SF",
       "expectation": "Every-week TE1 with real top-5 upside.",
@@ -4216,7 +4388,9 @@
       "age": 31,
       "rec_td_rate": 10.14,
       "rec_td_rate_career": 6.48,
-      "rec_td_rate_spike": 3.66
+      "rec_td_rate_spike": 3.66,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "TE",
@@ -4227,7 +4401,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Every-week TE1 with real top-5 upside.  WHY: He produced 12.4 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 62 versus model overall rank 46.  RISK: Route share, target volume and touchdown volatility are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 2",
       "team": "ATL",
       "expectation": "Every-week TE1 with real top-5 upside.",
@@ -4260,7 +4434,9 @@
       "age": 29,
       "rec_td_rate": 4.24,
       "rec_td_rate_career": 3.33,
-      "rec_td_rate_spike": 0.91
+      "rec_td_rate_spike": 0.91,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "TE",
@@ -4271,7 +4447,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Every-week TE1 with real top-5 upside.  WHY: He produced 11.7 PPR/FP points per game across 16 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 71 versus model overall rank 53.  RISK: Route share, target volume and touchdown volatility are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 3",
       "team": "CLE",
       "expectation": "Every-week TE1 with real top-5 upside.",
@@ -4304,7 +4480,9 @@
       "age": 21,
       "rec_td_rate": 5.61,
       "rec_td_rate_career": 5.61,
-      "rec_td_rate_spike": 0.0
+      "rec_td_rate_spike": 0.0,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "TE",
@@ -4315,7 +4493,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Every-week TE1 with real top-5 upside.  WHY: He produced 11.0 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 80 versus model overall rank 56.  RISK: Route share, target volume and touchdown volatility are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 3",
       "team": "DAL",
       "expectation": "Every-week TE1 with real top-5 upside.",
@@ -4348,7 +4526,9 @@
       "age": 26,
       "rec_td_rate": 7.84,
       "rec_td_rate_career": 4.81,
-      "rec_td_rate_spike": 3.04
+      "rec_td_rate_spike": 3.04,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "TE",
@@ -4359,7 +4539,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Low-end TE1; startable but replacement options remain close.  WHY: He produced 14.6 PPR/FP points per game across 8 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 89 versus model overall rank 58.  RISK: Availability/sample risk is elevated after only 8 games; talent is not being punished as heavily as durability.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 3",
       "team": "GB",
       "expectation": "Low-end TE1; startable but replacement options remain close.",
@@ -4392,7 +4572,9 @@
       "age": 24,
       "rec_td_rate": 13.64,
       "rec_td_rate_career": 9.74,
-      "rec_td_rate_spike": 3.9
+      "rec_td_rate_spike": 3.9,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "TE",
@@ -4403,7 +4585,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Low-end TE1; startable but replacement options remain close.  WHY: He produced 11.8 PPR/FP points per game across 9 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 98 versus model overall rank 63.  RISK: Availability/sample risk is elevated after only 9 games; talent is not being punished as heavily as durability.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 3",
       "team": "DET",
       "expectation": "Low-end TE1; startable but replacement options remain close.",
@@ -4436,7 +4618,9 @@
       "age": 24,
       "rec_td_rate": 6.12,
       "rec_td_rate_career": 7.94,
-      "rec_td_rate_spike": -1.81
+      "rec_td_rate_spike": -1.81,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "TE",
@@ -4447,7 +4631,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Low-end TE1; startable but replacement options remain close.  WHY: He produced 10.6 PPR/FP points per game across 12 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 107 versus model overall rank 67.  RISK: Route share, target volume and touchdown volatility are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 3",
       "team": "BUF",
       "expectation": "Low-end TE1; startable but replacement options remain close.",
@@ -4480,7 +4664,9 @@
       "age": 25,
       "rec_td_rate": 10.2,
       "rec_td_rate_career": 4.19,
-      "rec_td_rate_spike": 6.02
+      "rec_td_rate_spike": 6.02,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "TE",
@@ -4491,7 +4677,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Low-end TE1; startable but replacement options remain close.  WHY: He produced 11.4 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 116 versus model overall rank 72.  RISK: Route share, target volume and touchdown volatility are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 3",
       "team": "KC",
       "expectation": "Low-end TE1; startable but replacement options remain close.",
@@ -4524,7 +4710,9 @@
       "age": 35,
       "rec_td_rate": 4.63,
       "rec_td_rate_career": 5.44,
-      "rec_td_rate_spike": -0.81
+      "rec_td_rate_spike": -0.81,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "TE",
@@ -4535,7 +4723,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Streaming/TE2 range; touchdown and route volume drive usefulness.  WHY: He produced 12.3 PPR/FP points per game across 15 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 125 versus model overall rank 88.  RISK: Route share, target volume and touchdown volatility are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 4",
       "team": "PHI",
       "expectation": "Streaming/TE2 range; touchdown and route volume drive usefulness.",
@@ -4568,7 +4756,9 @@
       "age": 30,
       "rec_td_rate": 13.41,
       "rec_td_rate_career": 6.27,
-      "rec_td_rate_spike": 7.14
+      "rec_td_rate_spike": 7.14,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "TE",
@@ -4579,7 +4769,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Streaming/TE2 range; touchdown and route volume drive usefulness.  WHY: He produced 7.7 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 134 versus model overall rank 97.  RISK: Route share, target volume and touchdown volatility are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 4",
       "team": "BAL",
       "expectation": "Streaming/TE2 range; touchdown and route volume drive usefulness.",
@@ -4612,7 +4802,9 @@
       "age": 29,
       "rec_td_rate": 7.14,
       "rec_td_rate_career": 7.98,
-      "rec_td_rate_spike": -0.83
+      "rec_td_rate_spike": -0.83,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "TE",
@@ -4623,7 +4815,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Streaming/TE2 range; touchdown and route volume drive usefulness.  WHY: He produced 4.4 PPR/FP points per game across 14 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 143 versus model overall rank 99.  RISK: Route share, target volume and touchdown volatility are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 4",
       "team": "NYG",
       "expectation": "Streaming/TE2 range; touchdown and route volume drive usefulness.",
@@ -4656,7 +4848,9 @@
       "age": 25,
       "rec_td_rate": 2.78,
       "rec_td_rate_career": 7.73,
-      "rec_td_rate_spike": -4.95
+      "rec_td_rate_spike": -4.95,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "TE",
@@ -4667,7 +4861,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Streaming/TE2 range; touchdown and route volume drive usefulness.  WHY: He produced 10.6 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 152 versus model overall rank 103.  RISK: Route share, target volume and touchdown volatility are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 4",
       "team": "NO",
       "expectation": "Streaming/TE2 range; touchdown and route volume drive usefulness.",
@@ -4700,7 +4894,9 @@
       "age": 28,
       "rec_td_rate": 2.94,
       "rec_td_rate_career": 6.48,
-      "rec_td_rate_spike": -3.54
+      "rec_td_rate_spike": -3.54,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "TE",
@@ -4711,7 +4907,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Streaming/TE2 range; touchdown and route volume drive usefulness.  WHY: He produced 10.5 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 161 versus model overall rank 116.  RISK: Route share, target volume and touchdown volatility are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 4",
       "team": "NE",
       "expectation": "Streaming/TE2 range; touchdown and route volume drive usefulness.",
@@ -4744,7 +4940,9 @@
       "age": 30,
       "rec_td_rate": 8.05,
       "rec_td_rate_career": 7.09,
-      "rec_td_rate_spike": 0.96
+      "rec_td_rate_spike": 0.96,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "TE",
@@ -4755,7 +4953,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Streaming/TE2 range; touchdown and route volume drive usefulness.  WHY: He produced 9.8 PPR/FP points per game across 12 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 170 versus model overall rank 121.  RISK: Route share, target volume and touchdown volatility are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 4",
       "team": "JAX",
       "expectation": "Streaming/TE2 range; touchdown and route volume drive usefulness.",
@@ -4788,7 +4986,9 @@
       "age": 24,
       "rec_td_rate": 5.0,
       "rec_td_rate_career": 4.92,
-      "rec_td_rate_spike": 0.08
+      "rec_td_rate_spike": 0.08,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "TE",
@@ -4799,7 +4999,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Deep TE stash; needs a larger route/target role to matter in 10-team leagues.  WHY: He produced 7.3 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 179 versus model overall rank 125.  RISK: Route share, target volume and touchdown volatility are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 4",
       "team": "WAS",
       "expectation": "Deep TE stash; needs a larger route/target role to matter in 10-team leagues.",
@@ -4832,7 +5032,9 @@
       "age": 25,
       "rec_td_rate": 2.53,
       "rec_td_rate_career": 2.94,
-      "rec_td_rate_spike": -0.41
+      "rec_td_rate_spike": -0.41,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "TE",
@@ -4843,7 +5045,7 @@
       "model_path": "ROOKIE ENGINE",
       "status": "Available",
       "narrative": "EXPECTATION: Deep TE stash; needs a larger route/target role to matter in 10-team leagues.  WHY: Rookie score 86.6, backed by No. 16 draft capital and a 6.46 NFL prospect grade. The 2026 role projection is strong enough to replace missing NFL history. Market price is favorable around ADP 188 versus model overall rank 135.  RISK: NFL translation and exact weekly role are the main variables; preseason first-team usage can move this rating quickly.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 5",
       "team": "NYJ",
       "expectation": "Deep TE stash; needs a larger route/target role to matter in 10-team leagues.",
@@ -4876,7 +5078,9 @@
       "age": null,
       "rec_td_rate": null,
       "rec_td_rate_career": null,
-      "rec_td_rate_spike": null
+      "rec_td_rate_spike": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "TE",
@@ -4887,7 +5091,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Deep TE stash; needs a larger route/target role to matter in 10-team leagues.  WHY: He produced 7.5 PPR/FP points per game across 15 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 197 versus model overall rank 138.  RISK: Route share, target volume and touchdown volatility are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 5",
       "team": "MIN",
       "expectation": "Deep TE stash; needs a larger route/target role to matter in 10-team leagues.",
@@ -4920,7 +5124,9 @@
       "age": 28,
       "rec_td_rate": 4.55,
       "rec_td_rate_career": 4.14,
-      "rec_td_rate_spike": 0.41
+      "rec_td_rate_spike": 0.41,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "TE",
@@ -4931,7 +5137,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Deep TE stash; needs a larger route/target role to matter in 10-team leagues.  WHY: He produced 10.4 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 206 versus model overall rank 140.  RISK: Route share, target volume and touchdown volatility are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 5",
       "team": "HOU",
       "expectation": "Deep TE stash; needs a larger route/target role to matter in 10-team leagues.",
@@ -4964,7 +5170,9 @@
       "age": 29,
       "rec_td_rate": 2.83,
       "rec_td_rate_career": 4.66,
-      "rec_td_rate_spike": -1.82
+      "rec_td_rate_spike": -1.82,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "TE",
@@ -4975,7 +5183,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Deep TE stash; needs a larger route/target role to matter in 10-team leagues.  WHY: He produced 8.8 PPR/FP points per game across 15 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 215 versus model overall rank 146.  RISK: Route share, target volume and touchdown volatility are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 5",
       "team": "LAC",
       "expectation": "Deep TE stash; needs a larger route/target role to matter in 10-team leagues.",
@@ -5008,7 +5216,9 @@
       "age": 22,
       "rec_td_rate": 4.35,
       "rec_td_rate_career": 4.35,
-      "rec_td_rate_spike": 0.0
+      "rec_td_rate_spike": 0.0,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "TE",
@@ -5019,7 +5229,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Deep TE stash; needs a larger route/target role to matter in 10-team leagues.  WHY: He produced 8.7 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 224 versus model overall rank 156.  RISK: Route share, target volume and touchdown volatility are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 5",
       "team": "SEA",
       "expectation": "Deep TE stash; needs a larger route/target role to matter in 10-team leagues.",
@@ -5052,7 +5262,9 @@
       "age": 23,
       "rec_td_rate": 8.82,
       "rec_td_rate_career": 9.43,
-      "rec_td_rate_spike": -0.61
+      "rec_td_rate_spike": -0.61,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "TE",
@@ -5063,7 +5275,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Deep TE stash; needs a larger route/target role to matter in 10-team leagues.  WHY: He produced 7.6 PPR/FP points per game across 16 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 233 versus model overall rank 165.  RISK: Route share, target volume and touchdown volatility are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 6",
       "team": "TB",
       "expectation": "Deep TE stash; needs a larger route/target role to matter in 10-team leagues.",
@@ -5096,7 +5308,9 @@
       "age": 26,
       "rec_td_rate": 1.23,
       "rec_td_rate_career": 3.67,
-      "rec_td_rate_spike": -2.43
+      "rec_td_rate_spike": -2.43,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "TE",
@@ -5107,7 +5321,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Deep TE stash; needs a larger route/target role to matter in 10-team leagues.  WHY: He produced 5.8 PPR/FP points per game across 16 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 242 versus model overall rank 166.  RISK: Route share, target volume and touchdown volatility are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 6",
       "team": "TEN",
       "expectation": "Deep TE stash; needs a larger route/target role to matter in 10-team leagues.",
@@ -5140,7 +5354,9 @@
       "age": 22,
       "rec_td_rate": 3.64,
       "rec_td_rate_career": 3.64,
-      "rec_td_rate_spike": 0.0
+      "rec_td_rate_spike": 0.0,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "TE",
@@ -5151,7 +5367,7 @@
       "model_path": "RATE-ADJUSTED VETERAN",
       "status": "Available",
       "narrative": "EXPECTATION: Deep TE stash; needs a larger route/target role to matter in 10-team leagues.  WHY: He produced 4.0 PPR/FP points per game across 13 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 251 versus model overall rank 175.  RISK: Route share, target volume and touchdown volatility are the main swing factors.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 7",
       "team": "LAR",
       "expectation": "Deep TE stash; needs a larger route/target role to matter in 10-team leagues.",
@@ -5184,7 +5400,9 @@
       "age": 22,
       "rec_td_rate": 12.0,
       "rec_td_rate_career": 12.0,
-      "rec_td_rate_spike": 0.0
+      "rec_td_rate_spike": 0.0,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -5228,7 +5446,9 @@
       "age": 25,
       "rec_td_rate": 4.32,
       "rec_td_rate_career": 7.04,
-      "rec_td_rate_spike": -2.72
+      "rec_td_rate_spike": -2.72,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -5272,7 +5492,9 @@
       "age": 24,
       "rec_td_rate": 6.02,
       "rec_td_rate_career": 4.4,
-      "rec_td_rate_spike": 1.63
+      "rec_td_rate_spike": 1.63,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -5316,7 +5538,9 @@
       "age": 23,
       "rec_td_rate": 6.13,
       "rec_td_rate_career": 5.09,
-      "rec_td_rate_spike": 1.05
+      "rec_td_rate_spike": 1.05,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -5360,7 +5584,9 @@
       "age": 25,
       "rec_td_rate": 6.4,
       "rec_td_rate_career": 5.93,
-      "rec_td_rate_spike": 0.47
+      "rec_td_rate_spike": 0.47,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -5404,7 +5630,9 @@
       "age": 28,
       "rec_td_rate": 5.79,
       "rec_td_rate_career": 6.86,
-      "rec_td_rate_spike": -1.08
+      "rec_td_rate_spike": -1.08,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -5448,7 +5676,9 @@
       "age": 26,
       "rec_td_rate": 2.56,
       "rec_td_rate_career": 4.9,
-      "rec_td_rate_spike": -2.33
+      "rec_td_rate_spike": -2.33,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -5492,7 +5722,9 @@
       "age": 26,
       "rec_td_rate": 1.42,
       "rec_td_rate_career": 4.82,
-      "rec_td_rate_spike": -3.4
+      "rec_td_rate_spike": -3.4,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -5536,7 +5768,9 @@
       "age": 24,
       "rec_td_rate": 6.57,
       "rec_td_rate_career": 4.88,
-      "rec_td_rate_spike": 1.69
+      "rec_td_rate_spike": 1.69,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -5580,7 +5814,9 @@
       "age": 24,
       "rec_td_rate": 6.25,
       "rec_td_rate_career": 4.43,
-      "rec_td_rate_spike": 1.82
+      "rec_td_rate_spike": 1.82,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -5624,7 +5860,9 @@
       "age": 26,
       "rec_td_rate": 5.0,
       "rec_td_rate_career": 5.29,
-      "rec_td_rate_spike": -0.29
+      "rec_td_rate_spike": -0.29,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -5668,7 +5906,9 @@
       "age": 25,
       "rec_td_rate": 6.41,
       "rec_td_rate_career": 6.7,
-      "rec_td_rate_spike": -0.29
+      "rec_td_rate_spike": -0.29,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -5712,7 +5952,9 @@
       "age": 25,
       "rec_td_rate": 5.77,
       "rec_td_rate_career": 4.16,
-      "rec_td_rate_spike": 1.61
+      "rec_td_rate_spike": 1.61,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -5723,7 +5965,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Strong WR1; bankable weekly starter with spike-week ceiling.  WHY: He produced 12.4 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 50 versus model overall rank 28.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 2",
       "team": "CAR",
       "expectation": "Strong WR1; bankable weekly starter with spike-week ceiling.",
@@ -5756,7 +5998,9 @@
       "age": 22,
       "rec_td_rate": 5.74,
       "rec_td_rate_career": 5.74,
-      "rec_td_rate_spike": 0.0
+      "rec_td_rate_spike": 0.0,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -5767,7 +6011,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Strong WR2 with top-12 weekly upside.  WHY: He produced 14.1 PPR/FP points per game across 15 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 54 versus model overall rank 37.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 3",
       "team": "CIN",
       "expectation": "Strong WR2 with top-12 weekly upside.",
@@ -5800,7 +6044,9 @@
       "age": 26,
       "rec_td_rate": 11.22,
       "rec_td_rate_career": 7.38,
-      "rec_td_rate_spike": 3.85
+      "rec_td_rate_spike": 3.85,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -5811,7 +6057,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Strong WR1; bankable weekly starter with spike-week ceiling.  WHY: He produced 14.2 PPR/FP points per game across 7 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 58 versus model overall rank 31.  RISK: Availability/sample risk is elevated after only 7 games; talent is not being punished as heavily as durability.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 2",
       "team": "NYJ",
       "expectation": "Strong WR1; bankable weekly starter with spike-week ceiling.",
@@ -5844,7 +6090,9 @@
       "age": 25,
       "rec_td_rate": 6.78,
       "rec_td_rate_career": 3.41,
-      "rec_td_rate_spike": 3.37
+      "rec_td_rate_spike": 3.37,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -5888,7 +6136,9 @@
       "age": 26,
       "rec_td_rate": 3.54,
       "rec_td_rate_career": 5.6,
-      "rec_td_rate_spike": -2.06
+      "rec_td_rate_spike": -2.06,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -5899,7 +6149,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Strong WR1; bankable weekly starter with spike-week ceiling.  WHY: He produced 14.4 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 65 versus model overall rank 32.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 2",
       "team": "BAL",
       "expectation": "Strong WR1; bankable weekly starter with spike-week ceiling.",
@@ -5932,7 +6182,9 @@
       "age": 24,
       "rec_td_rate": 4.24,
       "rec_td_rate_career": 4.09,
-      "rec_td_rate_spike": 0.14
+      "rec_td_rate_spike": 0.14,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -5943,7 +6195,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Strong WR2 with top-12 weekly upside.  WHY: The 2026 opportunity and projection carry most of the grade because detailed 2025 rate data is incomplete. Market price is favorable around ADP 69 versus model overall rank 57.  RISK: Evidence is thinner than for established veterans, so camp, depth-chart and role news can move the grade materially.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 3",
       "team": "NYG",
       "expectation": "Strong WR2 with top-12 weekly upside.",
@@ -5976,7 +6228,9 @@
       "age": 22,
       "rec_td_rate": 5.71,
       "rec_td_rate_career": 4.39,
-      "rec_td_rate_spike": 1.32
+      "rec_td_rate_spike": 1.32,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -5987,7 +6241,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Strong WR2 with top-12 weekly upside.  WHY: He produced 11.5 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 73 versus model overall rank 55.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 3",
       "team": "TB",
       "expectation": "Strong WR2 with top-12 weekly upside.",
@@ -6020,7 +6274,9 @@
       "age": 22,
       "rec_td_rate": 4.72,
       "rec_td_rate_career": 4.72,
-      "rec_td_rate_spike": 0.0
+      "rec_td_rate_spike": 0.0,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -6031,7 +6287,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Strong WR2 with top-12 weekly upside.  WHY: He produced 12.1 PPR/FP points per game across 16 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 77 versus model overall rank 52.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 3",
       "team": "DEN",
       "expectation": "Strong WR2 with top-12 weekly upside.",
@@ -6064,7 +6320,9 @@
       "age": 26,
       "rec_td_rate": 6.0,
       "rec_td_rate_career": 4.78,
-      "rec_td_rate_spike": 1.22
+      "rec_td_rate_spike": 1.22,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -6075,7 +6333,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Strong WR2 with top-12 weekly upside.  WHY: He produced 11.4 PPR/FP points per game across 10 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 81 versus model overall rank 62.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 4",
       "team": "WAS",
       "expectation": "Strong WR2 with top-12 weekly upside.",
@@ -6108,7 +6366,9 @@
       "age": 29,
       "rec_td_rate": 5.0,
       "rec_td_rate_career": 5.22,
-      "rec_td_rate_spike": -0.22
+      "rec_td_rate_spike": -0.22,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -6119,7 +6379,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Strong WR2 with top-12 weekly upside.  WHY: The 2026 opportunity and projection carry most of the grade because detailed 2025 rate data is incomplete. Market price is favorable around ADP 85 versus model overall rank 51.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 3",
       "team": "LAC",
       "expectation": "Strong WR2 with top-12 weekly upside.",
@@ -6152,7 +6412,9 @@
       "age": 23,
       "rec_td_rate": 5.66,
       "rec_td_rate_career": 5.96,
-      "rec_td_rate_spike": -0.3
+      "rec_td_rate_spike": -0.3,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -6163,7 +6425,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Strong WR2 with top-12 weekly upside.  WHY: He produced 15.9 PPR/FP points per game across 14 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 89 versus model overall rank 76.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 4",
       "team": "LAR",
       "expectation": "Strong WR2 with top-12 weekly upside.",
@@ -6196,7 +6458,9 @@
       "age": 32,
       "rec_td_rate": 12.28,
       "rec_td_rate_career": 7.21,
-      "rec_td_rate_spike": 5.07
+      "rec_td_rate_spike": 5.07,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -6207,7 +6471,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Strong WR2 with top-12 weekly upside.  WHY: He produced 8.5 PPR/FP points per game across 15 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 93 versus model overall rank 71.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 4",
       "team": "CHI",
       "expectation": "Strong WR2 with top-12 weekly upside.",
@@ -6240,7 +6504,9 @@
       "age": 21,
       "rec_td_rate": 3.33,
       "rec_td_rate_career": 3.33,
-      "rec_td_rate_spike": 0.0
+      "rec_td_rate_spike": 0.0,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -6251,7 +6517,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: WR2/FLEX; dependable lineup option with matchup-driven ceiling.  WHY: He produced 10.0 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 4",
       "team": "BUF",
       "expectation": "WR2/FLEX; dependable lineup option with matchup-driven ceiling.",
@@ -6284,7 +6550,9 @@
       "age": 28,
       "rec_td_rate": 7.06,
       "rec_td_rate_career": 4.2,
-      "rec_td_rate_spike": 2.86
+      "rec_td_rate_spike": 2.86,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -6295,7 +6563,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: WR2/FLEX; dependable lineup option with matchup-driven ceiling.  WHY: He produced 12.9 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 4",
       "team": "DET",
       "expectation": "WR2/FLEX; dependable lineup option with matchup-driven ceiling.",
@@ -6328,7 +6596,9 @@
       "age": 24,
       "rec_td_rate": 6.86,
       "rec_td_rate_career": 6.97,
-      "rec_td_rate_spike": -0.1
+      "rec_td_rate_spike": -0.1,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -6339,7 +6609,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: WR2/FLEX; dependable lineup option with matchup-driven ceiling.  WHY: He produced 12.2 PPR/FP points per game across 12 games. The workload/efficiency profile gives the model a rate-based reason to keep him here.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 5",
       "team": "CHI",
       "expectation": "WR2/FLEX; dependable lineup option with matchup-driven ceiling.",
@@ -6372,7 +6642,9 @@
       "age": 23,
       "rec_td_rate": 6.67,
       "rec_td_rate_career": 4.71,
-      "rec_td_rate_spike": 1.95
+      "rec_td_rate_spike": 1.95,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -6383,7 +6655,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: WR2/FLEX; dependable lineup option with matchup-driven ceiling.  WHY: The 2026 opportunity and projection carry most of the grade because detailed 2025 rate data is incomplete. Market price is favorable around ADP 108 versus model overall rank 91.  RISK: Evidence is thinner than for established veterans, so camp, depth-chart and role news can move the grade materially.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 4",
       "team": "SF",
       "expectation": "WR2/FLEX; dependable lineup option with matchup-driven ceiling.",
@@ -6416,7 +6688,9 @@
       "age": 32,
       "rec_td_rate": 4.84,
       "rec_td_rate_career": 7.23,
-      "rec_td_rate_spike": -2.39
+      "rec_td_rate_spike": -2.39,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -6427,7 +6701,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: FLEX/bench receiver; needs target growth or efficiency spikes.  WHY: He produced 10.6 PPR/FP points per game across 12 games. The workload/efficiency profile gives the model a rate-based reason to keep him here.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 5",
       "team": "ARI",
       "expectation": "FLEX/bench receiver; needs target growth or efficiency spikes.",
@@ -6460,7 +6734,9 @@
       "age": 23,
       "rec_td_rate": 5.48,
       "rec_td_rate_career": 6.35,
-      "rec_td_rate_spike": -0.87
+      "rec_td_rate_spike": -0.87,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -6471,7 +6747,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: WR2/FLEX; dependable lineup option with matchup-driven ceiling.  WHY: He produced 13.2 PPR/FP points per game across 10 games. The workload/efficiency profile gives the model a rate-based reason to keep him here.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 5",
       "team": "GB",
       "expectation": "WR2/FLEX; dependable lineup option with matchup-driven ceiling.",
@@ -6504,7 +6780,9 @@
       "age": 26,
       "rec_td_rate": 10.91,
       "rec_td_rate_career": 8.81,
-      "rec_td_rate_spike": 2.1
+      "rec_td_rate_spike": 2.1,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -6515,7 +6793,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: FLEX/bench receiver; needs target growth or efficiency spikes.  WHY: He produced 12.2 PPR/FP points per game across 15 games. The workload/efficiency profile gives the model a rate-based reason to keep him here.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 5",
       "team": "IND",
       "expectation": "FLEX/bench receiver; needs target growth or efficiency spikes.",
@@ -6548,7 +6826,9 @@
       "age": 25,
       "rec_td_rate": 7.14,
       "rec_td_rate_career": 5.74,
-      "rec_td_rate_spike": 1.4
+      "rec_td_rate_spike": 1.4,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -6559,7 +6839,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: FLEX/bench receiver; needs target growth or efficiency spikes.  WHY: He produced 12.4 PPR/FP points per game across 15 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. The market is more aggressive at ADP 124 versus model overall rank 134, so price matters.  RISK: Price is the biggest risk: the market currently asks you to draft him earlier than the model prefers.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 6",
       "team": "PIT",
       "expectation": "FLEX/bench receiver; needs target growth or efficiency spikes.",
@@ -6592,7 +6872,9 @@
       "age": 27,
       "rec_td_rate": 6.06,
       "rec_td_rate_career": 6.55,
-      "rec_td_rate_spike": -0.48
+      "rec_td_rate_spike": -0.48,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -6603,7 +6885,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: WR2/FLEX; dependable lineup option with matchup-driven ceiling.  WHY: Rookie score 95.1, backed by No. 4 draft capital and a 6.71 NFL prospect grade. The 2026 role projection is strong enough to replace missing NFL history.  RISK: NFL translation and exact weekly role are the main variables; preseason first-team usage can move this rating quickly.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 5",
       "team": "TEN",
       "expectation": "WR2/FLEX; dependable lineup option with matchup-driven ceiling.",
@@ -6636,7 +6918,9 @@
       "age": 24,
       "rec_td_rate": null,
       "rec_td_rate_career": null,
-      "rec_td_rate_spike": null
+      "rec_td_rate_spike": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -6647,7 +6931,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: FLEX/bench receiver; needs target growth or efficiency spikes.  WHY: He produced 13.0 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 6",
       "team": "DEN",
       "expectation": "FLEX/bench receiver; needs target growth or efficiency spikes.",
@@ -6680,7 +6964,9 @@
       "age": 29,
       "rec_td_rate": 5.65,
       "rec_td_rate_career": 5.06,
-      "rec_td_rate_spike": 0.58
+      "rec_td_rate_spike": 0.58,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -6691,7 +6977,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: WR2/FLEX; dependable lineup option with matchup-driven ceiling.  WHY: Rookie score 92.4, backed by No. 8 draft capital and a 6.43 NFL prospect grade. The 2026 role projection is strong enough to replace missing NFL history. Market price is favorable around ADP 136 versus model overall rank 98.  RISK: NFL translation and exact weekly role are the main variables; preseason first-team usage can move this rating quickly.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 4",
       "team": "NO",
       "expectation": "WR2/FLEX; dependable lineup option with matchup-driven ceiling.",
@@ -6724,7 +7010,9 @@
       "age": 25,
       "rec_td_rate": null,
       "rec_td_rate_career": null,
-      "rec_td_rate_spike": null
+      "rec_td_rate_spike": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -6735,7 +7023,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: WR2/FLEX; dependable lineup option with matchup-driven ceiling.  WHY: He produced 11.9 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 140 versus model overall rank 105.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 4",
       "team": "PIT",
       "expectation": "WR2/FLEX; dependable lineup option with matchup-driven ceiling.",
@@ -6768,7 +7056,9 @@
       "age": 31,
       "rec_td_rate": 6.31,
       "rec_td_rate_career": 3.53,
-      "rec_td_rate_spike": 2.78
+      "rec_td_rate_spike": 2.78,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -6779,7 +7069,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: WR2/FLEX; dependable lineup option with matchup-driven ceiling.  WHY: He produced 11.0 PPR/FP points per game across 16 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 143 versus model overall rank 110.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 5",
       "team": "JAX",
       "expectation": "WR2/FLEX; dependable lineup option with matchup-driven ceiling.",
@@ -6812,7 +7102,9 @@
       "age": 28,
       "rec_td_rate": 2.73,
       "rec_td_rate_career": 3.34,
-      "rec_td_rate_spike": -0.61
+      "rec_td_rate_spike": -0.61,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -6823,7 +7115,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: WR2/FLEX; dependable lineup option with matchup-driven ceiling.  WHY: He produced 9.6 PPR/FP points per game across 14 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 147 versus model overall rank 114.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 5",
       "team": "MIN",
       "expectation": "WR2/FLEX; dependable lineup option with matchup-driven ceiling.",
@@ -6856,7 +7148,9 @@
       "age": 23,
       "rec_td_rate": 3.8,
       "rec_td_rate_career": 7.69,
-      "rec_td_rate_spike": -3.89
+      "rec_td_rate_spike": -3.89,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -6867,7 +7161,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: WR2/FLEX; dependable lineup option with matchup-driven ceiling.  WHY: He produced 13.7 PPR/FP points per game across 16 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 151 versus model overall rank 118.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 5",
       "team": "TEN",
       "expectation": "WR2/FLEX; dependable lineup option with matchup-driven ceiling.",
@@ -6900,7 +7194,9 @@
       "age": 24,
       "rec_td_rate": 2.86,
       "rec_td_rate_career": 2.31,
-      "rec_td_rate_spike": 0.54
+      "rec_td_rate_spike": 0.54,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -6911,7 +7207,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: FLEX/bench receiver; needs target growth or efficiency spikes.  WHY: The 2026 opportunity and projection carry most of the grade because detailed 2025 rate data is incomplete.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 6",
       "team": "JAX",
       "expectation": "FLEX/bench receiver; needs target growth or efficiency spikes.",
@@ -6944,7 +7240,9 @@
       "age": 22,
       "rec_td_rate": 2.2,
       "rec_td_rate_career": 5.36,
-      "rec_td_rate_spike": -3.16
+      "rec_td_rate_spike": -3.16,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -6955,7 +7253,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: WR2/FLEX; dependable lineup option with matchup-driven ceiling.  WHY: Rookie score 89.2, backed by No. 20 draft capital and a 6.47 NFL prospect grade. The 2026 role projection is strong enough to replace missing NFL history. Market price is favorable around ADP 159 versus model overall rank 145.  RISK: NFL translation and exact weekly role are the main variables; preseason first-team usage can move this rating quickly.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 5",
       "team": "PHI",
       "expectation": "WR2/FLEX; dependable lineup option with matchup-driven ceiling.",
@@ -6988,7 +7286,9 @@
       "age": 28,
       "rec_td_rate": null,
       "rec_td_rate_career": null,
-      "rec_td_rate_spike": null
+      "rec_td_rate_spike": null,
+      "adjustment": -3,
+      "adjustment_reason": "Camp hamstring issue / missed practice time; temporary downgrade."
     },
     {
       "pos": "WR",
@@ -6999,7 +7299,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: FLEX/bench receiver; needs target growth or efficiency spikes.  WHY: He produced 11.5 PPR/FP points per game across 16 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 163 versus model overall rank 133.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 5",
       "team": "JAX",
       "expectation": "FLEX/bench receiver; needs target growth or efficiency spikes.",
@@ -7032,7 +7332,9 @@
       "age": 23,
       "rec_td_rate": 5.26,
       "rec_td_rate_career": 5.99,
-      "rec_td_rate_spike": -0.72
+      "rec_td_rate_spike": -0.72,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -7043,7 +7345,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: FLEX/bench receiver; needs target growth or efficiency spikes.  WHY: The 2026 opportunity and projection carry most of the grade because detailed 2025 rate data is incomplete. Market price is favorable around ADP 167 versus model overall rank 137.  RISK: Evidence is thinner than for established veterans, so camp, depth-chart and role news can move the grade materially.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 5",
       "team": "TB",
       "expectation": "FLEX/bench receiver; needs target growth or efficiency spikes.",
@@ -7076,7 +7378,9 @@
       "age": 29,
       "rec_td_rate": 3.92,
       "rec_td_rate_career": 4.73,
-      "rec_td_rate_spike": -0.81
+      "rec_td_rate_spike": -0.81,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -7087,7 +7391,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: FLEX/bench receiver; needs target growth or efficiency spikes.  WHY: He produced 12.2 PPR/FP points per game across 14 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 171 versus model overall rank 142.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 5",
       "team": "LAC",
       "expectation": "FLEX/bench receiver; needs target growth or efficiency spikes.",
@@ -7120,7 +7424,9 @@
       "age": 23,
       "rec_td_rate": 9.52,
       "rec_td_rate_career": 7.44,
-      "rec_td_rate_spike": 2.09
+      "rec_td_rate_spike": 2.09,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -7130,12 +7436,12 @@
       "confidence": "C",
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
-      "narrative": "EXPECTATION: Out for the year; do not draft.  WHY: Season-ending PCL surgery announced 8/1/2026 (NFL.com). The −60 adjustment reflects zero expected 2026 production.  RISK: Medical timeline is the only variable; he will not play this season.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "narrative": "EXPECTATION: Out for the year; do not draft.  WHY: Season-ending PCL surgery announced 8/1/2026 (NFL.com). The \u221260 adjustment reflects zero expected 2026 production.  RISK: Medical timeline is the only variable; he will not play this season.",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 6",
       "team": "SF",
       "expectation": "Out for the year; do not draft.",
-      "why": "Season-ending PCL surgery announced 8/1/2026 (NFL.com). The −60 adjustment reflects zero expected 2026 production.",
+      "why": "Season-ending PCL surgery announced 8/1/2026 (NFL.com). The \u221260 adjustment reflects zero expected 2026 production.",
       "risk": "Medical timeline is the only variable; he will not play this season.",
       "bye": 8,
       "snap_share": 78.1,
@@ -7164,7 +7470,9 @@
       "age": 24,
       "rec_td_rate": 0.0,
       "rec_td_rate_career": 3.03,
-      "rec_td_rate_spike": -3.03
+      "rec_td_rate_spike": -3.03,
+      "adjustment": -60,
+      "adjustment_reason": "Season-ending PCL surgery announced 8/1/2026; out for the year (NFL.com)."
     },
     {
       "pos": "WR",
@@ -7175,7 +7483,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: FLEX/bench receiver; needs target growth or efficiency spikes.  WHY: He produced 13.0 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 178 versus model overall rank 153.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 6",
       "team": "ARI",
       "expectation": "FLEX/bench receiver; needs target growth or efficiency spikes.",
@@ -7208,7 +7516,9 @@
       "age": 25,
       "rec_td_rate": 5.56,
       "rec_td_rate_career": 5.49,
-      "rec_td_rate_spike": 0.07
+      "rec_td_rate_spike": 0.07,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -7219,7 +7529,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: FLEX/bench receiver; needs target growth or efficiency spikes.  WHY: He produced 7.9 PPR/FP points per game across 14 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 182 versus model overall rank 155.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 6",
       "team": "KC",
       "expectation": "FLEX/bench receiver; needs target growth or efficiency spikes.",
@@ -7252,7 +7562,9 @@
       "age": 22,
       "rec_td_rate": 1.37,
       "rec_td_rate_career": 4.09,
-      "rec_td_rate_spike": -2.72
+      "rec_td_rate_spike": -2.72,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -7263,7 +7575,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: FLEX/bench receiver; needs target growth or efficiency spikes.  WHY: The 2026 opportunity and projection carry most of the grade because detailed 2025 rate data is incomplete. Market price is favorable around ADP 186 versus model overall rank 159.  RISK: Evidence is thinner than for established veterans, so camp, depth-chart and role news can move the grade materially.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 6",
       "team": "GB",
       "expectation": "FLEX/bench receiver; needs target growth or efficiency spikes.",
@@ -7296,7 +7608,9 @@
       "age": 22,
       "rec_td_rate": 0.0,
       "rec_td_rate_career": 0.0,
-      "rec_td_rate_spike": 0.0
+      "rec_td_rate_spike": 0.0,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -7307,7 +7621,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: FLEX/bench receiver; needs target growth or efficiency spikes.  WHY: He produced 8.5 PPR/FP points per game across 16 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 190 versus model overall rank 162.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 6",
       "team": "IND",
       "expectation": "FLEX/bench receiver; needs target growth or efficiency spikes.",
@@ -7340,7 +7654,9 @@
       "age": 24,
       "rec_td_rate": 4.55,
       "rec_td_rate_career": 3.75,
-      "rec_td_rate_spike": 0.79
+      "rec_td_rate_spike": 0.79,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -7351,7 +7667,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: FLEX/bench receiver; needs target growth or efficiency spikes.  WHY: The 2026 opportunity and projection carry most of the grade because detailed 2025 rate data is incomplete. Market price is favorable around ADP 194 versus model overall rank 167.  RISK: Evidence is thinner than for established veterans, so camp, depth-chart and role news can move the grade materially.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 6",
       "team": "GB",
       "expectation": "FLEX/bench receiver; needs target growth or efficiency spikes.",
@@ -7384,7 +7700,9 @@
       "age": 25,
       "rec_td_rate": 4.55,
       "rec_td_rate_career": 7.85,
-      "rec_td_rate_spike": -3.31
+      "rec_td_rate_spike": -3.31,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -7395,7 +7713,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Late-round bench upside; role growth is required for weekly relevance.  WHY: He produced 10.4 PPR/FP points per game across 16 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 198 versus model overall rank 171.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 6",
       "team": "BUF",
       "expectation": "Late-round bench upside; role growth is required for weekly relevance.",
@@ -7428,7 +7746,9 @@
       "age": 25,
       "rec_td_rate": 4.21,
       "rec_td_rate_career": 4.23,
-      "rec_td_rate_spike": -0.02
+      "rec_td_rate_spike": -0.02,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -7439,7 +7759,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Late-round bench upside; role growth is required for weekly relevance.  WHY: The 2026 opportunity and projection carry most of the grade because detailed 2025 rate data is incomplete. Market price is favorable around ADP 202 versus model overall rank 174.  RISK: Evidence is thinner than for established veterans, so camp, depth-chart and role news can move the grade materially.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 7",
       "team": "NYG",
       "expectation": "Late-round bench upside; role growth is required for weekly relevance.",
@@ -7472,7 +7792,9 @@
       "age": 23,
       "rec_td_rate": null,
       "rec_td_rate_career": null,
-      "rec_td_rate_spike": null
+      "rec_td_rate_spike": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -7483,7 +7805,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Late-round bench upside; role growth is required for weekly relevance.  WHY: He produced 10.3 PPR/FP points per game across 16 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 206 versus model overall rank 178.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 7",
       "team": "NE",
       "expectation": "Late-round bench upside; role growth is required for weekly relevance.",
@@ -7516,7 +7838,9 @@
       "age": 25,
       "rec_td_rate": 7.06,
       "rec_td_rate_career": 6.56,
-      "rec_td_rate_spike": 0.5
+      "rec_td_rate_spike": 0.5,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -7527,7 +7851,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Late-round bench upside; role growth is required for weekly relevance.  WHY: He produced 8.2 PPR/FP points per game across 11 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 210 versus model overall rank 179.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 7",
       "team": "CAR",
       "expectation": "Late-round bench upside; role growth is required for weekly relevance.",
@@ -7560,7 +7884,9 @@
       "age": 23,
       "rec_td_rate": 6.98,
       "rec_td_rate_career": 5.62,
-      "rec_td_rate_spike": 1.36
+      "rec_td_rate_spike": 1.36,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -7571,7 +7897,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Late-round bench upside; role growth is required for weekly relevance.  WHY: Rookie score 85.3, backed by No. 24 draft capital and a 6.42 NFL prospect grade. The 2026 role projection is strong enough to replace missing NFL history. Market price is favorable around ADP 214 versus model overall rank 181.  RISK: NFL translation and exact weekly role are the main variables; preseason first-team usage can move this rating quickly.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 7",
       "team": "CLE",
       "expectation": "Late-round bench upside; role growth is required for weekly relevance.",
@@ -7604,7 +7930,9 @@
       "age": null,
       "rec_td_rate": null,
       "rec_td_rate_career": null,
-      "rec_td_rate_spike": null
+      "rec_td_rate_spike": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -7615,7 +7943,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Late-round bench upside; role growth is required for weekly relevance.  WHY: He produced 8.7 PPR/FP points per game across 18 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 218 versus model overall rank 184.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 7",
       "team": "SEA",
       "expectation": "Late-round bench upside; role growth is required for weekly relevance.",
@@ -7648,7 +7976,9 @@
       "age": 27,
       "rec_td_rate": 2.17,
       "rec_td_rate_career": 4.96,
-      "rec_td_rate_spike": -2.78
+      "rec_td_rate_spike": -2.78,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -7659,7 +7989,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Late-round bench upside; role growth is required for weekly relevance.  WHY: The 2026 opportunity and projection carry most of the grade because detailed 2025 rate data is incomplete. Market price is favorable around ADP 221 versus model overall rank 185.  RISK: Evidence is thinner than for established veterans, so camp, depth-chart and role news can move the grade materially.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 7",
       "team": "TEN",
       "expectation": "Late-round bench upside; role growth is required for weekly relevance.",
@@ -7692,7 +8022,9 @@
       "age": 30,
       "rec_td_rate": 0.0,
       "rec_td_rate_career": 5.95,
-      "rec_td_rate_spike": -5.95
+      "rec_td_rate_spike": -5.95,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -7703,7 +8035,7 @@
       "model_path": "ROOKIE ENGINE",
       "status": "Available",
       "narrative": "EXPECTATION: Late-round bench upside; role growth is required for weekly relevance.  WHY: Rookie score 82.1, backed by No. 30 draft capital and a 6.39 NFL prospect grade. The 2026 role projection is strong enough to replace missing NFL history. Market price is favorable around ADP 225 versus model overall rank 186.  RISK: NFL translation and exact weekly role are the main variables; preseason first-team usage can move this rating quickly.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 7",
       "team": "NYJ",
       "expectation": "Late-round bench upside; role growth is required for weekly relevance.",
@@ -7736,7 +8068,9 @@
       "age": 31,
       "rec_td_rate": null,
       "rec_td_rate_career": null,
-      "rec_td_rate_spike": null
+      "rec_td_rate_spike": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -7747,7 +8081,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Late-round bench upside; role growth is required for weekly relevance.  WHY: He produced 7.1 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 229 versus model overall rank 189.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 7",
       "team": "CLE",
       "expectation": "Late-round bench upside; role growth is required for weekly relevance.",
@@ -7780,7 +8114,9 @@
       "age": 26,
       "rec_td_rate": 1.89,
       "rec_td_rate_career": 2.8,
-      "rec_td_rate_spike": -0.91
+      "rec_td_rate_spike": -0.91,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -7791,7 +8127,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Late-round bench upside; role growth is required for weekly relevance.  WHY: He produced 5.9 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 233 versus model overall rank 190.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 7",
       "team": "LV",
       "expectation": "Late-round bench upside; role growth is required for weekly relevance.",
@@ -7824,7 +8160,9 @@
       "age": 26,
       "rec_td_rate": 7.55,
       "rec_td_rate_career": 9.65,
-      "rec_td_rate_spike": -2.1
+      "rec_td_rate_spike": -2.1,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -7835,7 +8173,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Late-round bench upside; role growth is required for weekly relevance.  WHY: The 2026 opportunity and projection carry most of the grade because detailed 2025 rate data is incomplete. Market price is favorable around ADP 237 versus model overall rank 192.  RISK: Evidence is thinner than for established veterans, so camp, depth-chart and role news can move the grade materially.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 7",
       "team": "TB",
       "expectation": "Late-round bench upside; role growth is required for weekly relevance.",
@@ -7868,7 +8206,9 @@
       "age": 23,
       "rec_td_rate": null,
       "rec_td_rate_career": null,
-      "rec_td_rate_spike": null
+      "rec_td_rate_spike": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -7879,7 +8219,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Late-round bench upside; role growth is required for weekly relevance.  WHY: The 2026 opportunity and projection carry most of the grade because detailed 2025 rate data is incomplete. Market price is favorable around ADP 241 versus model overall rank 193.  RISK: Evidence is thinner than for established veterans, so camp, depth-chart and role news can move the grade materially.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 7",
       "team": "NYJ",
       "expectation": "Late-round bench upside; role growth is required for weekly relevance.",
@@ -7912,7 +8252,9 @@
       "age": 22,
       "rec_td_rate": 2.7,
       "rec_td_rate_career": 1.55,
-      "rec_td_rate_spike": 1.15
+      "rec_td_rate_spike": 1.15,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -7923,7 +8265,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Late-round bench upside; role growth is required for weekly relevance.  WHY: He produced 4.4 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 245 versus model overall rank 194.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 7",
       "team": "DET",
       "expectation": "Late-round bench upside; role growth is required for weekly relevance.",
@@ -7956,7 +8298,9 @@
       "age": 23,
       "rec_td_rate": 22.22,
       "rec_td_rate_career": 22.22,
-      "rec_td_rate_spike": 0.0
+      "rec_td_rate_spike": 0.0,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -7967,7 +8311,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Late-round bench upside; role growth is required for weekly relevance.  WHY: Rookie score 79.3, backed by No. 39 draft capital and a 6.40 NFL prospect grade. The 2026 role projection is strong enough to replace missing NFL history. Market price is favorable around ADP 249 versus model overall rank 196.  RISK: NFL translation and exact weekly role are the main variables; preseason first-team usage can move this rating quickly.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 7",
       "team": "CLE",
       "expectation": "Late-round bench upside; role growth is required for weekly relevance.",
@@ -8000,7 +8344,9 @@
       "age": null,
       "rec_td_rate": null,
       "rec_td_rate_career": null,
-      "rec_td_rate_spike": null
+      "rec_td_rate_spike": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -8011,7 +8357,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Late-round bench upside; role growth is required for weekly relevance.  WHY: He produced 9.6 PPR/FP points per game across 17 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 253 versus model overall rank 197.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 7",
       "team": "LV",
       "expectation": "Late-round bench upside; role growth is required for weekly relevance.",
@@ -8044,7 +8390,9 @@
       "age": 24,
       "rec_td_rate": 5.43,
       "rec_td_rate_career": 4.83,
-      "rec_td_rate_spike": 0.6
+      "rec_td_rate_spike": 0.6,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -8055,7 +8403,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Late-round bench upside; role growth is required for weekly relevance.  WHY: The 2026 opportunity and projection carry most of the grade because detailed 2025 rate data is incomplete. Market price is favorable around ADP 256 versus model overall rank 198.  RISK: Evidence is thinner than for established veterans, so camp, depth-chart and role news can move the grade materially.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 7",
       "team": "WAS",
       "expectation": "Late-round bench upside; role growth is required for weekly relevance.",
@@ -8088,7 +8436,9 @@
       "age": 37,
       "rec_td_rate": null,
       "rec_td_rate_career": null,
-      "rec_td_rate_spike": null
+      "rec_td_rate_spike": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -8099,7 +8449,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Late-round bench upside; role growth is required for weekly relevance.  WHY: The 2026 opportunity and projection carry most of the grade because detailed 2025 rate data is incomplete. Market price is favorable around ADP 260 versus model overall rank 201.  RISK: Evidence is thinner than for established veterans, so camp, depth-chart and role news can move the grade materially.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 7",
       "team": "JAX",
       "expectation": "Late-round bench upside; role growth is required for weekly relevance.",
@@ -8132,7 +8482,9 @@
       "age": 22,
       "rec_td_rate": null,
       "rec_td_rate_career": null,
-      "rec_td_rate_spike": null
+      "rec_td_rate_spike": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -8143,7 +8495,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Late-round bench upside; role growth is required for weekly relevance.  WHY: He produced 7.6 PPR/FP points per game across 15 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 264 versus model overall rank 202.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 7",
       "team": "DAL",
       "expectation": "Late-round bench upside; role growth is required for weekly relevance.",
@@ -8176,7 +8528,9 @@
       "age": 25,
       "rec_td_rate": 7.14,
       "rec_td_rate_career": 5.71,
-      "rec_td_rate_spike": 1.43
+      "rec_td_rate_spike": 1.43,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -8187,7 +8541,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Late-round bench upside; role growth is required for weekly relevance.  WHY: He produced 11.6 PPR/FP points per game across 15 games. The workload/efficiency profile gives the model a rate-based reason to keep him here. Market price is favorable around ADP 268 versus model overall rank 204.  RISK: Target competition, quarterback efficiency and touchdown regression are the main downside paths.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 7",
       "team": "MIN",
       "expectation": "Late-round bench upside; role growth is required for weekly relevance.",
@@ -8220,7 +8574,9 @@
       "age": 28,
       "rec_td_rate": 10.0,
       "rec_td_rate_career": 6.67,
-      "rec_td_rate_spike": 3.33
+      "rec_td_rate_spike": 3.33,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -8231,7 +8587,7 @@
       "model_path": "HISTORY FALLBACK",
       "status": "Available",
       "narrative": "EXPECTATION: Late-round bench upside; role growth is required for weekly relevance.  WHY: The 2026 opportunity and projection carry most of the grade because detailed 2025 rate data is incomplete. Market price is favorable around ADP 272 versus model overall rank 205.  RISK: Evidence is thinner than for established veterans, so camp, depth-chart and role news can move the grade materially.",
-      "source": "ADP proxy — editable; based on positional draft cost",
+      "source": "ADP proxy \u2014 editable; based on positional draft cost",
       "tier": "TIER 7",
       "team": "NYG",
       "expectation": "Late-round bench upside; role growth is required for weekly relevance.",
@@ -8264,7 +8620,9 @@
       "age": 27,
       "rec_td_rate": 1.39,
       "rec_td_rate_career": 3.16,
-      "rec_td_rate_spike": -1.77
+      "rec_td_rate_spike": -1.77,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "K",
@@ -8305,7 +8663,9 @@
       "pass_td": 0,
       "team_qb": "Dak Prescott",
       "handcuff": "",
-      "age": 30
+      "age": 30,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "K",
@@ -8346,7 +8706,9 @@
       "pass_td": 0,
       "team_qb": "C.J. Stroud",
       "handcuff": "",
-      "age": 31
+      "age": 31,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "K",
@@ -8387,7 +8749,9 @@
       "pass_td": 0,
       "team_qb": "Justin Herbert",
       "handcuff": "",
-      "age": 25
+      "age": 25,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "K",
@@ -8428,7 +8792,9 @@
       "pass_td": 0,
       "team_qb": "Sam Darnold",
       "handcuff": "",
-      "age": 34
+      "age": 34,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "K",
@@ -8469,7 +8835,9 @@
       "pass_td": 0,
       "team_qb": "Trevor Lawrence",
       "handcuff": "",
-      "age": 22
+      "age": 22,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "K",
@@ -8510,7 +8878,9 @@
       "pass_td": 0,
       "team_qb": "Brock Purdy",
       "handcuff": "",
-      "age": 29
+      "age": 29,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "K",
@@ -8551,7 +8921,9 @@
       "pass_td": 0,
       "team_qb": "Lamar Jackson",
       "handcuff": "",
-      "age": 24
+      "age": 24,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "K",
@@ -8592,7 +8964,9 @@
       "pass_td": 0,
       "team_qb": "Matthew Stafford",
       "handcuff": "",
-      "age": 23
+      "age": 23,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "K",
@@ -8639,7 +9013,9 @@
       "rec_td_rate_spike": 1.06,
       "rush_td_rate": 0.88,
       "rush_td_rate_career": 1.06,
-      "rush_td_rate_spike": -0.17
+      "rush_td_rate_spike": -0.17,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "K",
@@ -8680,7 +9056,9 @@
       "pass_td": 0,
       "team_qb": "Caleb Williams",
       "handcuff": "",
-      "age": 33
+      "age": 33,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "K",
@@ -8721,7 +9099,9 @@
       "pass_td": 0,
       "team_qb": "Drake Maye",
       "handcuff": "",
-      "age": 22
+      "age": 22,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "K",
@@ -8762,7 +9142,9 @@
       "pass_td": 0,
       "team_qb": "Joe Burrow",
       "handcuff": "",
-      "age": 26
+      "age": 26,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "DST",
@@ -8803,7 +9185,9 @@
       "pass_td": 0,
       "team_qb": "C.J. Stroud",
       "handcuff": "",
-      "age": null
+      "age": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "DST",
@@ -8844,7 +9228,9 @@
       "pass_td": 0,
       "team_qb": "Bo Nix",
       "handcuff": "",
-      "age": null
+      "age": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "DST",
@@ -8885,7 +9271,9 @@
       "pass_td": 0,
       "team_qb": "Sam Darnold",
       "handcuff": "",
-      "age": null
+      "age": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "DST",
@@ -8926,7 +9314,9 @@
       "pass_td": 0,
       "team_qb": "Matthew Stafford",
       "handcuff": "",
-      "age": 30
+      "age": 30,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "DST",
@@ -8967,7 +9357,9 @@
       "pass_td": 0,
       "team_qb": "Jalen Hurts",
       "handcuff": "",
-      "age": null
+      "age": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "DST",
@@ -9008,7 +9400,9 @@
       "pass_td": 0,
       "team_qb": "Kyler Murray",
       "handcuff": "",
-      "age": null
+      "age": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "DST",
@@ -9049,7 +9443,9 @@
       "pass_td": 0,
       "team_qb": "Drake Maye",
       "handcuff": "",
-      "age": null
+      "age": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "DST",
@@ -9090,7 +9486,9 @@
       "pass_td": 0,
       "team_qb": "Trevor Lawrence",
       "handcuff": "",
-      "age": null
+      "age": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "DST",
@@ -9131,7 +9529,9 @@
       "pass_td": 0,
       "team_qb": "Aaron Rodgers",
       "handcuff": "",
-      "age": null
+      "age": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "DST",
@@ -9172,7 +9572,9 @@
       "pass_td": 0,
       "team_qb": "Justin Herbert",
       "handcuff": "",
-      "age": null
+      "age": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "DST",
@@ -9213,7 +9615,9 @@
       "pass_td": 0,
       "team_qb": "Lamar Jackson",
       "handcuff": "",
-      "age": null
+      "age": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "DST",
@@ -9254,7 +9658,9 @@
       "pass_td": 0,
       "team_qb": "Jordan Love",
       "handcuff": "",
-      "age": null
+      "age": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "DST",
@@ -9295,7 +9701,9 @@
       "pass_td": 0,
       "team_qb": "Jared Goff",
       "handcuff": "",
-      "age": null
+      "age": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "DST",
@@ -9336,7 +9744,9 @@
       "pass_td": 0,
       "team_qb": "Josh Allen",
       "handcuff": "",
-      "age": null
+      "age": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "DST",
@@ -9377,7 +9787,9 @@
       "pass_td": 0,
       "team_qb": "Patrick Mahomes II",
       "handcuff": "",
-      "age": null
+      "age": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "DST",
@@ -9418,7 +9830,9 @@
       "pass_td": 0,
       "team_qb": "Deshaun Watson",
       "handcuff": "",
-      "age": null
+      "age": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "DST",
@@ -9459,7 +9873,9 @@
       "pass_td": 0,
       "team_qb": "Brock Purdy",
       "handcuff": "",
-      "age": null
+      "age": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "DST",
@@ -9500,7 +9916,9 @@
       "pass_td": 0,
       "team_qb": "Tyler Shough",
       "handcuff": "",
-      "age": null
+      "age": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "DST",
@@ -9541,7 +9959,9 @@
       "pass_td": 0,
       "team_qb": "Tua Tagovailoa",
       "handcuff": "",
-      "age": null
+      "age": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "DST",
@@ -9582,7 +10002,9 @@
       "pass_td": 0,
       "team_qb": "Caleb Williams",
       "handcuff": "",
-      "age": null
+      "age": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "DST",
@@ -9623,7 +10045,9 @@
       "pass_td": 0,
       "team_qb": "Daniel Jones",
       "handcuff": "",
-      "age": null
+      "age": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "DST",
@@ -9664,7 +10088,9 @@
       "pass_td": 0,
       "team_qb": "Jaxson Dart",
       "handcuff": "",
-      "age": null
+      "age": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "DST",
@@ -9705,7 +10131,9 @@
       "pass_td": 0,
       "team_qb": "Baker Mayfield",
       "handcuff": "",
-      "age": null
+      "age": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "DST",
@@ -9746,7 +10174,9 @@
       "pass_td": 0,
       "team_qb": "Dak Prescott",
       "handcuff": "",
-      "age": null
+      "age": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "DST",
@@ -9787,7 +10217,9 @@
       "pass_td": 0,
       "team_qb": "Bryce Young",
       "handcuff": "",
-      "age": null
+      "age": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "DST",
@@ -9828,7 +10260,9 @@
       "pass_td": 0,
       "team_qb": "Cam Ward",
       "handcuff": "",
-      "age": null
+      "age": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "DST",
@@ -9869,7 +10303,9 @@
       "pass_td": 0,
       "team_qb": "Malik Willis",
       "handcuff": "",
-      "age": null
+      "age": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "DST",
@@ -9910,7 +10346,9 @@
       "pass_td": 0,
       "team_qb": "Jayden Daniels",
       "handcuff": "",
-      "age": null
+      "age": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "DST",
@@ -9951,7 +10389,9 @@
       "pass_td": 0,
       "team_qb": "Geno Smith",
       "handcuff": "",
-      "age": null
+      "age": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "DST",
@@ -9992,7 +10432,9 @@
       "pass_td": 0,
       "team_qb": "Jacoby Brissett",
       "handcuff": "",
-      "age": null
+      "age": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "DST",
@@ -10033,7 +10475,9 @@
       "pass_td": 0,
       "team_qb": "Joe Burrow",
       "handcuff": "",
-      "age": null
+      "age": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "DST",
@@ -10074,7 +10518,9 @@
       "pass_td": 0,
       "team_qb": "Kirk Cousins",
       "handcuff": "",
-      "age": null
+      "age": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -10118,7 +10564,9 @@
       "age": 31,
       "rec_td_rate": 3.92,
       "rec_td_rate_career": 5.51,
-      "rec_td_rate_spike": -1.58
+      "rec_td_rate_spike": -1.58,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -10162,7 +10610,9 @@
       "age": 29,
       "rec_td_rate": 5.05,
       "rec_td_rate_career": 4.43,
-      "rec_td_rate_spike": 0.62
+      "rec_td_rate_spike": 0.62,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -10206,7 +10656,9 @@
       "age": 22,
       "rec_td_rate": 8.82,
       "rec_td_rate_career": 8.82,
-      "rec_td_rate_spike": 0.0
+      "rec_td_rate_spike": 0.0,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "WR",
@@ -10250,7 +10702,9 @@
       "age": 25,
       "rec_td_rate": null,
       "rec_td_rate_career": null,
-      "rec_td_rate_spike": null
+      "rec_td_rate_spike": null,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -10297,7 +10751,9 @@
       "rec_td_rate_spike": -1.29,
       "rush_td_rate": 2.78,
       "rush_td_rate_career": 3.12,
-      "rush_td_rate_spike": -0.35
+      "rush_td_rate_spike": -0.35,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "RB",
@@ -10344,7 +10800,9 @@
       "rec_td_rate_spike": null,
       "rush_td_rate": 1.69,
       "rush_td_rate_career": 2.48,
-      "rush_td_rate_spike": -0.78
+      "rush_td_rate_spike": -0.78,
+      "adjustment": 0,
+      "adjustment_reason": ""
     },
     {
       "pos": "TE",
@@ -10388,7 +10846,9 @@
       "age": 26,
       "rec_td_rate": 7.41,
       "rec_td_rate_career": 6.18,
-      "rec_td_rate_spike": 1.23
+      "rec_td_rate_spike": 1.23,
+      "adjustment": 0,
+      "adjustment_reason": ""
     }
   ],
   "config": {

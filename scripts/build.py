@@ -214,6 +214,22 @@ ADJ = {
     "Makai Lemon": (-3, "Camp hamstring issue / missed practice time; temporary downgrade."),
     "Ricky Pearsall": (-60, "Season-ending PCL surgery announced 8/1/2026; out for the year (NFL.com)."),
     "Zach Charbonnet": (-25, "Jan 2026 playoff ACL; opens on PUP, return may be as late as December (ESPN). Not draftable in a 10-team league."),
+    # 2026 QB Ladder (locked order 1-20)
+    "Joe Burrow": (2.91, "QB6: 2025 rate held strong; health fade was too harsh."),
+    "Jalen Hurts": (-0.45, "QB7: Slot below Burrow."),
+    "Jayden Daniels": (0.80, "QB8: Maintain position."),
+    "Matthew Stafford": (1.08, "QB9: Mid-30s TDs in 2025, not 46; move up."),
+    "Patrick Mahomes II": (-1.21, "QB10: 2025 was 4.4% TD vs 5.7% career (14g); down from 7."),
+    "Dak Prescott": (0.38, "QB11: Slight bump."),
+    "Jared Goff": (2.36, "QB12: 34 TD, 7.9 Y/A in 2025; move up from 16."),
+    "Jaxson Dart": (1.44, "QB13: Sophomore legs bet (2025 was rookie year)."),
+    "Trevor Lawrence": (-0.69, "QB14: Slot below Dart."),
+    "Jordan Love": (3.46, "QB15: Move up into mid-tier."),
+    "Bo Nix": (-2.25, "QB16: Ankle fracture + 2 surgeries, 6.4 Y/A; down from 11."),
+    "Baker Mayfield": (2.67, "QB17: Durable, not a 13; move up."),
+    "Brock Purdy": (-1.84, "QB18: Slot below Baker."),
+    "Kyler Murray": (0.79, "QB19: Slight bump."),
+    "Sam Darnold": (5.45, "QB20: Locked into top 20."),
 }
 for i, p in enumerate(players):
     if p["player"] in ADJ:
